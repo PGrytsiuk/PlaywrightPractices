@@ -10,24 +10,24 @@ import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertTha
 
 public class LunchingBrowser {
 
+    public LunchingBrowser(Page page) {
+    }
+
     public static void main(String[] args) {
 
         Playwright playwright = Playwright.create();
         Browser browser = playwright.chromium().launch(
-        new LaunchOptions().setHeadless(false)
+                new LaunchOptions().setHeadless(false)
         );
         Page page = browser.newPage();
         page.navigate("https://gym.langfit.net/login");
 
-        Locator username = page.locator("[name='username']");
-        username.fill("pavlo_grytsiuk");
-        Locator password = page.locator("[name='userPassword']");
-        password.fill("pgry2412");
-        Locator SignIn =page.locator("[aria-label='sign in']");
-        SignIn.click();
-        Locator Host = page.locator("//*[contains (@class, 'user-name')]");
-       /* Host.getByText("Pavlo Grytsiuk");*/
-        assertThat(Host).hasText("Pavlo Grytsiuk");
+        LoginPage loginPage = new LoginPage(page);
+        HomePage homePage= new HomePage(page);
+        loginPage.login("pavlo_grytsiuk", "pgry2412");
+        // Verify the username on the home page
+        homePage.verifyUserName("Pavlo Grytsiuk");
+
         browser.close();
 
 
