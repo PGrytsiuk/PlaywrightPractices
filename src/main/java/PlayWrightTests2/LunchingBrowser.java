@@ -28,8 +28,9 @@ public class LunchingBrowser {
         // Verify the username on the home page
         homePage.verifyUserName("Pavlo Grytsiuk");
 
+        page.close();
         browser.close();
-
+        playwright.close();
 
     }
 
