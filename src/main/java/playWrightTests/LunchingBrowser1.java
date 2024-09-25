@@ -60,7 +60,7 @@ public class LunchingBrowser1 {
 
         page.close();
         browser.close();
-        playwright.close();
+
 
         }
 

@@ -1,15 +1,15 @@
 package PlayWrightTests2;
 
+import Pages.LoginPage;
 import com.microsoft.playwright.Browser;
 import com.microsoft.playwright.BrowserType;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.Playwright;
 
-import java.sql.SQLOutput;
+
 
 public class InvalidLogin {
-    public InvalidLogin(Page page) {
-    }
+
 
     public static void main(String[] args) {
 
@@ -28,7 +28,7 @@ public class InvalidLogin {
         loginPage.getToastMessageText("Invalid username or password");
 
         System.out.println("Toast message is present: " +Tost);
-        /*System.out.println(page.locator("//*[contains (@class, 'toast-message')]").textContent());*/
+        System.out.println(page.locator("//*[contains (@class, 'toast-message')]").textContent());
 
         page.close();
         browser.close();

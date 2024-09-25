@@ -1,11 +1,12 @@
-package PlayWrightTests2;
+package Pages;
 
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 
 import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
 
-public class HomePage extends LunchingBrowser{
+public class HomePage extends BasePage {
+
     private final Locator hostLabel;
 
     public HomePage(Page page) {

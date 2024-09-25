@@ -1,14 +1,14 @@
-package PlayWrightTests2;
+package Pages;
 
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 
 import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
 
-public class LoginPage extends LunchingBrowser {
+public class LoginPage extends BasePage {
 
 
-    private Page page;
+
     private final Locator usernameField;
     private final Locator passwordField;
     private final Locator signInButton;
