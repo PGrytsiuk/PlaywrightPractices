@@ -1,14 +1,13 @@
 package playWrightTests;
-
+import org.junit.Assert;
 import com.microsoft.playwright.Browser;
 import com.microsoft.playwright.BrowserType.LaunchOptions;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.Playwright;
-
 import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
 
-public class LunchingBrowser1 {
+public class DefaultLoginTest {
 
 
 
@@ -42,21 +41,10 @@ public class LunchingBrowser1 {
         Locator edit =page.locator("//*[contains (@md-svg-icon, 'lt-icon-edit')]");
         edit.click();
         String inputValue1 =page.locator("//*[contains (@name, 'firstName')]").inputValue();
+        String Expected="Pavlo";
+        Assert.assertEquals(inputValue1, Expected);
 
         page.locator("//*[contains (@name, 'firstName')]").clear();
-
-
-            page.navigate("https://designsystem.digital.gov/components/checkbox/");
-            boolean checkbox = page.locator(("//*[contains(@for, 'check-historical-douglass')]")).first().isVisible();
-
-            Locator checkboxOperation = page.locator("//*[contains(@for, 'check-historical-truth')]").first();
-            assertThat(checkboxOperation).isChecked();
-            checkboxOperation.uncheck();
-
-            assertThat(checkboxOperation).not().isChecked();
-
-
-
 
         page.close();
         browser.close();
