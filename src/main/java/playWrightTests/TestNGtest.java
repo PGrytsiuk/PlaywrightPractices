@@ -1,24 +1,20 @@
-package PlayWrightTests2;
+package playWrightTests;
 
 import Pages.LoginPage;
 import Utils.ScreenshotsAndRecordings;
 import com.microsoft.playwright.*;
+import org.testng.annotations.Test;
 
+public class TestNGtest {
 
-
-public class InvalidLogin {
-
-
-    public static void main(String[] args) {
-
+    @Test
+    public void InvalidLogin(){
         Playwright playwright = Playwright.create();
         Browser browser = playwright.chromium().launch(
                 new BrowserType.LaunchOptions().setHeadless(false)
         );
-        // Create a new context with video recording
         BrowserContext context = ScreenshotsAndRecordings.VideoCapture(browser, "Invalid Login");
-        Page page= context.newPage();
-
+        Page page = context.newPage();
         page.navigate("https://gym.langfit.net/login");
 
         LoginPage loginPage = new LoginPage(page);
@@ -31,12 +27,9 @@ public class InvalidLogin {
         System.out.println("Toast message is present: " +Toast);
         System.out.println(page.locator("//*[contains (@class, 'toast-message')]").textContent());
         ScreenshotsAndRecordings.ScreenshotCapture(page, "Invalid Login");
-            // Closing the page and context, which should save the video
+        // Closing the page and context, which should save the video
 
         page.close();
-        context.close();
-        browser.close();
-        playwright.close();
 
 
     }

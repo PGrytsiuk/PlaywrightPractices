@@ -16,6 +16,8 @@ public class DropDownsHandling {
             );
             Page page = browser.newPage();
 
+
+
             page.navigate("https://www.lambdatest.com/selenium-playground/select-dropdown-demo");
 
 
