@@ -5,6 +5,12 @@ import com.microsoft.playwright.BrowserType.LaunchOptions;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.Playwright;
+
+import java.nio.file.Paths;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
+
 import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
 
 public class DefaultLoginTest {
@@ -25,6 +31,13 @@ public class DefaultLoginTest {
         Locator password = page.locator("[name='userPassword']");
         password.fill("pgry2412");
         Locator SignIn =page.locator("[aria-label='sign in']");
+            //Field masking for screenshot
+            String timestamp = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
+            String screenshotPath = "./snaps/scr" + timestamp + ".png";
+            Page.ScreenshotOptions screenshotOptions = new Page.ScreenshotOptions();
+            page.screenshot(screenshotOptions.setPath(Paths.get(screenshotPath)).setFullPage(false).setMask(List.of(username)));
+
+
         SignIn.click();
         Locator Host = page.locator("//*[contains (@class, 'user-name')]");
         Host.getByText("Pavlo Grytsiuk");
