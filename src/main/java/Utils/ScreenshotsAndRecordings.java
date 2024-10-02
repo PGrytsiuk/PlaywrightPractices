@@ -23,6 +23,7 @@ public class ScreenshotsAndRecordings {
 
     }
 
+
     public static BrowserContext VideoCapture (Browser browser, String testName){
 
         String VideoCapturePath = "./videos/"+ testName;
