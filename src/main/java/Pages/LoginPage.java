@@ -14,6 +14,8 @@ public class LoginPage extends BasePage {
     private final Locator signInButton;
     private final Locator ToastAlert;
     private final Locator ToastMessage;
+    private final Locator AppStoreRedirect;
+    private final Locator PlayMarketRedirect;
 
     public LoginPage(Page page) {
         super(page);
@@ -22,6 +24,8 @@ public class LoginPage extends BasePage {
         this.signInButton = page.locator("[aria-label='sign in']");
         this.ToastAlert =page.locator("//*[contains(@id, 'toast-container')]");
         this.ToastMessage=page.locator("//*[contains (@class, 'toast-message')]");
+        this.AppStoreRedirect=page.locator("//img[@alt='Download on the App Store']");
+        this.PlayMarketRedirect=page.locator("//img[@alt='Get it on Google Play']");
     }
 
     public void enterUsername(String username) {
@@ -49,5 +53,13 @@ public class LoginPage extends BasePage {
         enterPassword(password);
         clickSignIn();
         // Assuming successful login redirects to HomePage
+    }
+
+    public void clickAppStoreRedirect(){
+        AppStoreRedirect.click();
+    }
+
+    public void clickPlayMarketRedirect(){
+        PlayMarketRedirect.click();
     }
 }

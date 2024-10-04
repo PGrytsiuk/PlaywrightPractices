@@ -20,6 +20,7 @@ public class TestNGtest1 extends Setup {
                 page.navigate("https://gym.langfit.net/login");
 
                 LoginPage loginPage = new LoginPage(page);
+                //Entering invalid credentials
                 loginPage.login(username,password);
                 // Verify the alert
                 boolean Toast = loginPage.AlertAppear();

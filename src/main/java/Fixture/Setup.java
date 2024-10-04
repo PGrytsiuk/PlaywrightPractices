@@ -23,7 +23,7 @@ public class Setup {
         );
 
         this.page = browser.newPage();
-
+        this.context = browser.newContext();
     }
 
     protected void setupContextWithVideo() {
