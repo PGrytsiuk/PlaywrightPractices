@@ -1,12 +1,12 @@
 package PlayWrightTests2;
 
+
 import Pages.HomePage;
 import Pages.LoginPage;
 import com.microsoft.playwright.Browser;
 import com.microsoft.playwright.BrowserType.LaunchOptions;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.Playwright;
-
 
 import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
@@ -15,8 +15,6 @@ import java.util.UUID;
 
 
 public class ValidLogin {
-
-
 
     public static void main(String[] args) {
 

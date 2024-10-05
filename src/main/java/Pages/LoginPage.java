@@ -2,6 +2,7 @@ package Pages;
 
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
+import org.junit.Assert;
 
 import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
 
@@ -16,6 +17,7 @@ public class LoginPage extends BasePage {
     private final Locator ToastMessage;
     private final Locator AppStoreRedirect;
     private final Locator PlayMarketRedirect;
+    private final Locator ErrorMessage;
 
     public LoginPage(Page page) {
         super(page);
@@ -26,6 +28,17 @@ public class LoginPage extends BasePage {
         this.ToastMessage=page.locator("//*[contains (@class, 'toast-message')]");
         this.AppStoreRedirect=page.locator("//img[@alt='Download on the App Store']");
         this.PlayMarketRedirect=page.locator("//img[@alt='Get it on Google Play']");
+        this.ErrorMessage=page.locator("(//div[@class='md-input-message-animation ng-scope'])");
+    }
+
+    public int ErrorMessageSize(){
+        return ErrorMessage.count();
+
+    }
+
+    public void AssertErrorMessagesCount(){
+        int errorMessagesExpectedCount = 1;
+        Assert.assertEquals(ErrorMessageSize(), errorMessagesExpectedCount);
     }
 
     public void enterUsername(String username) {
@@ -48,6 +61,13 @@ public class LoginPage extends BasePage {
     public void getToastMessageText(String expectedAlertMessage){
         assertThat(ToastMessage).hasText(expectedAlertMessage);
     }
+
+    public void EmptyLogin(){
+        enterUsername("");
+        enterPassword("");
+        clickSignIn();
+    }
+
     public void login(String username, String password) {
         enterUsername(username);
         enterPassword(password);

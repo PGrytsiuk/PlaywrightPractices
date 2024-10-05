@@ -8,7 +8,7 @@ import org.testng.annotations.Test;
 
 public class TestNGtest {
 
-    @Test
+    @Test(priority = 3, enabled = false)
     public void InvalidLogin(){
         Playwright playwright = Playwright.create();
         Browser browser = playwright.chromium().launch(

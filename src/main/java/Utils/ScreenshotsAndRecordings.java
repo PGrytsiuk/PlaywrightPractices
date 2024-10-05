@@ -17,7 +17,6 @@ public class ScreenshotsAndRecordings {
         String timestamp = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
         String screenshotPath = "./snaps/"+ testName +"_"+ timestamp + ".png";
 
-
         Page.ScreenshotOptions screenshotOptions = new Page.ScreenshotOptions();
         page.screenshot(screenshotOptions.setPath(Paths.get(screenshotPath)));
 

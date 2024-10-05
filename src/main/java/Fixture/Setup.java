@@ -22,7 +22,9 @@ public class Setup {
                 new BrowserType.LaunchOptions().setHeadless(false)
         );
 
+/*
         this.page = browser.newPage();
+*/
         this.context = browser.newContext();
     }
 
@@ -37,7 +39,7 @@ public class Setup {
                         .setRecordVideoDir(Paths.get(VideoCapturePath))
                         .setRecordVideoSize(new RecordVideoSize(1280, 720))
         );// Assuming you want .webm format
-        page = context.newPage();
+       this.page = context.newPage();
     }
 
     @AfterMethod
