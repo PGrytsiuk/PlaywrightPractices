@@ -1,4 +1,4 @@
-package TestNGTests;
+package LangFitTests;
 
 import Pages.LoginPage;
 import Utils.ScreenshotsAndRecordings;

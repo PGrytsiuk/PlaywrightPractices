@@ -22,10 +22,10 @@ public class Setup {
                 new BrowserType.LaunchOptions().setHeadless(false)
         );
 
-/*
-        this.page = browser.newPage();
-*/
-        this.context = browser.newContext();
+
+      /* this.page = browser.newPage();
+
+      this.context = browser.newContext();*/
     }
 
     protected void setupContextWithVideo() {
@@ -33,13 +33,14 @@ public class Setup {
     }
 
     protected void setupContextWithVideo(String videoFileName) {
+
         String VideoCapturePath = "./videos/" + videoFileName;
         context = browser.newContext(
                 new Browser.NewContextOptions()
                         .setRecordVideoDir(Paths.get(VideoCapturePath))
                         .setRecordVideoSize(new RecordVideoSize(1280, 720))
         );// Assuming you want .webm format
-       this.page = context.newPage();
+       page = context.newPage();
     }
 
     @AfterMethod

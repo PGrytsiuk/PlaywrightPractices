@@ -11,7 +11,7 @@ import org.testng.annotations.Test;
 
 
 
-public class DowloadAMobileppTest  extends Setup {
+public class TandCandDowloadAMobileppTest extends Setup {
 
     @Test(priority = 2)
     void downloadMobileApp(){
@@ -21,6 +21,11 @@ public class DowloadAMobileppTest  extends Setup {
             page.navigate("https://gym.langfit.net/login");
 
             LoginPage loginPage = new LoginPage(page);
+            //Tap on the Terms and conditions link
+            Page TermsAndCondtion = page.context().waitForPage(loginPage::TermsAndConditions);
+            TermsAndCondtion.waitForLoadState();
+            System.out.println(TermsAndCondtion.title());
+            TermsAndCondtion.close();
 
             //Tap on the AppStore icon
             Page AppStorePage = page.context().waitForPage(loginPage::clickAppStoreRedirect);

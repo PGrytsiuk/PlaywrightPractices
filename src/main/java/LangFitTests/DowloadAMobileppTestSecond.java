@@ -1,4 +1,4 @@
-package TestNGTests;
+package LangFitTests;
 
 import Fixture.Setup;
 import Pages.LoginPage;

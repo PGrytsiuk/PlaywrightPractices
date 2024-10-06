@@ -1,4 +1,4 @@
-package TestNGTests;
+package LangFitTests;
 
 import Configs.ConfigLoader;
 import Fixture.Setup;
