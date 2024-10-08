@@ -5,16 +5,15 @@ import Pages.LoginPage;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
-public class ForgotPassword extends Setup {
+public class ForgotPassTest extends Setup {
 
 
 
     @DataProvider(name="EmailOrusername")
     public Object[][] EmailOrUsername() {
         return new Object[][] {
-               /* { "pgrytsiuk1992@gmail.com" },
-                { "pavlo_grytsiuk"},*/
-
+               { "pgrytsiuk1992@gmail.com" },
+                { "pavlo_grytsiuk"},
                 { "<EMAIL>[0]"},
                  {"Test"}
 
