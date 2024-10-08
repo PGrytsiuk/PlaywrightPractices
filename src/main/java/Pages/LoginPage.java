@@ -2,6 +2,7 @@ package Pages;
 
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
+import com.microsoft.playwright.options.WaitForSelectorState;
 import org.junit.Assert;
 
 import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
@@ -22,6 +23,14 @@ public class LoginPage extends BasePage {
     private final Locator LanguageSelectorSize;
     private final Locator TermsAndCondition;
     private final Locator WelcomeMessage;
+    private final Locator ForgotPassword;
+    private final Locator ResetPasswordpopup;
+    private final Locator ResetPasswordMessage;
+    private final Locator UsernameOREmail;
+    private final Locator Send;
+    private final Locator ResetPasswordSuccessMessage;
+    private final Locator ErrorToastResetPassword;
+    private final Locator ResetPasswordErrorMessage;
 
     public LoginPage(Page page) {
         super(page);
@@ -37,6 +46,67 @@ public class LoginPage extends BasePage {
         this.LanguageSelectorSize=page.locator("(//md-option[contains(@class,'option ng-scope')])//div[@class='md-text ng-binding']");
         this.TermsAndCondition =page.locator("//a[@class='terms-service-link md-violet-theme']");
         this.WelcomeMessage=page.locator("//h1[@class='welcome-message ng-binding']");
+        this.ForgotPassword=page.locator("//span[@translate='login.FORGOT_PASSWORD']");
+        this.ResetPasswordpopup=page.locator("//md-dialog[contains(@class,'lt-forgot-modal lt-modal')]");
+        this.ResetPasswordMessage=page.locator("//span[@translate='login.RESET']");
+        this.UsernameOREmail=page.locator("//input[@name='usernameOrEmail']");
+        this.Send=page.locator("//button[@aria-label='send']");
+        this.ResetPasswordSuccessMessage=page.locator("//h2[@class='valid-email-message ng-scope']");
+        this.ErrorToastResetPassword=page.locator("//div[@class='toast toast-error']");
+        this.ResetPasswordErrorMessage=page.locator("//div[@aria-label='Error']/following-sibling::div[1]");
+
+    }
+
+    public void tapForgotPassword() {
+        ForgotPassword.click();
+    }
+
+    public boolean ResetPasswordpopup() {
+        return ResetPasswordpopup.isVisible();
+
+    }
+
+    public void assertResetPasswordMessage(String expectedMessage) {
+        assertThat(ResetPasswordMessage).hasText(expectedMessage);
+    }
+
+    public void enterUsernameOrEmail(String usernameOrEmail) {
+        UsernameOREmail.fill(usernameOrEmail);
+    }
+
+    public void clickSend() {
+        Send.click();
+    }
+
+
+    public void assertPopupSuccessTitle(String expectedTitle) {
+        String actualMessage = ResetPasswordSuccessMessage.textContent();
+        if (actualMessage != null && actualMessage.contains(expectedTitle)) {
+            System.out.println("Success message verified: " + actualMessage);
+        } else {
+            throw new AssertionError("Expected success message not found: " + expectedTitle);
+        }
+    }
+
+    public boolean ErrorToastWhenResettingPassword(){
+        try {
+            ErrorToastResetPassword.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE).setTimeout(5000));
+            return ErrorToastResetPassword.isVisible();
+        } catch (Exception e) {
+            return false;
+        }
+
+
+
+    }
+
+    public void assertPopupErrorMessage(String expectedMessage) {
+        String actualErrorMessage = ResetPasswordErrorMessage.textContent();
+        if (actualErrorMessage != null && actualErrorMessage.contains(expectedMessage)) {
+            System.out.println("Error message verified: " + actualErrorMessage);
+        } else {
+            throw new AssertionError("Expected error message not found: " + expectedMessage);
+        }
     }
 
     private Locator welcomeMessageLocator() {

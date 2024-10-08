@@ -23,9 +23,9 @@ public class Setup {
         );
 
 
-      /* this.page = browser.newPage();
+       this.page = browser.newPage();
 
-      this.context = browser.newContext();*/
+      this.context = browser.newContext();
     }
 
     protected void setupContextWithVideo() {
