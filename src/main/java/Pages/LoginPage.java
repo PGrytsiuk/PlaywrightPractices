@@ -95,9 +95,6 @@ public class LoginPage extends BasePage {
         } catch (Exception e) {
             return false;
         }
-
-
-
     }
 
     public void assertPopupErrorMessage(String expectedMessage) {
@@ -198,7 +195,7 @@ public class LoginPage extends BasePage {
         enterUsername(username);
         enterPassword(password);
         clickSignIn();
-        // Assuming successful login redirects to HomePage
+
     }
 
     public void clickAppStoreRedirect(){
