@@ -3,7 +3,6 @@ package LangFitTests;
 import Fixture.EmailsHandling;
 import Fixture.Setup;
 import Pages.LoginPage;
-import com.microsoft.playwright.Page;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 

@@ -4,7 +4,6 @@ import Configs.ConfigLoader;
 import com.microsoft.playwright.Browser;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
-import org.testng.Assert;
 
 import javax.mail.*;
 import javax.mail.internet.MimeMultipart;
@@ -20,12 +19,11 @@ public class EmailsHandling {
     protected Page page;
     protected Browser browser;
 
-    private final Locator ResetPasswordButton;
+
     private final Locator NewPasswordTitle;
 
     public EmailsHandling(Page page){
         this.page=page;
-        this.ResetPasswordButton=page.locator("//a[normalize-space(text())='Reset your password']");
         this.NewPasswordTitle=page.locator("//h2[normalize-space(text())='New password']");
     }
 
@@ -37,9 +35,6 @@ public class EmailsHandling {
         assertThat(NewPasswordTitle).hasText(expectedTitle);
     }
 
-    public void emailResetPasswordClick() {
-        ResetPasswordButton.click();
-    }
 
     public void executeResetPasswordMail() throws Exception {
 
@@ -134,9 +129,6 @@ public class EmailsHandling {
         try {
             // Load the reset link
             page.navigate(resetLink);
-            // Click the "Reset your password" button
-            emailResetPasswordClick();
-
 
             List<Page> pages = page.context().pages();
             for(Page tabs : pages) {
