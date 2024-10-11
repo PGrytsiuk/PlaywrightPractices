@@ -37,23 +37,23 @@ public class LoginPage extends BasePage {
         this.usernameField = page.locator("[name='username']");
         this.passwordField = page.locator("[name='userPassword']");
         this.signInButton = page.locator("[aria-label='sign in']");
-        this.ToastAlert =page.locator("//*[contains(@id, 'toast-container')]");
-        this.ToastMessage=page.locator("//*[contains (@class, 'toast-message')]");
-        this.AppStoreRedirect=page.locator("//img[@alt='Download on the App Store']");
-        this.PlayMarketRedirect=page.locator("//img[@alt='Get it on Google Play']");
-        this.ErrorMessage=page.locator("(//div[@class='md-input-message-animation ng-scope'])");
-        this.LanguageSelector= page.locator("section");
-        this.LanguageSelectorSize=page.locator("(//md-option[contains(@class,'option ng-scope')])//div[@class='md-text ng-binding']");
-        this.TermsAndCondition =page.locator("//a[@class='terms-service-link md-violet-theme']");
-        this.WelcomeMessage=page.locator("//h1[@class='welcome-message ng-binding']");
-        this.ForgotPassword=page.locator("//span[@translate='login.FORGOT_PASSWORD']");
-        this.ResetPasswordpopup=page.locator("//md-dialog[contains(@class,'lt-forgot-modal lt-modal')]");
-        this.ResetPasswordMessage=page.locator("//span[@translate='login.RESET']");
-        this.UsernameOREmail=page.locator("//input[@name='usernameOrEmail']");
-        this.Send=page.locator("//button[@aria-label='send']");
-        this.ResetPasswordSuccessMessage=page.locator("//h2[@class='valid-email-message ng-scope']");
-        this.ErrorToastResetPassword=page.locator("//div[@class='toast toast-error']");
-        this.ResetPasswordErrorMessage=page.locator("//div[@aria-label='Error']/following-sibling::div[1]");
+        this.ToastAlert = page.locator("//*[contains(@id, 'toast-container')]");
+        this.ToastMessage = page.locator("//*[contains (@class, 'toast-message')]");
+        this.AppStoreRedirect = page.locator("//img[@alt='Download on the App Store']");
+        this.PlayMarketRedirect = page.locator("//img[@alt='Get it on Google Play']");
+        this.ErrorMessage = page.locator("(//div[@class='md-input-message-animation ng-scope'])");
+        this.LanguageSelector = page.locator("section");
+        this.LanguageSelectorSize = page.locator("(//md-option[contains(@class,'option ng-scope')])//div[@class='md-text ng-binding']");
+        this.TermsAndCondition = page.locator("//a[@class='terms-service-link md-violet-theme']");
+        this.WelcomeMessage = page.locator("//h1[@class='welcome-message ng-binding']");
+        this.ForgotPassword = page.locator("//span[@translate='login.FORGOT_PASSWORD']");
+        this.ResetPasswordpopup = page.locator("//md-dialog[contains(@class,'lt-forgot-modal lt-modal')]");
+        this.ResetPasswordMessage = page.locator("//span[@translate='login.RESET']");
+        this.UsernameOREmail = page.locator("//input[@name='usernameOrEmail']");
+        this.Send = page.locator("//button[@aria-label='send']");
+        this.ResetPasswordSuccessMessage = page.locator("//h2[@class='valid-email-message ng-scope']");
+        this.ErrorToastResetPassword = page.locator("//div[@class='toast toast-error']");
+        this.ResetPasswordErrorMessage = page.locator("//div[@aria-label='Error']/following-sibling::div[1]");
 
     }
 
