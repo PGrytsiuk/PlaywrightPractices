@@ -55,6 +55,8 @@ public class LoginPage extends BasePage {
         this.ErrorToastResetPassword=page.locator("//div[@class='toast toast-error']");
         this.ResetPasswordErrorMessage=page.locator("//div[@aria-label='Error']/following-sibling::div[1]");
 
+
+
     }
 
     public void tapForgotPassword() {
@@ -95,8 +97,6 @@ public class LoginPage extends BasePage {
         } catch (Exception e) {
             return false;
         }
-
-
 
     }
 
@@ -198,7 +198,7 @@ public class LoginPage extends BasePage {
         enterUsername(username);
         enterPassword(password);
         clickSignIn();
-        // Assuming successful login redirects to HomePage
+
     }
 
     public void clickAppStoreRedirect(){

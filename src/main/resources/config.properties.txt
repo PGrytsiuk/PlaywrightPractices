@@ -1,0 +1,12 @@
+# config.properties
+
+# User credentials
+Invalid_username=pavlo_grytsiuk1233
+Invalid_password=pgry2412123
+
+Valid_username=pavlo_grytsiuk
+Valid_password=pgry2412
+
+#Email credentials
+Email_username=testpgrytsiuk@gmail.com
+Email_password=nqhy hvcb dkeh vzat
