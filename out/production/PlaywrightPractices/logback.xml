@@ -1,0 +1,17 @@
+<configuration>
+    <!-- Console Appender -->
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- Root Logger with ERROR level to minimize output -->
+    <root level="ERROR">
+        <appender-ref ref="STDOUT" />
+    </root>
+
+    <!-- Example to control logging for specific packages -->
+    <logger name="org.testng" level="INFO" />
+    <logger name="com.example" level="DEBUG" />
+</configuration>

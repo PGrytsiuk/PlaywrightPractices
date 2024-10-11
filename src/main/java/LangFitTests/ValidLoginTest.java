@@ -13,7 +13,7 @@ import java.util.Date;
 import java.util.UUID;
 
 
-public class ValidLoginTest  extends Setup {
+public class ValidLoginTest extends Setup {
 
     @Test(priority = 1)
     public void validLoginTest() {

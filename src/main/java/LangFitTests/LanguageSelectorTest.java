@@ -3,10 +3,11 @@ package LangFitTests;
 
 import Fixture.Setup;
 import Pages.LoginPage;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
 
-
+@Listeners(Fixture.CustomListeners.class)
 public class LanguageSelectorTest extends Setup {
 
     @Test(priority = 2)

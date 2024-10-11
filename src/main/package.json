@@ -1,0 +1,18 @@
+{
+  "name": "playwrightpractices",
+  "version": "1.0.0",
+  "description": "A project to practice Playwright scripts",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Your Name",
+  "license": "ISC",
+  "devDependencies": {
+    "playwright": "^1.16.0"
+  },
+  "dependencies": {
+    "playwright-core": "^1.47.2"
+  }
+}
