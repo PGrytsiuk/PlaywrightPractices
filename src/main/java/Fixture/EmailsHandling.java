@@ -8,6 +8,7 @@ import com.microsoft.playwright.Page;
 import javax.mail.*;
 import javax.mail.internet.MimeMultipart;
 import javax.mail.search.SubjectTerm;
+import java.net.MalformedURLException;
 import java.util.List;
 import java.util.Properties;
 
@@ -112,17 +113,38 @@ public class EmailsHandling {
             }
         }
         return result.toString();
+
     }
 
     private static String extractResetLink(String content) {
-        // Simple regex to extract the reset link
-        String regex = "href=\"([^\"]+)\"";
+        // Regex to extract URLs within angle brackets or in href="..."
+        String regex = "href\\s*=\\s*\"([^\"]*)\"|<\\s*([^>\\s]+)\\s*>";
         java.util.regex.Pattern pattern = java.util.regex.Pattern.compile(regex);
         java.util.regex.Matcher matcher = pattern.matcher(content);
-        if (matcher.find()) {
-            return matcher.group(1);
+
+        while (matcher.find()) {
+            String url = null;
+            if (matcher.group(1) != null) {
+                url = matcher.group(1);
+            } else if (matcher.group(2) != null) {
+                url = matcher.group(2);
+            }
+
+            if (url != null && isValidUrl(url)) {
+                return url;
+            }
         }
+
         return null;
+    }
+
+    private static boolean isValidUrl(String url) {
+        try {
+            new java.net.URL(url);
+            return true;
+        } catch (MalformedURLException e) {
+            return false;
+        }
     }
 
     public void completePasswordReset(String resetLink) {
@@ -141,8 +163,6 @@ public class EmailsHandling {
             if(newPasswordTitle()) {
                 assertNewPasswordtitle("New Password");
             }
-            // Following steps to actually reset password (if any)
-            // Additional logic to interact with the password reset UI
 
         } catch (Exception e) {
             System.err.println("Failed to complete the password reset process: " + e.getMessage());
