@@ -27,7 +27,7 @@
                     <include name="ForGotPassword"/>
                 </methods>
             </class>
-            <class name="LangFitTests.TestNGTest">
+            <class name="LangFitTests.NGTest">
                 <methods>
                     <include name="InvalidLogin"/>
                 </methods>
