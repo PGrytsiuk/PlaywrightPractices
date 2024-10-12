@@ -1,5 +1,6 @@
 package LangFitTests;
 
+
 import Fixture.EmailsHandling;
 import Fixture.Setup;
 import Pages.LoginPage;
@@ -9,18 +10,20 @@ import org.testng.annotations.Test;
 public class ForgotPassTest extends Setup {
 
 
-    @DataProvider(name = "EmailOrusername")
-    public Object[][] EmailOrUsername() {
-        return new Object[][]{
-              /*  {"pgrytsiuk1992@gmail.com"},
-                {"pavlo_grytsiuk"},
-                {"<EMAIL>[0]"},*/
-                {"Test"}
 
+
+    @DataProvider(name="EmailOrusername")
+    public Object[][] EmailOrUsername() {
+        return new Object[][] {
+               { "pgrytsiuk1992@gmail.com" },
+                { "pavlo_grytsiuk"},
+                { "<EMAIL>[0]"},
+                 {"Test"}
         };
     }
 
     @Test(priority = 4, dataProvider = "EmailOrusername")
+
     public void ForgotPassword(String usernameOrEmail) {
         try {
             /*   setupContextWithVideo("FORGOT_PASSWORD");*/
@@ -28,6 +31,7 @@ public class ForgotPassTest extends Setup {
 
             LoginPage loginPage = new LoginPage(page);
             EmailsHandling ExecuteResetEmail = new EmailsHandling(page);
+
             //Tap on the Forgot Password link
             loginPage.tapForgotPassword();
             //Verify the title
@@ -45,6 +49,7 @@ public class ForgotPassTest extends Setup {
             } else {
                 throw new AssertionError("Neither success nor error message was displayed.");
             }
+            
 
             try {
                 ExecuteResetEmail.executeResetPasswordMail();
@@ -54,6 +59,7 @@ public class ForgotPassTest extends Setup {
             }
 
         } catch (Exception e) {
+
             System.err.println("An error occurred during theDowloadAMobilepp test: " + e.getMessage());
         }
 
