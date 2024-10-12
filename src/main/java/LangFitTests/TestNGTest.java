@@ -7,6 +7,8 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
+import java.nio.file.Paths;
+
 @Listeners(Fixture.CustomListeners.class)
 public class TestNGTest {
 
@@ -27,6 +29,13 @@ public class TestNGTest {
         );
         BrowserContext context = ScreenshotsAndRecordings.VideoCapture(browser, "Invalid Login");
         Page page = context.newPage();
+
+        // Start tracing before creating / navigating a page.
+        context.tracing().start(new Tracing.StartOptions()
+                .setScreenshots(true)
+                .setSnapshots(true)
+                .setSources(true));
+
         page.navigate("https://gym.langfit.net/login");
 
         LoginPage loginPage = new LoginPage(page);
@@ -40,6 +49,10 @@ public class TestNGTest {
         System.out.println(page.locator("//*[contains (@class, 'toast-message')]").textContent());
         ScreenshotsAndRecordings.ScreenshotCapture(page, "Invalid Login");
         // Closing the page and context, which should save the video
+
+        // Stop tracing and export it into a zip archive.
+        context.tracing().stop(new Tracing.StopOptions()
+                .setPath(Paths.get("trace.zip")));
 
 
         playwright.close();
