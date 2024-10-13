@@ -4,7 +4,6 @@ import Fixture.Setup;
 import Pages.LoginPage;
 import com.microsoft.playwright.Page;
 import org.testng.annotations.Test;
-
 import java.util.List;
 
 public class DowloadAMobileppTestSecond extends Setup {
