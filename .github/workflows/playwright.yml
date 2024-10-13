@@ -19,5 +19,4 @@ jobs:
     - name: Ensure browsers are installed
       run: mvn exec:java -e -D exec.mainClass=com.microsoft.playwright.CLI -D exec.args="install --with-deps"
     - name: Run tests
-      run: xvfb-run --auto-servernum -- npm test
-      working-directory: ./PlaywrightPractices/src/main
+      run: mvn test
