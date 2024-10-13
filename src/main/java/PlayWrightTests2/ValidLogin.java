@@ -20,7 +20,7 @@ public class ValidLogin {
 
         Playwright playwright = Playwright.create();
         Browser browser = playwright.chromium().launch(
-                new LaunchOptions().setHeadless(false)
+                new LaunchOptions().setHeadless(true)
         );
 
 
