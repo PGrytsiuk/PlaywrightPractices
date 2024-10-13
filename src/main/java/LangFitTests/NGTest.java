@@ -25,7 +25,7 @@ public class NGTest {
     public void InvalidLogin(String login, String password) {
         Playwright playwright = Playwright.create();
         Browser browser = playwright.chromium().launch(
-                new BrowserType.LaunchOptions().setHeadless(false)
+                new BrowserType.LaunchOptions().setHeadless(true)
         );
         BrowserContext context = ScreenshotsAndRecordings.VideoCapture(browser, "Invalid Login");
         Page page = context.newPage();
