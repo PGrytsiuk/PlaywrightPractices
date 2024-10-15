@@ -3,6 +3,7 @@ package Hooks;
 import Configs.ConfigLoader;
 import Pages.ResetPassword;
 import Utils.PasswordGenerator;
+import com.microsoft.playwright.Browser;
 import com.microsoft.playwright.Page;
 
 import javax.mail.*;
@@ -15,6 +16,8 @@ import java.util.Properties;
 public class EmailsHandlingResetPasswordFlow {
 
     protected Page page;
+    protected Browser browser;
+
 
     public EmailsHandlingResetPasswordFlow(Page page) {
         this.page = page;
