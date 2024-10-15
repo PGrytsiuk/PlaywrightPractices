@@ -1,6 +1,5 @@
 package Utils;
 
-import com.microsoft.playwright.APIRequest;
 import com.microsoft.playwright.Browser;
 import com.microsoft.playwright.BrowserContext;
 import com.microsoft.playwright.Page;
@@ -39,7 +38,7 @@ public class ScreenshotsAndRecordings {
                         .setRecordVideoDir(Paths.get(videoCapturePath))
                         .setRecordVideoSize(new RecordVideoSize(1280, 720))
         );
-        Page page = context.newPage();
+
     }
 
 

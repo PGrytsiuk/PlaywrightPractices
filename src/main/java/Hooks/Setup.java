@@ -1,11 +1,10 @@
 package Hooks;
 
 import com.microsoft.playwright.*;
-import com.microsoft.playwright.options.RecordVideoSize;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 
-import java.nio.file.Paths;
+
 
 
 public class Setup {

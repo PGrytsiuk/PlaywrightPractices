@@ -17,6 +17,7 @@ public class EmailsHandlingResetPasswordFlow {
     protected Page page;
 
     public EmailsHandlingResetPasswordFlow(Page page) {
+        this.page = page;
     }
 
 
