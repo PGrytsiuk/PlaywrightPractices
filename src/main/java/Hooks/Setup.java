@@ -1,4 +1,4 @@
-package Fixture;
+package Hooks;
 
 import com.microsoft.playwright.*;
 import com.microsoft.playwright.options.RecordVideoSize;
@@ -19,7 +19,7 @@ public class Setup {
     public void setUp() {
         playwright = Playwright.create();
         browser = playwright.chromium().launch(
-                new BrowserType.LaunchOptions().setHeadless(true)
+                new BrowserType.LaunchOptions().setHeadless(false)
         );
 
 
@@ -28,20 +28,6 @@ public class Setup {
       this.context = browser.newContext();
     }
 
-    protected void setupContextWithVideo() {
-        setupContextWithVideo(null);
-    }
-
-    protected void setupContextWithVideo(String videoFileName) {
-
-        String VideoCapturePath = "./videos/" + videoFileName;
-        context = browser.newContext(
-                new Browser.NewContextOptions()
-                        .setRecordVideoDir(Paths.get(VideoCapturePath))
-                        .setRecordVideoSize(new RecordVideoSize(1280, 720))
-        );// Assuming you want .webm format
-       page = context.newPage();
-    }
 
     @AfterMethod
     public void tearDown() {

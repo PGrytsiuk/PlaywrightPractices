@@ -1,6 +1,6 @@
 package LangFitTests;
 
-import Fixture.Setup;
+import Hooks.Setup;
 import Pages.LoginPage;
 import com.microsoft.playwright.Page;
 import org.testng.annotations.Test;

@@ -1,16 +1,18 @@
 package LangFitTests;
 
 import Configs.ConfigLoader;
-import Fixture.Setup;
+import Hooks.Setup;
 import Pages.LoginPage;
 import Utils.ScreenshotsAndRecordings;
 import org.testng.annotations.Test;
+
+import static Utils.ScreenshotsAndRecordings.setupContextWithVideo;
 
 public class InvalidLoginTest extends Setup {
     @Test(priority = 1)
         void InvalidLoginCredentials(){
             try {
-                setupContextWithVideo("INVALID_LOGIN");
+                setupContextWithVideo(browser, "INVALID_LOGIN");
                 ConfigLoader config = new ConfigLoader();
                 String username = config.getProperty("Invalid_username");
                 String password = config.getProperty("Invalid_password");
@@ -20,18 +22,18 @@ public class InvalidLoginTest extends Setup {
                 LoginPage loginPage = new LoginPage(page);
                 //Verify if error messages are visible
 
-                loginPage.EmptyLogin();
-                int errorMessages = loginPage.ErrorMessageSize();
+                loginPage.emptyLogin();
+                int errorMessages = loginPage.errorMessageSize();
                 if(errorMessages > 0){
 
                     System.out.println(" Error messages count " + errorMessages);
 
                 }
-                loginPage.AssertErrorMessagesCount();
+                loginPage.assertErrorMessagesCount();
                 //Enter invalid credentials
                 loginPage.login(username,password);
                 // Verify the alert
-                boolean Toast = loginPage.AlertAppear();
+                boolean Toast = loginPage.alertAppear();
                 loginPage.getToastMessageText("Invalid username or password");
 
                 System.out.println("Toast message is present: " + Toast);

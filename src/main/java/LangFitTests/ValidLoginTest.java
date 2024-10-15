@@ -1,7 +1,7 @@
 package LangFitTests;
 
 import Configs.ConfigLoader;
-import Fixture.Setup;
+import Hooks.Setup;
 import Pages.HomePage;
 import Pages.LoginPage;
 import com.microsoft.playwright.Page;
@@ -12,13 +12,15 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.UUID;
 
+import static Utils.ScreenshotsAndRecordings.setupContextWithVideo;
+
 
 public class ValidLoginTest extends Setup {
 
     @Test(priority = 1)
     public void validLoginTest() {
 
-        setupContextWithVideo("VALID_LOGIN");
+        setupContextWithVideo(browser,"VALID_LOGIN");
 
         ConfigLoader config = new ConfigLoader();
         String username = config.getProperty("Valid_username");

@@ -1,39 +1,22 @@
-package Fixture;
+package Hooks;
 
 import Configs.ConfigLoader;
-import com.microsoft.playwright.Browser;
-import com.microsoft.playwright.Locator;
+import Pages.ResetPassword;
+import Utils.PasswordGenerator;
 import com.microsoft.playwright.Page;
 
 import javax.mail.*;
 import javax.mail.internet.MimeMultipart;
 import javax.mail.search.SubjectTerm;
 import java.net.MalformedURLException;
-import java.util.List;
 import java.util.Properties;
 
-import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
 
-
-public class EmailsHandling {
+public class EmailsHandlingResetPasswordFlow {
 
     protected Page page;
-    protected Browser browser;
 
-
-    private final Locator NewPasswordTitle;
-
-    public EmailsHandling(Page page){
-        this.page=page;
-        this.NewPasswordTitle=page.locator("//h2[normalize-space(text())='New password']");
-    }
-
-    public boolean newPasswordTitle(){
-        return NewPasswordTitle.isVisible();
-    }
-
-    public void assertNewPasswordtitle(String expectedTitle){
-        assertThat(NewPasswordTitle).hasText(expectedTitle);
+    public EmailsHandlingResetPasswordFlow(Page page) {
     }
 
 
@@ -60,7 +43,7 @@ public class EmailsHandling {
             inbox.open(Folder.READ_ONLY);
 
             // Fetch new messages from the server
-            Message[] messages = inbox.search(new SubjectTerm("Fwd: Recover password on LangFit"));
+            Message[] messages = inbox.search(new SubjectTerm("Recover password on LangFit"));
             if (messages.length == 0) {
                 System.out.println("No messages found with the specified subject.");
                 return;
@@ -149,20 +132,21 @@ public class EmailsHandling {
 
     public void completePasswordReset(String resetLink) {
         try {
+            ResetPassword resetPassword = new ResetPassword(page);
+            String newPassword = PasswordGenerator.generateUniquePassword();
+
             // Load the reset link
             page.navigate(resetLink);
+            //Verify in New Password title is present
+            if(resetPassword.newPasswordTitle()){
+                resetPassword.assertNewPasswordtitle("New password");
+            }else
+                System.out.println("New password title is not visible");
+            //Verify that Send button is blocked by default
+            resetPassword.SendButtonDisabledbyDefault();
+            //Fill New password and confirm password fields
+            resetPassword.EnteringNewPassword(newPassword, newPassword);
 
-            List<Page> pages = page.context().pages();
-            for(Page tabs : pages) {
-                tabs.waitForLoadState();
-                System.out.println(tabs.url());
-            }
-
-            Page newPasswordpage = pages.get(1);
-            System.out.println(newPasswordpage.title());
-            if(newPasswordTitle()) {
-                assertNewPasswordtitle("New Password");
-            }
 
         } catch (Exception e) {
             System.err.println("Failed to complete the password reset process: " + e.getMessage());

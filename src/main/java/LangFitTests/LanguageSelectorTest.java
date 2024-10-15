@@ -1,19 +1,21 @@
 package LangFitTests;
 
 
-import Fixture.Setup;
+import Hooks.Setup;
 import Pages.LoginPage;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
+import static Utils.ScreenshotsAndRecordings.setupContextWithVideo;
 
-@Listeners(Fixture.CustomListeners.class)
+
+@Listeners(Hooks.CustomListeners.class)
 public class LanguageSelectorTest extends Setup {
 
     @Test(priority = 2)
     public void languageSelectorTest(){
         try {
-            setupContextWithVideo("LANGUAGE_SELECTOR");
+            setupContextWithVideo(browser, "LANGUAGE_SELECTOR");
             page.navigate("https://gym.langfit.net/login");
 
             String [] languages = new String[]{
@@ -26,11 +28,11 @@ public class LanguageSelectorTest extends Setup {
 
             //Tap on the LanguageSelector
             LoginPage loginPage = new LoginPage(page);
-            loginPage.LanguageSelectordropdown();
+            loginPage.languageSelectordropdown();
             Thread.sleep(3000);
             //Verify if 5 languages are present in the selector
-            loginPage.AssertLanguageSelectorSize();
-            int languagesCount = loginPage.LanguageSelectorSize();
+            loginPage.assertLanguageSelectorSize();
+            int languagesCount = loginPage.languageSelectorSize();
                 if(languagesCount>0){
 
                 System.out.println("Languages are present");
