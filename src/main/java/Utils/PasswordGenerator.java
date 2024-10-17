@@ -5,19 +5,22 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Properties;
 
+
 public class PasswordGenerator {
 
     private static final String PROPERTIES_FILE_PATH = "config.properties";
     private static final String COUNTER_KEY = "passwordCounter";
     private static final String PREFIX_KEY = "passwordPrefix";
-
+    private static final String LATEST_PASSWORD_KEY = "latestPassword";
 
     public static String generateUniquePassword() {
         int counter = readCounter();
         counter++;
         writeCounter(counter);
         String prefix = readPrefix();
-        return prefix + counter;
+        String newPassword = prefix + counter;
+        writeLatestPassword(newPassword);
+        return newPassword;
     }
 
     private static int readCounter() {
@@ -58,5 +61,25 @@ public class PasswordGenerator {
         }
     }
 
+    private static void writeLatestPassword(String newPassword) {
+        Properties properties = new Properties();
+        try (FileInputStream input = new FileInputStream(PROPERTIES_FILE_PATH)) {
+            properties.load(input);
+        } catch (IOException e) {
+            System.err.println("Error loading properties file.");
+        }
+        properties.setProperty(LATEST_PASSWORD_KEY, newPassword);
+        try (FileOutputStream output = new FileOutputStream(PROPERTIES_FILE_PATH)) {
+            properties.store(output, null);
+        } catch (IOException e) {
+            System.err.println("Error writing to properties file.");
+        }
+    }
 
+
+
+    public static void main(String[] args) {
+        String newPassword = generateUniquePassword();
+        System.out.println("Generated Password: " + newPassword);
+    }
 }

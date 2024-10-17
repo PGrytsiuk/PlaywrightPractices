@@ -13,6 +13,8 @@ public class ResetPassword extends BasePage {
     private final Locator NewPasswordInput;
     private final Locator ConfirmPasswordInput;
     private final Locator SendButton;
+    private final Locator SuccessToast;
+    private final Locator SuccessToastMessage;
 
     public ResetPassword(Page page){
         super(page);
@@ -20,8 +22,18 @@ public class ResetPassword extends BasePage {
         this.NewPasswordInput=page.locator("//input[@aria-label='new password']");
         this.ConfirmPasswordInput=page.locator("//input[@aria-label='confirm password']");
         this.SendButton=page.locator("//button[@aria-label='send']");
+        this.SuccessToast=page.locator("//div[@class='toast toast-success']");
+        this.SuccessToastMessage=page.locator("//div[normalize-space(text())='Password successfully changed']");
 
 
+    }
+
+    public void SuccessToastIsVisible(){
+        SuccessToast.isVisible();
+    }
+
+    public void assertSuccessToast(String expectedTitle){
+        assertThat(SuccessToastMessage).hasText(expectedTitle);
     }
 
 

@@ -9,23 +9,19 @@ import com.microsoft.playwright.Page;
 import javax.mail.*;
 import javax.mail.internet.MimeMultipart;
 import javax.mail.search.SubjectTerm;
-import java.net.MalformedURLException;
+import java.util.Arrays;
 import java.util.Properties;
-
 
 public class EmailsHandlingResetPasswordFlow {
 
     protected Page page;
     protected Browser browser;
 
-
     public EmailsHandlingResetPasswordFlow(Page page) {
         this.page = page;
     }
 
-
     public void executeResetPasswordMail() throws Exception {
-
         ConfigLoader config = new ConfigLoader();
         String emailUsername = config.getProperty("Email_username");
         String emailPassword = config.getProperty("Email_password");
@@ -37,7 +33,6 @@ public class EmailsHandlingResetPasswordFlow {
         String host = "imap.gmail.com";
         Properties props = new Properties();
         props.setProperty("mail.imap.ssl.enable", "true");
-        // set any other needed mail.imap.* properties here
         Session session = Session.getInstance(props);
         Store store = session.getStore("imap");
 
@@ -55,12 +50,23 @@ public class EmailsHandlingResetPasswordFlow {
                 return;
             }
 
+            // Sort messages by received date in descending order (latest first)
+            Arrays.sort(messages, (m1, m2) -> {
+                try {
+                    return m2.getReceivedDate().compareTo(m1.getReceivedDate());
+                } catch (MessagingException e) {
+                    return 0;
+                }
+            });
+
+            // Use the latest message
             Message message = messages[0];
             String content = getTextFromMessage(message);
 
             // Debug: Print out email properties
             System.out.println("Content Type: " + message.getContentType());
             System.out.println("Subject: " + message.getSubject());
+            System.out.println("Received Date: " + message.getReceivedDate());
 
             // Extract the reset link from the email content
             String resetLink = extractResetLink(content);
@@ -82,7 +88,7 @@ public class EmailsHandlingResetPasswordFlow {
     }
 
     private static String getTextFromMessage(Message message) throws Exception {
-        if (message.isMimeType("text/plain") || message.isMimeType("TEXT/HTML")) {
+        if (message.isMimeType("text/plain") || message.isMimeType("text/html")) {
             return message.getContent().toString();
         } else if (message.isMimeType("multipart/*")) {
             return getTextFromMimeMultipart((MimeMultipart) message.getContent());
@@ -108,10 +114,9 @@ public class EmailsHandlingResetPasswordFlow {
         return result.toString();
     }
 
-
     private static String extractResetLink(String content) {
         // Regex to extract URLs within angle brackets
-        String regex = "(https?:\\/\\/u9534674\\.ct\\.sendgrid\\.net\\/ls\\/click\\?upn=[^\\\"]+)\\\" ";
+        String regex = "(https?://u9534674\\.ct\\.sendgrid\\.net/ls/click\\?upn=[^\"]+)\" ";
         java.util.regex.Pattern pattern = java.util.regex.Pattern.compile(regex);
         java.util.regex.Matcher matcher = pattern.matcher(content);
 
@@ -123,32 +128,26 @@ public class EmailsHandlingResetPasswordFlow {
         return null;
     }
 
-    private static boolean isValidUrl(String url) {
-        try {
-            new java.net.URL(url);
-            return true;
-        } catch (MalformedURLException e) {
-            return false;
-        }
-    }
-
     public void completePasswordReset(String resetLink) {
         try {
-            ResetPassword resetPassword = new ResetPassword(page);
+            ResetPassword resetPass = new ResetPassword(page);
             String newPassword = PasswordGenerator.generateUniquePassword();
 
             // Load the reset link
             page.navigate(resetLink);
-            //Verify in New Password title is present
-            if(resetPassword.newPasswordTitle()){
-                resetPassword.assertNewPasswordtitle("New password");
-            }else
+            // Verify in New Password title is present
+            if (resetPass.newPasswordTitle()) {
+                resetPass.assertNewPasswordtitle("New password");
+            } else {
                 System.out.println("New password title is not visible");
-            //Verify that Send button is blocked by default
-            resetPassword.SendButtonDisabledbyDefault();
-            //Fill New password and confirm password fields
-            resetPassword.EnteringNewPassword(newPassword, newPassword);
-
+            }
+            // Verify that Send button is blocked by default
+            resetPass.SendButtonDisabledbyDefault();
+            // Fill New password and confirm password fields
+            resetPass.EnteringNewPassword(newPassword, newPassword);
+            // Verify Success Toast for Rest Password journey
+            resetPass.SuccessToastIsVisible();
+            resetPass.assertSuccessToast("Password successfully changed");
 
         } catch (Exception e) {
             System.err.println("Failed to complete the password reset process: " + e.getMessage());
