@@ -1,7 +1,9 @@
 package PlayWrightTests2;
 
-import Fixture.Setup;
+import Hooks.Setup;
 import Pages.LoginPage;
+
+import static Utils.ScreenshotsAndRecordings.setupContextWithVideo;
 import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
 
 import Utils.ScreenshotsAndRecordings;
@@ -15,14 +17,14 @@ public class TandCandDowloadAMobileppTest extends Setup {
 
     @Test(priority = 2)
     void downloadMobileApp(){
-            setupContextWithVideo("DOWNLOAD_MOBILE_APP");
+            setupContextWithVideo(browser, "DOWNLOAD_MOBILE_APP");
 
         try {
             page.navigate("https://gym.langfit.net/login");
 
             LoginPage loginPage = new LoginPage(page);
             //Tap on the Terms and conditions link
-            Page TermsAndCondtion = page.context().waitForPage(loginPage::TermsAndConditions);
+            Page TermsAndCondtion = page.context().waitForPage(loginPage::termsAndConditions);
             TermsAndCondtion.waitForLoadState();
             System.out.println(TermsAndCondtion.title());
             TermsAndCondtion.close();

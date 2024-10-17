@@ -31,5 +31,15 @@ public class ScreenshotsAndRecordings {
                 .setRecordVideoSize(new RecordVideoSize(1280, 720)));
     }
 
+    public static void setupContextWithVideo(Browser browser, String videoFileName) {
+        String videoCapturePath = "./videos/" + videoFileName;
+        BrowserContext context = browser.newContext(
+                new Browser.NewContextOptions()
+                        .setRecordVideoDir(Paths.get(videoCapturePath))
+                        .setRecordVideoSize(new RecordVideoSize(1280, 720))
+        );
+
+    }
+
 
 }

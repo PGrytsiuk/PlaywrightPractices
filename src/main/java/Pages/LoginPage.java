@@ -63,7 +63,7 @@ public class LoginPage extends BasePage {
         ForgotPassword.click();
     }
 
-    public boolean ResetPasswordpopup() {
+    public boolean resetPasswordpopup() {
         return ResetPasswordpopup.isVisible();
 
     }
@@ -90,7 +90,7 @@ public class LoginPage extends BasePage {
         }
     }
 
-    public boolean ErrorToastWhenResettingPassword(){
+    public boolean errorToastWhenResettingPassword(){
         try {
             ErrorToastResetPassword.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE).setTimeout(5000));
             return ErrorToastResetPassword.isVisible();
@@ -133,38 +133,38 @@ public class LoginPage extends BasePage {
                 assert actualWelcomeMessage.equals(languages[i]) : "Expected: " + languages[i] + ", but got: " + actualWelcomeMessage;
 
                 if (i < optionCount - 1) {
-                    LanguageSelectordropdown();
+                    languageSelectordropdown();
                 }
 
             }
     }
 
-    public void TermsAndConditions(){
+    public void termsAndConditions(){
         TermsAndCondition.click();
     }
 
-    public void LanguageSelectordropdown(){
+    public void languageSelectordropdown(){
         LanguageSelector.click();
     }
 
-    public int LanguageSelectorSize(){
+    public int languageSelectorSize(){
         return LanguageSelectorSize.count();
     }
 
-    public void AssertLanguageSelectorSize(){
+    public void assertLanguageSelectorSize(){
         int languageSelectorExpectedCount = 5;
-        Assert.assertEquals(LanguageSelectorSize(), languageSelectorExpectedCount);
+        Assert.assertEquals(languageSelectorSize(), languageSelectorExpectedCount);
     }
 
 
-    public int ErrorMessageSize(){
+    public int errorMessageSize(){
         return ErrorMessage.count();
 
     }
 
-    public void AssertErrorMessagesCount(){
+    public void assertErrorMessagesCount(){
         int errorMessagesExpectedCount = 1;
-        Assert.assertEquals(ErrorMessageSize(), errorMessagesExpectedCount);
+        Assert.assertEquals(errorMessageSize(), errorMessagesExpectedCount);
     }
 
     public void enterUsername(String username) {
@@ -179,7 +179,7 @@ public class LoginPage extends BasePage {
         signInButton.click();
     }
 
-    public boolean  AlertAppear(){
+    public boolean alertAppear(){
         ToastAlert.isVisible();
         return true;
 
@@ -188,7 +188,7 @@ public class LoginPage extends BasePage {
         assertThat(ToastMessage).hasText(expectedAlertMessage);
     }
 
-    public void EmptyLogin(){
+    public void emptyLogin(){
         enterUsername("");
         enterPassword("");
         clickSignIn();

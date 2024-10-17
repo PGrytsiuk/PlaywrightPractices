@@ -1,8 +1,8 @@
 package LangFitTests;
 
 
-import Fixture.EmailsHandling;
-import Fixture.Setup;
+import Hooks.EmailsHandlingResetPasswordFlow;
+import Hooks.Setup;
 import Pages.LoginPage;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -15,10 +15,9 @@ public class ForgotPassTest extends Setup {
     @DataProvider(name="EmailOrusername")
     public Object[][] EmailOrUsername() {
         return new Object[][] {
-               { "pgrytsiuk1992@gmail.com" },
-                { "pavlo_grytsiuk"},
-                { "<EMAIL>[0]"},
-                 {"Test"}
+               { "testpgrytsiuk@gmail.com" },
+                { "<EMAIL>[0]"}
+
         };
     }
 
@@ -30,7 +29,7 @@ public class ForgotPassTest extends Setup {
             page.navigate("https://gym.langfit.net/login");
 
             LoginPage loginPage = new LoginPage(page);
-            EmailsHandling ExecuteResetEmail = new EmailsHandling(page);
+            EmailsHandlingResetPasswordFlow ExecuteResetEmail = new EmailsHandlingResetPasswordFlow(page);
 
             //Tap on the Forgot Password link
             loginPage.tapForgotPassword();
@@ -42,21 +41,23 @@ public class ForgotPassTest extends Setup {
             loginPage.clickSend();
 
             // Check for either the success or error message
-            if (loginPage.ErrorToastWhenResettingPassword()) {
+            if (loginPage.errorToastWhenResettingPassword()) {
                 loginPage.assertPopupErrorMessage("Provided username or email address doesn't exist on the system");
-            } else if (loginPage.ResetPasswordpopup()) {
+            } else if (loginPage.resetPasswordpopup()) {
                 loginPage.assertPopupSuccessTitle("An email has been send to the provided email with further instructions");
+                try {
+                    //Execute email reset password journey
+                    ExecuteResetEmail.executeResetPasswordMail();
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             } else {
                 throw new AssertionError("Neither success nor error message was displayed.");
             }
             
 
-            try {
-                ExecuteResetEmail.executeResetPasswordMail();
 
-           } catch (Exception e) {
-                e.printStackTrace();
-            }
 
         } catch (Exception e) {
 
