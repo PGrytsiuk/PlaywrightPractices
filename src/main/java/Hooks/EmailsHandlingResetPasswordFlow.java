@@ -142,11 +142,11 @@ public class EmailsHandlingResetPasswordFlow {
                 System.out.println("New password title is not visible");
             }
             // Verify that Send button is blocked by default
-            resetPass.SendButtonDisabledbyDefault();
+            resetPass.sendButtonDisabledbyDefault();
             // Fill New password and confirm password fields
-            resetPass.EnteringNewPassword(newPassword, newPassword);
+            resetPass.enteringNewPassword(newPassword, newPassword);
             // Verify Success Toast for Rest Password journey
-            resetPass.SuccessToastIsVisible();
+            resetPass.successToastIsVisible();
             resetPass.assertSuccessToast("Password successfully changed");
 
         } catch (Exception e) {
