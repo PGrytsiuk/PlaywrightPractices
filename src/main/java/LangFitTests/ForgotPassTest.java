@@ -45,17 +45,19 @@ public class ForgotPassTest extends Setup {
                 loginPage.assertPopupErrorMessage("Provided username or email address doesn't exist on the system");
             } else if (loginPage.resetPasswordpopup()) {
                 loginPage.assertPopupSuccessTitle("An email has been send to the provided email with further instructions");
+                try {
+                    //Execute email reset password journey
+                    ExecuteResetEmail.executeResetPasswordMail();
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             } else {
                 throw new AssertionError("Neither success nor error message was displayed.");
             }
             
 
-            try {
-                ExecuteResetEmail.executeResetPasswordMail();
 
-           } catch (Exception e) {
-                e.printStackTrace();
-            }
 
         } catch (Exception e) {
 

@@ -30,14 +30,16 @@ public class EmailsHandlingResetPasswordFlow {
         String emailUsername = config.getProperty("Email_username");
         String emailPassword = config.getProperty("Email_password");
 
+        if (emailUsername == null || emailPassword == null) {
+            throw new IllegalArgumentException("Email_username or Email_password is not set in the configuration.");
+        }
+
         String host = "imap.gmail.com";
         Properties props = new Properties();
         props.setProperty("mail.imap.ssl.enable", "true");
         // set any other needed mail.imap.* properties here
         Session session = Session.getInstance(props);
         Store store = session.getStore("imap");
-
-
 
         try {
             store.connect(host, emailUsername, emailPassword);
@@ -55,6 +57,10 @@ public class EmailsHandlingResetPasswordFlow {
 
             Message message = messages[0];
             String content = getTextFromMessage(message);
+
+            // Debug: Print out email properties
+            System.out.println("Content Type: " + message.getContentType());
+            System.out.println("Subject: " + message.getSubject());
 
             // Extract the reset link from the email content
             String resetLink = extractResetLink(content);
@@ -76,7 +82,7 @@ public class EmailsHandlingResetPasswordFlow {
     }
 
     private static String getTextFromMessage(Message message) throws Exception {
-        if (message.isMimeType("text/plain")) {
+        if (message.isMimeType("text/plain") || message.isMimeType("TEXT/HTML")) {
             return message.getContent().toString();
         } else if (message.isMimeType("multipart/*")) {
             return getTextFromMimeMultipart((MimeMultipart) message.getContent());
@@ -91,7 +97,7 @@ public class EmailsHandlingResetPasswordFlow {
             BodyPart bodyPart = mimeMultipart.getBodyPart(i);
             if (bodyPart.isMimeType("text/plain")) {
                 result.append(bodyPart.getContent());
-                break; // Avoid returning the same text content twice.
+                // Avoid returning the same text content twice.
             } else if (bodyPart.isMimeType("text/html")) {
                 String html = (String) bodyPart.getContent();
                 result.append(html);
@@ -100,26 +106,18 @@ public class EmailsHandlingResetPasswordFlow {
             }
         }
         return result.toString();
-
     }
 
+
     private static String extractResetLink(String content) {
-        // Regex to extract URLs within angle brackets or in href="..."
-        String regex = "href\\s*=\\s*\"([^\"]*)\"|<\\s*([^>\\s]+)\\s*>";
+        // Regex to extract URLs within angle brackets
+        String regex = "(https?:\\/\\/u9534674\\.ct\\.sendgrid\\.net\\/ls\\/click\\?upn=[^\\\"]+)\\\" ";
         java.util.regex.Pattern pattern = java.util.regex.Pattern.compile(regex);
         java.util.regex.Matcher matcher = pattern.matcher(content);
 
-        while (matcher.find()) {
-            String url = null;
-            if (matcher.group(1) != null) {
-                url = matcher.group(1);
-            } else if (matcher.group(2) != null) {
-                url = matcher.group(2);
-            }
-
-            if (url != null && isValidUrl(url)) {
-                return url;
-            }
+        if (matcher.find()) {
+            // Return the content of the first capturing group (inside the angle brackets)
+            return matcher.group(1);
         }
 
         return null;
