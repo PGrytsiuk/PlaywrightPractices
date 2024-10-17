@@ -9,7 +9,7 @@ import org.testng.annotations.Test;
 
 import java.nio.file.Paths;
 
-@Listeners(Fixture.CustomListeners.class)
+@Listeners(Hooks.CustomListeners.class)
 public class NGTest {
 
     @DataProvider(name = "Invalid users")
@@ -42,7 +42,7 @@ public class NGTest {
 
         loginPage.login(login, password);
         // Verify the alert
-        boolean Toast = loginPage.AlertAppear();
+        boolean Toast = loginPage.alertAppear();
         loginPage.getToastMessageText("Invalid username or password");
 
         System.out.println("Toast message is present: " + Toast);

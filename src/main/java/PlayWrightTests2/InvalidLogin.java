@@ -25,7 +25,7 @@ public class InvalidLogin {
 
         loginPage.login("pavlo_grytsiuk1233", "pgry2412123");
         // Verify the alert
-        boolean Toast=loginPage.AlertAppear();
+        boolean Toast=loginPage.alertAppear();
         loginPage.getToastMessageText("Invalid username or password");
 
         System.out.println("Toast message is present: " +Toast);

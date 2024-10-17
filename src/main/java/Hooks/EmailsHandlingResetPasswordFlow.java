@@ -1,56 +1,40 @@
-package Fixture;
+package Hooks;
 
 import Configs.ConfigLoader;
+import Pages.ResetPassword;
+import Utils.PasswordGenerator;
 import com.microsoft.playwright.Browser;
-import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 
 import javax.mail.*;
 import javax.mail.internet.MimeMultipart;
 import javax.mail.search.SubjectTerm;
-import java.net.MalformedURLException;
-import java.util.List;
+import java.util.Arrays;
 import java.util.Properties;
 
-import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
-
-
-public class EmailsHandling {
+public class EmailsHandlingResetPasswordFlow {
 
     protected Page page;
     protected Browser browser;
 
-
-    private final Locator NewPasswordTitle;
-
-    public EmailsHandling(Page page){
-        this.page=page;
-        this.NewPasswordTitle=page.locator("//h2[normalize-space(text())='New password']");
+    public EmailsHandlingResetPasswordFlow(Page page) {
+        this.page = page;
     }
-
-    public boolean newPasswordTitle(){
-        return NewPasswordTitle.isVisible();
-    }
-
-    public void assertNewPasswordtitle(String expectedTitle){
-        assertThat(NewPasswordTitle).hasText(expectedTitle);
-    }
-
 
     public void executeResetPasswordMail() throws Exception {
-
         ConfigLoader config = new ConfigLoader();
         String emailUsername = config.getProperty("Email_username");
         String emailPassword = config.getProperty("Email_password");
 
+        if (emailUsername == null || emailPassword == null) {
+            throw new IllegalArgumentException("Email_username or Email_password is not set in the configuration.");
+        }
+
         String host = "imap.gmail.com";
         Properties props = new Properties();
         props.setProperty("mail.imap.ssl.enable", "true");
-        // set any other needed mail.imap.* properties here
         Session session = Session.getInstance(props);
         Store store = session.getStore("imap");
-
-
 
         try {
             store.connect(host, emailUsername, emailPassword);
@@ -60,14 +44,29 @@ public class EmailsHandling {
             inbox.open(Folder.READ_ONLY);
 
             // Fetch new messages from the server
-            Message[] messages = inbox.search(new SubjectTerm("Fwd: Recover password on LangFit"));
+            Message[] messages = inbox.search(new SubjectTerm("Recover password on LangFit"));
             if (messages.length == 0) {
                 System.out.println("No messages found with the specified subject.");
                 return;
             }
 
+            // Sort messages by received date in descending order (latest first)
+            Arrays.sort(messages, (m1, m2) -> {
+                try {
+                    return m2.getReceivedDate().compareTo(m1.getReceivedDate());
+                } catch (MessagingException e) {
+                    return 0;
+                }
+            });
+
+            // Use the latest message
             Message message = messages[0];
             String content = getTextFromMessage(message);
+
+            // Debug: Print out email properties
+            System.out.println("Content Type: " + message.getContentType());
+            System.out.println("Subject: " + message.getSubject());
+            System.out.println("Received Date: " + message.getReceivedDate());
 
             // Extract the reset link from the email content
             String resetLink = extractResetLink(content);
@@ -89,7 +88,7 @@ public class EmailsHandling {
     }
 
     private static String getTextFromMessage(Message message) throws Exception {
-        if (message.isMimeType("text/plain")) {
+        if (message.isMimeType("text/plain") || message.isMimeType("text/html")) {
             return message.getContent().toString();
         } else if (message.isMimeType("multipart/*")) {
             return getTextFromMimeMultipart((MimeMultipart) message.getContent());
@@ -104,7 +103,7 @@ public class EmailsHandling {
             BodyPart bodyPart = mimeMultipart.getBodyPart(i);
             if (bodyPart.isMimeType("text/plain")) {
                 result.append(bodyPart.getContent());
-                break; // Avoid returning the same text content twice.
+                // Avoid returning the same text content twice.
             } else if (bodyPart.isMimeType("text/html")) {
                 String html = (String) bodyPart.getContent();
                 result.append(html);
@@ -113,56 +112,42 @@ public class EmailsHandling {
             }
         }
         return result.toString();
-
     }
 
     private static String extractResetLink(String content) {
-        // Regex to extract URLs within angle brackets or in href="..."
-        String regex = "href\\s*=\\s*\"([^\"]*)\"|<\\s*([^>\\s]+)\\s*>";
+        // Regex to extract URLs within angle brackets
+        String regex = "(https?://u9534674\\.ct\\.sendgrid\\.net/ls/click\\?upn=[^\"]+)\" ";
         java.util.regex.Pattern pattern = java.util.regex.Pattern.compile(regex);
         java.util.regex.Matcher matcher = pattern.matcher(content);
 
-        while (matcher.find()) {
-            String url = null;
-            if (matcher.group(1) != null) {
-                url = matcher.group(1);
-            } else if (matcher.group(2) != null) {
-                url = matcher.group(2);
-            }
-
-            if (url != null && isValidUrl(url)) {
-                return url;
-            }
+        if (matcher.find()) {
+            // Return the content of the first capturing group (inside the angle brackets)
+            return matcher.group(1);
         }
 
         return null;
     }
 
-    private static boolean isValidUrl(String url) {
-        try {
-            new java.net.URL(url);
-            return true;
-        } catch (MalformedURLException e) {
-            return false;
-        }
-    }
-
     public void completePasswordReset(String resetLink) {
         try {
+            ResetPassword resetPass = new ResetPassword(page);
+            String newPassword = PasswordGenerator.generateUniquePassword();
+
             // Load the reset link
             page.navigate(resetLink);
-
-            List<Page> pages = page.context().pages();
-            for(Page tabs : pages) {
-                tabs.waitForLoadState();
-                System.out.println(tabs.url());
+            // Verify in New Password title is present
+            if (resetPass.newPasswordTitle()) {
+                resetPass.assertNewPasswordtitle("New password");
+            } else {
+                System.out.println("New password title is not visible");
             }
-
-            Page newPasswordpage = pages.get(1);
-            System.out.println(newPasswordpage.title());
-            if(newPasswordTitle()) {
-                assertNewPasswordtitle("New Password");
-            }
+            // Verify that Send button is blocked by default
+            resetPass.sendButtonDisabledbyDefault();
+            // Fill New password and confirm password fields
+            resetPass.enteringNewPassword(newPassword, newPassword);
+            // Verify Success Toast for Rest Password journey
+            resetPass.successToastIsVisible();
+            resetPass.assertSuccessToast("Password successfully changed");
 
         } catch (Exception e) {
             System.err.println("Failed to complete the password reset process: " + e.getMessage());
