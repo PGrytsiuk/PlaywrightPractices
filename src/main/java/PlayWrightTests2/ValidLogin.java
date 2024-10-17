@@ -1,6 +1,7 @@
 package PlayWrightTests2;
 
 
+import Configs.ConfigLoader;
 import Pages.HomePage;
 import Pages.LoginPage;
 import com.microsoft.playwright.Browser;
@@ -22,7 +23,9 @@ public class ValidLogin {
         Browser browser = playwright.chromium().launch(
                 new LaunchOptions().setHeadless(true)
         );
-
+        ConfigLoader config = new ConfigLoader();
+        String username = config.getProperty("Valid_username");
+        String password = config.getProperty("Valid_password");
 
             Page page = browser.newPage();
             page.navigate("https://gym.langfit.net/login");
@@ -36,7 +39,7 @@ public class ValidLogin {
 
             LoginPage loginPage = new LoginPage(page);
             HomePage homePage = new HomePage(page);
-            loginPage.login("pavlo_grytsiuk", "pgry2412");
+            loginPage.login(username,  password );
             // Verify the username on the home page
             homePage.verifyUserName("Pavlo Grytsiuk");
 
