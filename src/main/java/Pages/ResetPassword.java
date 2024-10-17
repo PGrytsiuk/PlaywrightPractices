@@ -28,7 +28,7 @@ public class ResetPassword extends BasePage {
 
     }
 
-    public void SuccessToastIsVisible(){
+    public void successToastIsVisible(){
         SuccessToast.isVisible();
     }
 
@@ -61,12 +61,12 @@ public class ResetPassword extends BasePage {
         SendButton.click();
 
     }
-    public void SendButtonDisabledbyDefault(){
+    public void sendButtonDisabledbyDefault(){
         assertTrue(SendButton.isDisabled(), "Button should be disabled by default.");
 
     }
 
-    public void EnteringNewPassword(String newPassword, String confirmPassword){
+    public void enteringNewPassword(String newPassword, String confirmPassword){
         enterNewPassword(newPassword);
         enterConfirmPassword(confirmPassword);
         clickSendButton();
