@@ -1,19 +1,24 @@
 package Utils;
 
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.util.Properties;
+import Configs.ConfigLoader;
+
 
 
 public class PasswordGenerator {
 
-    private static final String PROPERTIES_FILE_PATH = "config.properties";
+
     private static final String COUNTER_KEY = "passwordCounter";
     private static final String PREFIX_KEY = "passwordPrefix";
     private static final String LATEST_PASSWORD_KEY = "latestPassword";
 
-    public static String generateUniquePassword() {
+    private final ConfigLoader configLoader;
+
+    public PasswordGenerator(){
+        configLoader = new ConfigLoader();
+
+    }
+
+    public String generateUniquePassword() {
         int counter = readCounter();
         counter++;
         writeCounter(counter);
@@ -23,63 +28,31 @@ public class PasswordGenerator {
         return newPassword;
     }
 
-    private static int readCounter() {
-        Properties properties = new Properties();
-        try (FileInputStream input = new FileInputStream(PROPERTIES_FILE_PATH)) {
-            properties.load(input);
-            String counter = properties.getProperty(COUNTER_KEY, "0");
-            return Integer.parseInt(counter);
-        } catch (IOException | NumberFormatException e) {
-            System.err.println("Error reading properties file. Using default value 0.");
-            return 0;
-        }
+    private int readCounter() {
+            String counterStr = configLoader.getProperty(COUNTER_KEY);
+            return counterStr == null ? 0 : Integer.parseInt(counterStr);
+
     }
 
-    private static String readPrefix() {
-        Properties properties = new Properties();
-        try (FileInputStream input = new FileInputStream(PROPERTIES_FILE_PATH)) {
-            properties.load(input);
-            return properties.getProperty(PREFIX_KEY, "Password");
-        } catch (IOException e) {
-            System.err.println("Error reading properties file. Using default prefix 'Password'.");
-            return "Password";
-        }
+    private String readPrefix() {
+            return configLoader.getProperty(PREFIX_KEY) == null ? "Password" : configLoader.getProperty(PREFIX_KEY);
+
     }
 
-    private static void writeCounter(int counter) {
-        Properties properties = new Properties();
-        try (FileInputStream input = new FileInputStream(PROPERTIES_FILE_PATH)) {
-            properties.load(input);
-        } catch (IOException e) {
-            System.err.println("Error loading properties file.");
-        }
-        properties.setProperty(COUNTER_KEY, String.valueOf(counter));
-        try (FileOutputStream output = new FileOutputStream(PROPERTIES_FILE_PATH)) {
-            properties.store(output, null);
-        } catch (IOException e) {
-            System.err.println("Error writing to properties file.");
-        }
+    private void writeCounter(int counter) {
+        configLoader.setProperty(COUNTER_KEY, String.valueOf(counter));
+
     }
 
-    private static void writeLatestPassword(String newPassword) {
-        Properties properties = new Properties();
-        try (FileInputStream input = new FileInputStream(PROPERTIES_FILE_PATH)) {
-            properties.load(input);
-        } catch (IOException e) {
-            System.err.println("Error loading properties file.");
-        }
-        properties.setProperty(LATEST_PASSWORD_KEY, newPassword);
-        try (FileOutputStream output = new FileOutputStream(PROPERTIES_FILE_PATH)) {
-            properties.store(output, null);
-        } catch (IOException e) {
-            System.err.println("Error writing to properties file.");
-        }
-    }
+    private void writeLatestPassword(String newPassword) {
+        configLoader.setProperty(LATEST_PASSWORD_KEY, newPassword);
 
+    }
 
 
     public static void main(String[] args) {
-        String newPassword = generateUniquePassword();
+        PasswordGenerator passwordGenerator = new PasswordGenerator();
+        String newPassword = passwordGenerator.generateUniquePassword();
         System.out.println("Generated Password: " + newPassword);
     }
 }

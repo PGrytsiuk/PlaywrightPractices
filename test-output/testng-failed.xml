@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
-<suite name="Failed suite [Default Suite]">
+<suite name="Failed suite [Default Suite]" guice-stage="DEVELOPMENT">
   <test thread-count="5" name="PlaywrightPractices(failed)">
     <classes>
       <class name="LangFitTests.ValidLoginTest">
         <methods>
-          <include name="tearDown"/>
           <include name="validLoginTest"/>
+          <include name="tearDown"/>
           <include name="setUp"/>
         </methods>
       </class> <!-- LangFitTests.ValidLoginTest -->

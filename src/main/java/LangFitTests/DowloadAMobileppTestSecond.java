@@ -8,7 +8,7 @@ import java.util.List;
 
 public class DowloadAMobileppTestSecond extends Setup {
 
-    @Test(priority = 2,enabled = false)
+    @Test(priority = 2, enabled = false)
     void downloadMobileApp(){
 
         try {
