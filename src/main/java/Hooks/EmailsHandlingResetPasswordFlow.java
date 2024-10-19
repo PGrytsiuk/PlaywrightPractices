@@ -130,8 +130,11 @@ public class EmailsHandlingResetPasswordFlow {
 
     public void completePasswordReset(String resetLink) {
         try {
+            //Fixture
             ResetPassword resetPass = new ResetPassword(page);
-            String newPassword = PasswordGenerator.generateUniquePassword();
+            PasswordGenerator passwordGenerator = new PasswordGenerator();
+            String newPassword = passwordGenerator.generateUniquePassword();
+            String confirmPassword = newPassword;
 
             // Load the reset link
             page.navigate(resetLink);
@@ -144,10 +147,12 @@ public class EmailsHandlingResetPasswordFlow {
             // Verify that Send button is blocked by default
             resetPass.sendButtonDisabledbyDefault();
             // Fill New password and confirm password fields
-            resetPass.enteringNewPassword(newPassword, newPassword);
+            resetPass.enteringNewPassword(newPassword, confirmPassword);
             // Verify Success Toast for Rest Password journey
             resetPass.successToastIsVisible();
             resetPass.assertSuccessToast("Password successfully changed");
+
+            System.out.println("Generated Password: " + newPassword);
 
         } catch (Exception e) {
             System.err.println("Failed to complete the password reset process: " + e.getMessage());
