@@ -1,19 +1,19 @@
 package Configs;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Properties;
 
+import java.io.*;
+import java.util.Properties;
 
 public class ConfigLoader {
 
-    private static final String CONFIG_FILE_PATH = "config.properties";
+    private static final String CONFIG_FILE_PATH = "src/main/resources/config.properties";
     private final Properties properties = new Properties();
 
     public ConfigLoader() {
-        try (InputStream inputStream = getClass().getClassLoader().getResourceAsStream(CONFIG_FILE_PATH)) {
-            if (inputStream == null) {
-                throw new RuntimeException("Property file not found at " + CONFIG_FILE_PATH);
-            }
+        loadProperties();
+    }
+
+    private void loadProperties() {
+        try (InputStream inputStream = new FileInputStream(CONFIG_FILE_PATH)) {
             properties.load(inputStream);
         } catch (IOException e) {
             e.printStackTrace();
@@ -21,9 +21,21 @@ public class ConfigLoader {
         }
     }
 
-
-    public String getProperty(String key) {
+    public synchronized String getProperty(String key) {
         return properties.getProperty(key);
     }
 
+    public synchronized void setProperty(String key, String value) {
+        properties.setProperty(key, value);
+        saveProperties();
+    }
+
+    private void saveProperties() {
+        try (OutputStream outputStream = new FileOutputStream(CONFIG_FILE_PATH)) {
+            properties.store(outputStream, null);
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Failed to save properties to " + CONFIG_FILE_PATH);
+        }
+    }
 }

@@ -24,7 +24,7 @@ public class ValidLoginTest extends Setup {
 
         ConfigLoader config = new ConfigLoader();
         String username = config.getProperty("Valid_username");
-        String password = config.getProperty("Valid_password");
+        String password = config.getProperty("latestPassword");
 
         page.navigate("https://gym.langfit.net/login");
 

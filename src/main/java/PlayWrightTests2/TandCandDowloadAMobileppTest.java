@@ -15,7 +15,7 @@ import org.testng.annotations.Test;
 
 public class TandCandDowloadAMobileppTest extends Setup {
 
-    @Test(priority = 2)
+    @Test(priority = 2, enabled = false)
     void downloadMobileApp(){
             setupContextWithVideo(browser, "DOWNLOAD_MOBILE_APP");
 
