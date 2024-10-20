@@ -21,7 +21,7 @@ public class ForgotPassTest extends Setup {
         };
     }
 
-    @Test(priority = 4, dataProvider = "EmailOrusername")
+    @Test(priority = 1, dataProvider = "EmailOrusername")
 
     public void ForgotPassword(String usernameOrEmail) {
         try {

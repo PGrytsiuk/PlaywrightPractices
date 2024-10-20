@@ -5,6 +5,7 @@ on:
     branches: [ main, master ]
   pull_request:
     branches: [ main, master ]
+  workflow_dispatch: # Add manual trigger
 
 jobs:
   test:
@@ -66,15 +67,12 @@ jobs:
             exit 1
           fi
 
-      - name: Upload Allure Report Artifact (Optional)
-        uses: actions/upload-artifact@v4
-        with:
-          name: allure-report
-          path: allure-report
-
       - name: Deploy Allure Report to GitHub Pages
         if: ${{ github.event_name == 'push' }} # Only deploy on push events
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: allure-report
+          publish_branch: gh-pages
+          user_name: PGrytsiuk
+          user_email: pgrytsiuk1992@gmail.com
