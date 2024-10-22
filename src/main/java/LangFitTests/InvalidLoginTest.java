@@ -9,7 +9,7 @@ import org.testng.annotations.Test;
 import static Utils.ScreenshotsAndRecordings.setupContextWithVideo;
 
 public class InvalidLoginTest extends Setup {
-    @Test(priority = 1)
+    @Test(priority = 2)
         void InvalidLoginCredentials(){
             try {
                 setupContextWithVideo(browser, "INVALID_LOGIN");
