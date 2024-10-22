@@ -47,6 +47,11 @@
                     <include name="InvalidLogin"/>
                 </methods>
             </class>
+            <class name="LangFitTests.LogoTest">
+                <methods>
+                    <include name="logoTest"/>
+                </methods>
+            </class>
         </classes>
     </test>
 </suite>
