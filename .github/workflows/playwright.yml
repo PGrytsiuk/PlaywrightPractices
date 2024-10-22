@@ -41,7 +41,7 @@ jobs:
 
       # Run the ForgotPasswordTest first to update the password in config.properties
       - name: Run ForgotPassword Test
-        run: xvfb-run --auto-servernum --server-args='-screen 0 1024x768x24' mvn test -Dtest=ForgotPasswordTest -e -X
+        run: xvfb-run --auto-servernum --server-args='-screen 0 1024x768x24' mvn test -Dtest=LangFitTets.ForgotPasswordTest -e -X
 
       # Set environment variable from the new password in config.properties
       - name: Set environment variable from new password
@@ -49,7 +49,7 @@ jobs:
 
       # Run the ValidLoginTest using the new password
       - name: Run ValidLogin Test
-        run: xvfb-run --auto-servernum --server-args='-screen 0 1024x768x24' mvn test -Dtest=ValidLoginTest -Dconfig.password=$NEW_PASSWORD -e -X
+        run: xvfb-run --auto-servernum --server-args='-screen 0 1024x768x24' mvn test -Dtest=LangFitTets.ValidLoginTest -Dconfig.password=$NEW_PASSWORD -e -X
         env:
           CONFIG_PASSWORD: $NEW_PASSWORD
 
