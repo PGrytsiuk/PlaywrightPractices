@@ -33,15 +33,15 @@ public class LoginPage extends BasePage {
     private final Locator ErrorToastResetPassword;
     private final Locator ResetPasswordErrorMessage;
     private final Locator Logo;
-    private final Locator clickLogo;
+  /*  private final Locator clickLogo;*/
 
     public LoginPage(Page page) {
         super(page);
         this.Logo=page.locator("//a[@aria-label='Login page']");
-        this.clickLogo = page.locator("//a[@aria-label='Login page']//self::a");
+       /* this.clickLogo = page.locator("//a[@aria-label='Login page']//img[1]");*/
         this.usernameField = page.locator("[name='username']");
         this.passwordField = page.locator("[name='userPassword']");
-        this.signInButton = page.locator("[aria-label//img[@alt='logo'][1]='sign in']");
+        this.signInButton = page.locator("//button[@aria-label='sign in']");
         this.ToastAlert =page.locator("//*[contains(@id, 'toast-container')]");
         this.ToastMessage=page.locator("//*[contains (@class, 'toast-message')]");
         this.AppStoreRedirect=page.locator("//img[@alt='Download on the App Store']");
@@ -70,7 +70,7 @@ public class LoginPage extends BasePage {
     }
 
     public void clickLogo() {
-        clickLogo.click();
+        page.reload();
     }
 
 
