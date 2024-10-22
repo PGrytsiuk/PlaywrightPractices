@@ -35,6 +35,7 @@ public class LoginPage extends BasePage {
     private final Locator Logo;
   /*  private final Locator clickLogo;*/
 
+
     public LoginPage(Page page) {
         super(page);
         this.Logo=page.locator("//a[@aria-label='Login page']");
@@ -71,6 +72,7 @@ public class LoginPage extends BasePage {
 
     public void clickLogo() {
         page.reload();
+      
     }
 
 
@@ -84,6 +86,7 @@ public class LoginPage extends BasePage {
 
     public String getUsernameValue(){
          return usernameField.inputValue();
+      
     }
 
     public String  getPasswordValue(){
@@ -98,10 +101,12 @@ public class LoginPage extends BasePage {
 
     public boolean passwordIsEmpty(){
         return getPasswordValue().isEmpty();
+      
     }
 
     public void tapForgotPassword() {
         ForgotPassword.click();
+      
     }
 
     public boolean resetPasswordpopup() {
