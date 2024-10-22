@@ -37,15 +37,15 @@ jobs:
         run: mvn -B install -DskipTests --no-transfer-progress
 
       - name: Ensure browsers are installed
-        run: mvn exec:java -e -Dexec.mainClass=com.microsoft.playwright.CLI -Dexec.args="install --with-deps"
+        run: mvn exec:java -e -D exec.mainClass=com.microsoft.playwright.CLI -D exec.args="install --with-deps"
 
-      - name: Run ForgotPassTest Test
-        run: xvfb-run --auto-servernum --server-args='-screen 0 1024x768x24' mvn test --tests "ResetPasswordTest"
+      - name: Run ResetPassword Test
+        run: xvfb-run --auto-servernum --server-args='-screen 0 1024x768x24' mvn test -Dtest=ResetPasswordTest
 
       - name: Set environment variable from new password
         run: echo "NEW_PASSWORD=$(grep 'latestPassword' config.properties | cut -d '=' -f2)" >> $GITHUB_ENV
 
-      - name: Run validLoginTest Test
+      - name: Run ValidLogin Test
         run: xvfb-run --auto-servernum --server-args='-screen 0 1024x768x24' mvn test -Dconfig.password=$NEW_PASSWORD
         env:
           CONFIG_PASSWORD: $NEW_PASSWORD
