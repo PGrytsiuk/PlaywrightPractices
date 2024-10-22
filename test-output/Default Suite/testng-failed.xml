@@ -3,13 +3,13 @@
 <suite name="Failed suite [Default Suite]" guice-stage="DEVELOPMENT">
   <test thread-count="5" name="PlaywrightPractices(failed)">
     <classes>
-      <class name="LangFitTests.ValidLoginTest">
+      <class name="LangFitTests.LogoTest">
         <methods>
-          <include name="validLoginTest"/>
           <include name="tearDown"/>
           <include name="setUp"/>
+          <include name="logoTest"/>
         </methods>
-      </class> <!-- LangFitTests.ValidLoginTest -->
+      </class> <!-- LangFitTests.LogoTest -->
     </classes>
   </test> <!-- PlaywrightPractices(failed) -->
 </suite> <!-- Failed suite [Default Suite] -->
