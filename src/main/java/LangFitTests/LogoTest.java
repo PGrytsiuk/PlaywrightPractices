@@ -8,7 +8,8 @@ import org.testng.Assert;
 
 public class LogoTest extends Setup {
 
-    @Test(priority = 4, enabled = false)
+
+    @Test(priority = 4)
     public void logoTest(){
         try{
 
