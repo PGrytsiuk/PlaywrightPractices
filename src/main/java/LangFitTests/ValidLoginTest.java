@@ -17,7 +17,7 @@ import static Utils.ScreenshotsAndRecordings.setupContextWithVideo;
 
 public class ValidLoginTest extends Setup {
 
-    @Test(priority = 1)
+    @Test(priority = 2)
     public void validLoginTest() {
 
         setupContextWithVideo(browser,"VALID_LOGIN");
