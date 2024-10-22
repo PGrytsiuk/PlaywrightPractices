@@ -1,5 +1,6 @@
 package Pages;
 
+
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.WaitForSelectorState;
@@ -31,12 +32,16 @@ public class LoginPage extends BasePage {
     private final Locator ResetPasswordSuccessMessage;
     private final Locator ErrorToastResetPassword;
     private final Locator ResetPasswordErrorMessage;
+    private final Locator Logo;
+    private final Locator clickLogo;
 
     public LoginPage(Page page) {
         super(page);
+        this.Logo=page.locator("//a[@aria-label='Login page']");
+        this.clickLogo = page.locator("//a[@aria-label='Login page']//self::a");
         this.usernameField = page.locator("[name='username']");
         this.passwordField = page.locator("[name='userPassword']");
-        this.signInButton = page.locator("[aria-label='sign in']");
+        this.signInButton = page.locator("[aria-label//img[@alt='logo'][1]='sign in']");
         this.ToastAlert =page.locator("//*[contains(@id, 'toast-container')]");
         this.ToastMessage=page.locator("//*[contains (@class, 'toast-message')]");
         this.AppStoreRedirect=page.locator("//img[@alt='Download on the App Store']");
@@ -57,6 +62,42 @@ public class LoginPage extends BasePage {
 
 
 
+    }
+
+    public boolean logoIsPresent(){
+        return Logo.isVisible();
+
+    }
+
+    public void clickLogo() {
+        clickLogo.click();
+    }
+
+
+    public void pageIsRefreshedAfterTappingLogo(String username, String password){
+        enterUsername(username);
+        enterPassword(password);
+        clickLogo();
+
+    }
+
+
+    public String getUsernameValue(){
+         return usernameField.inputValue();
+    }
+
+    public String  getPasswordValue(){
+        return passwordField.inputValue();
+
+    }
+
+    public boolean usernameIsEmpty(){
+        return getUsernameValue().isEmpty();
+
+    }
+
+    public boolean passwordIsEmpty(){
+        return getPasswordValue().isEmpty();
     }
 
     public void tapForgotPassword() {
