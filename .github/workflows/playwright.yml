@@ -1,4 +1,3 @@
-
 name: Playwright Tests
 
 on:
@@ -19,6 +18,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          persist-credentials: false # Otherwise, the token used is the automatic token, which does not have permission to push to the repository
 
       - name: Set up Java
         uses: actions/setup-java@v3
@@ -55,6 +56,25 @@ jobs:
             exit 1
           fi
 
+      - name: Commit & Push changes if any
+        env:
+          GH_TOKEN: ${{ secrets.GH_PAT }}
+        run: |
+          git config --local user.name "github-actions[bot]"
+          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add src/main/resources/config.properties
+          # If there are changes, commit new password
+          git diff-index --quiet HEAD || git commit -m "Update config.properties with new password"
+          git remote set-url origin https://x-access-token:${{ secrets.GH_PAT }}@github.com/${{ github.repository }}.git
+          # Stash any uncommitted changes
+          git stash --include-untracked
+          # Pull latest changes and rebase
+          git pull --rebase origin ${{ github.head_ref }}
+          # Apply the stashed changes
+          git stash pop
+          # Push the changes
+          git push origin HEAD:${{ github.head_ref }} # Push to the branch that triggered the workflow
+
       - name: Generate Allure Report
         run: allure generate allure-results --clean -o allure-report
 
@@ -72,7 +92,7 @@ jobs:
         if: ${{ github.event_name == 'push' }} # Only deploy on push events
         uses: peaceiris/actions-gh-pages@v4
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+          github_token: ${{ secrets.GH_PAT }}
           publish_dir: allure-report
           publish_branch: gh-pages
           user_name: PGrytsiuk
