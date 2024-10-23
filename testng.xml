@@ -32,7 +32,7 @@
                     <include name="InvalidLogin"/>
                 </methods>
             </class>
-            <class name="LangFitTests.DowloadAMobileppTestSecond">
+            <class name="LangFitTests.DowloadMobileAppSecondTest">
                 <methods>
                     <include name="downloadMobileApp"/>
                 </methods>
