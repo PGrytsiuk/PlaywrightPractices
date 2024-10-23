@@ -58,7 +58,7 @@ jobs:
 
       - name: Commit & Push changes if any
         env:
-          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+          GH_TOKEN: ${{ secrets.GH_PAT }}
         run: |
           git config --local user.name "github-actions[bot]"
           git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
@@ -85,7 +85,7 @@ jobs:
         if: ${{ github.event_name == 'push' }} # Only deploy on push events
         uses: peaceiris/actions-gh-pages@v4
         with:
-          github_token: ${{ secrets.GH_TOKEN }}
+          github_token: ${{ secrets.GH_PAT }}
           publish_dir: allure-report
           publish_branch: gh-pages
           user_name: PGrytsiuk
