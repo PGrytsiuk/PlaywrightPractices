@@ -66,7 +66,13 @@ jobs:
           # If there are changes, commit new password
           git diff-index --quiet HEAD || git commit -m "Update config.properties with new password"
           git remote set-url origin https://x-access-token:${{ secrets.GH_PAT }}@github.com/${{ github.repository }}.git
+          # Stash any uncommitted changes
+          git stash --include-untracked
+          # Pull latest changes and rebase
           git pull --rebase origin ${{ github.head_ref }}
+          # Apply the stashed changes
+          git stash pop
+          # Push the changes
           git push origin HEAD:${{ github.head_ref }} # Push to the branch that triggered the workflow
 
       - name: Generate Allure Report
