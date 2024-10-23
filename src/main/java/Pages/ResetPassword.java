@@ -38,12 +38,10 @@ public class ResetPassword extends BasePage {
 
 
     public boolean newPasswordTitle(){
-
         return NewPasswordTitle.isVisible();
     }
 
     public void assertNewPasswordtitle(String expectedTitle){
-
         assertThat(NewPasswordTitle).hasText(expectedTitle);
     }
 

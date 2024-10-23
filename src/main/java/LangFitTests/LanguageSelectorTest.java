@@ -12,7 +12,7 @@ import static Utils.ScreenshotsAndRecordings.setupContextWithVideo;
 @Listeners(Hooks.CustomListeners.class)
 public class LanguageSelectorTest extends Setup {
 
-    @Test(priority = 2, enabled = false)
+    @Test(priority = 2)
     public void languageSelectorTest(){
         try {
             setupContextWithVideo(browser, "LANGUAGE_SELECTOR");
