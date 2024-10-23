@@ -33,13 +33,11 @@ public class LoginPage extends BasePage {
     private final Locator ErrorToastResetPassword;
     private final Locator ResetPasswordErrorMessage;
     private final Locator Logo;
-  /*  private final Locator clickLogo;*/
 
 
     public LoginPage(Page page) {
         super(page);
         this.Logo=page.locator("//a[@aria-label='Login page']");
-       /* this.clickLogo = page.locator("//a[@aria-label='Login page']//img[1]");*/
         this.usernameField = page.locator("[name='username']");
         this.passwordField = page.locator("[name='userPassword']");
         this.signInButton = page.locator("//button[@aria-label='sign in']");
