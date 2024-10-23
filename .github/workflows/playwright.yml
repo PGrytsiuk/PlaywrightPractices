@@ -57,12 +57,15 @@ jobs:
           fi
 
       - name: Commit & Push changes if any
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
         run: |
           git config --local user.name "github-actions[bot]"
           git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add src/main/resources/config.properties
           # If there are changes, commit new password
           git diff-index --quiet HEAD || git commit -m "Update config.properties with new password"
+          git remote set-url origin https://x-access-token:${{ secrets.GH_TOKEN }}@github.com/${{ github.repository }}.git
           git push origin HEAD:${{ github.ref }}
 
       - name: Generate Allure Report
@@ -82,7 +85,7 @@ jobs:
         if: ${{ github.event_name == 'push' }} # Only deploy on push events
         uses: peaceiris/actions-gh-pages@v4
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+          github_token: ${{ secrets.GH_TOKEN }}
           publish_dir: allure-report
           publish_branch: gh-pages
           user_name: PGrytsiuk
