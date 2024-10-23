@@ -1,3 +1,4 @@
+
 package Pages;
 
 
@@ -70,7 +71,7 @@ public class LoginPage extends BasePage {
 
     public void clickLogo() {
         page.reload();
-      
+
     }
 
 
@@ -83,8 +84,8 @@ public class LoginPage extends BasePage {
 
 
     public String getUsernameValue(){
-         return usernameField.inputValue();
-      
+        return usernameField.inputValue();
+
     }
 
     public String  getPasswordValue(){
@@ -99,12 +100,12 @@ public class LoginPage extends BasePage {
 
     public boolean passwordIsEmpty(){
         return getPasswordValue().isEmpty();
-      
+
     }
 
     public void tapForgotPassword() {
         ForgotPassword.click();
-      
+
     }
 
     public boolean resetPasswordpopup() {
@@ -171,16 +172,16 @@ public class LoginPage extends BasePage {
 
     public void verifyLanguageWelcomeMessages(String[] languages) {
         int optionCount = LanguageSelectorSizeLocator().count();
-            for (int i = 0; i < optionCount; i++) {
-                clickDropdownOption(i);
-                String actualWelcomeMessage = getWelcomeMessageText();
-                assert actualWelcomeMessage.equals(languages[i]) : "Expected: " + languages[i] + ", but got: " + actualWelcomeMessage;
+        for (int i = 0; i < optionCount; i++) {
+            clickDropdownOption(i);
+            String actualWelcomeMessage = getWelcomeMessageText();
+            assert actualWelcomeMessage.equals(languages[i]) : "Expected: " + languages[i] + ", but got: " + actualWelcomeMessage;
 
-                if (i < optionCount - 1) {
-                    languageSelectordropdown();
-                }
-
+            if (i < optionCount - 1) {
+                languageSelectordropdown();
             }
+
+        }
     }
 
     public void termsAndConditions(){
