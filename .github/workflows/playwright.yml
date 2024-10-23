@@ -58,32 +58,29 @@ jobs:
 
       - name: Commit & Push changes if any
         env:
-          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+          GH_TOKEN: ${{ secrets.GH_PAT }}
         run: |
           git config --local user.name "github-actions[bot]"
           git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          
-          # Ensure no unstaged changes
+
+          # Ensure all changes are stashed
           git stash --all
 
-          # Stash any changes
-          git add src/main/resources/config.properties
-          
-          # If there are changes, commit new password
-          git diff-index --quiet HEAD || git commit -m "Update config.properties with new password"
-
-          # Pull latest changes and rebase
-          git remote set-url origin https://x-access-token:${{ secrets.GH_TOKEN }}@github.com/${{ github.repository }}.git
-          git pull --rebase origin ${{ github.head_ref }}
-          
-          # Apply stashed changes if any
+          # Add changes and commit if any changes are found
           git stash pop || true
-
-          # Force add unstaged, untracked files if needed
           git add -A
+          git diff-index --quiet HEAD || git commit -m "Update config.properties and other changes"
+
+          # Pull and rebase with the latest changes
+          git remote set-url origin https://x-access-token:${{ secrets.GH_PAT }}@github.com/${{ github.repository }}.git
+          git pull --rebase origin ${{ github.head_ref }}
+
+          # Re-add all files and commit if there are any changes from rebase
+          git add -A
+          git diff-index --quiet HEAD || git commit -m "Rebase updates"
 
           # Push changes back to the repository
-          git push origin HEAD:${{ github.head_ref }}  # Push to the branch that triggered the workflow
+          git push origin HEAD:${{ github.head_ref }}
 
       - name: Generate Allure Report
         run: allure generate allure-results --clean -o allure-report
