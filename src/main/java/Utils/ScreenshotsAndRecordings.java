@@ -5,7 +5,6 @@ import com.microsoft.playwright.BrowserContext;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.RecordVideoSize;
 
-
 import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.Date;

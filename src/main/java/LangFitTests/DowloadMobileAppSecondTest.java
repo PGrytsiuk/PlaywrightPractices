@@ -6,9 +6,9 @@ import com.microsoft.playwright.Page;
 import org.testng.annotations.Test;
 import java.util.List;
 
-public class DowloadAMobileppTestSecond extends Setup {
+public class DowloadMobileAppSecondTest extends Setup {
 
-    @Test(priority = 3, enabled = false)
+    @Test(priority = 3)
     void downloadMobileApp(){
 
         try {
