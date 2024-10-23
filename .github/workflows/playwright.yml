@@ -62,18 +62,25 @@ jobs:
         run: |
           git config --local user.name "github-actions[bot]"
           git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add src/main/resources/config.properties
-          # If there are changes, commit new password
-          git diff-index --quiet HEAD || git commit -m "Update config.properties with new password"
-          git remote set-url origin https://x-access-token:${{ secrets.GH_PAT }}@github.com/${{ github.repository }}.git
-          # Stash any uncommitted changes
+
+          # Stash any changes
           git stash --include-untracked
-          # Pull latest changes and rebase
+
+          # Pull and rebase with the latest changes
+          git remote set-url origin https://x-access-token:${{ secrets.GH_PAT }}@github.com/${{ github.repository }}.git
           git pull --rebase origin ${{ github.head_ref }}
-          # Apply the stashed changes
-          git stash pop
-          # Push the changes
-          git push origin HEAD:${{ github.head_ref }} # Push to the branch that triggered the workflow
+
+          # Apply stashed changes if any
+          git stash pop || true
+
+          # Add all changes including new untracked files
+          git add -A
+
+          # Commit changes if there are any
+          git diff-index --quiet HEAD || git commit -m "Update config.properties and other changes"
+
+          # Push changes back to the repository
+          git push origin HEAD:${{ github.head_ref }}
 
       - name: Generate Allure Report
         run: allure generate allure-results --clean -o allure-report
