@@ -2,9 +2,9 @@ name: Playwright Tests
 
 on:
   push:
-    branches: [ main, master ]
+    branches: [ master, develop ]
   pull_request:
-    branches: [ main, master ]
+    branches: [ master, develop ]
   workflow_dispatch: # Add manual trigger
 
 jobs:
@@ -71,7 +71,7 @@ jobs:
         if: ${{ github.event_name == 'push' }} # Only deploy on push events
         uses: peaceiris/actions-gh-pages@v4
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+          github_token: ${{ secrets.GH_PAT }}
           publish_dir: allure-report
           publish_branch: gh-pages
           user_name: PGrytsiuk
