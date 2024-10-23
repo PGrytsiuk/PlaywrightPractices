@@ -1,4 +1,3 @@
-
 name: Playwright Tests
 
 on:
@@ -19,6 +18,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          persist-credentials: false # Otherwise, the token used is the automatic token, which does not have permission to push to the repository
 
       - name: Set up Java
         uses: actions/setup-java@v3
@@ -54,6 +55,15 @@ jobs:
             echo "Allure results directory does not exist"
             exit 1
           fi
+
+      - name: Commit & Push changes if any
+        run: |
+          git config --local user.name "github-actions[bot]"
+          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add src/main/resources/config.properties
+          # If there are changes, commit new password
+          git diff-index --quiet HEAD || git commit -m "Update config.properties with new password"
+          git push origin HEAD:${{ github.ref }}
 
       - name: Generate Allure Report
         run: allure generate allure-results --clean -o allure-report
