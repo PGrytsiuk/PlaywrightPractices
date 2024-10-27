@@ -10,52 +10,41 @@ import java.util.List;
 public class DowloadMobileAppSecondTest extends Setup {
 
     @Test(priority = 3)
-    void downloadMobileApp(){
-
+    public void downloadMobileApp() {
         try {
             page.navigate("https://gym.langfit.net/login");
 
             LoginPage loginPage = new LoginPage(page);
-            page.waitForPopup(new Page.WaitForPopupOptions().setPredicate(p->p.context().pages().size()==3), ()->{
+
+            // Open new tabs/windows by clicking buttons
+            page.waitForPopup(new Page.WaitForPopupOptions().setPredicate(p -> p.context().pages().size() == 3), () -> {
                 loginPage.clickPlayMarketRedirect();
                 loginPage.clickAppStoreRedirect();
-
             });
 
+            List<Page> pages = context.pages();
+            for (Page tab : pages) {
+                tab.waitForLoadState();
+                System.out.println(tab.url());
+            }
 
-            List<Page> pages = page.context().pages();
-                for(Page tabs : pages) {
-                    tabs.waitForLoadState();
-                    System.out.println(tabs.url());
-                }
+            // Switch to the iOS App Store page
+            Page iOSAppsPage = pages.get(1);
+            page = iOSAppsPage; // Set the current page to this tab for proper screenshot in case of failure
+            System.out.println(iOSAppsPage.title());
+            Assert.assertEquals(iOSAppsPage.title(), "\u200ELangFit on the App Store", "iOS App Store title mismatch");
+            System.out.println(iOSAppsPage.textContent("h1"));
 
+            // Switch to the Play Market page
+            Page playMarketPage = pages.get(2);
+            page = playMarketPage; // Set the current page to this tab for proper screenshot in case of failure
+            System.out.println(playMarketPage.title());
+            Assert.assertEquals(playMarketPage.title(), "LangFit on the Play Market", "Play Market title mismatch");
+            System.out.println(playMarketPage.textContent("h1"));
 
-                Page IOSAppsPage = pages.get(1);
-                System.out.println(IOSAppsPage.title());
-                Assert.assertEquals(IOSAppsPage.title(), "\u200ELangFit on the App Store");
-                System.out.println(IOSAppsPage.textContent("h1"));
-
-
-
-
-                Page PlayMarketPage = pages.get(2);
-                System.out.println(PlayMarketPage.title());
-                Assert.assertEquals(PlayMarketPage.title(), "LangFit on the Play Market");
-                System.out.println(PlayMarketPage.textContent("h1"));
-
-
-
-
-
-
-        } catch (Exception e){
-            System.err.println("An error occurred during theDowloadAMobilepp test: " + e.getMessage());
+        } catch (Exception e) {
+            System.err.println("An error occurred during the downloadMobileApp test: " + e.getMessage());
             e.printStackTrace();
         }
-
-
-
     }
-
-
 }
