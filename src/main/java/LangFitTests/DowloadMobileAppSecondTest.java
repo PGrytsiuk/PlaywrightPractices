@@ -3,6 +3,7 @@ package LangFitTests;
 import Hooks.Setup;
 import Pages.LoginPage;
 import com.microsoft.playwright.Page;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 import java.util.List;
 
@@ -31,13 +32,18 @@ public class DowloadMobileAppSecondTest extends Setup {
 
                 Page IOSAppsPage = pages.get(1);
                 System.out.println(IOSAppsPage.title());
+                Assert.assertEquals(IOSAppsPage.title(), "\u200ELangFit on the App Store");
                 System.out.println(IOSAppsPage.textContent("h1"));
+
 
 
 
                 Page PlayMarketPage = pages.get(2);
                 System.out.println(PlayMarketPage.title());
+                Assert.assertEquals(PlayMarketPage.title(), "LangFit on the Play Market");
                 System.out.println(PlayMarketPage.textContent("h1"));
+
+
 
 
 

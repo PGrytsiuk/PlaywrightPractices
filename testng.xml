@@ -37,9 +37,9 @@
                     <include name="downloadMobileApp"/>
                 </methods>
             </class>
-            <class name="PlayWrightTests2.TandCandDowloadAMobileppTest">
+            <class name="LangFitTests.TandCandDowloadAMobileppTest">
                 <methods>
-                    <include name="downloadMobileApp"/>
+                    <include name="downloadMobileApps"/>
                 </methods>
             </class>
             <class name="LangFitTests.ViewPortTest">

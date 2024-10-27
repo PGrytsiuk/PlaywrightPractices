@@ -1,23 +1,22 @@
-package PlayWrightTests2;
+package LangFitTests;
 
 import Hooks.Setup;
 import Pages.LoginPage;
 
-import static Utils.ScreenshotsAndRecordings.setupContextWithVideo;
 import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
 
 import Utils.ScreenshotsAndRecordings;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 
 
 
 public class TandCandDowloadAMobileppTest extends Setup {
 
-    @Test(priority = 2, enabled = false)
-    void downloadMobileApp(){
-            setupContextWithVideo(browser, "DOWNLOAD_MOBILE_APP");
+    @Test(priority = 2)
+    void downloadMobileApps(){
 
         try {
             page.navigate("https://gym.langfit.net/login");
@@ -29,7 +28,7 @@ public class TandCandDowloadAMobileppTest extends Setup {
             System.out.println(TermsAndCondtion.title());
             TermsAndCondtion.close();
 
-            //Tap on the AppStore icon
+            //Tap on the App Store icon
             Page AppStorePage = page.context().waitForPage(loginPage::clickAppStoreRedirect);
             AppStorePage.waitForLoadState();
             System.out.println(AppStorePage.title());
@@ -45,10 +44,9 @@ public class TandCandDowloadAMobileppTest extends Setup {
             Page PlayMarketPage = page.context().waitForPage(loginPage::clickPlayMarketRedirect);
             PlayMarketPage.waitForLoadState();
             System.out.println(PlayMarketPage.title());
+            Assert.assertEquals(PlayMarketPage.title(), "LangFit on the Play Market");
             Locator LangFitAndroid = PlayMarketPage.locator("//span[text()='LangFit']");
             assertThat(LangFitAndroid).hasText("LangFit");
-
-            ScreenshotsAndRecordings.ScreenshotCapture(PlayMarketPage, "DowloadAMobilepp_Android ");
 
             PlayMarketPage.close();
 

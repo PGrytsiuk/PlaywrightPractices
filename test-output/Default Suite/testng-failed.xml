@@ -7,6 +7,8 @@
         <methods>
           <include name="tearDown"/>
           <include name="setUp"/>
+          <include name="closeContextAndAddScreenshotIfFail"/>
+          <include name="createContextAndPage"/>
           <include name="logoTest"/>
         </methods>
       </class> <!-- LangFitTests.LogoTest -->
