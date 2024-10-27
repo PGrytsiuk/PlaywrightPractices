@@ -38,13 +38,14 @@ public class Setup {
     @AfterMethod
     public void closeContextAndAddScreenshotIfFail(ITestResult result) {
         if (result.getStatus() == ITestResult.FAILURE) {
+            // Take screenshot for the active page if the test fails
             takeScreenshotForPage(page, result.getName());
         }
 
         // Close all pages in the context
-        for (Page page : context.pages()) {
-            if (page != null) {
-                page.close();
+        for (Page p : context.pages()) {
+            if (p != null) {
+                p.close();
             }
         }
 
