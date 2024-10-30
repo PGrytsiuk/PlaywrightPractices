@@ -1,6 +1,5 @@
 package LangFitTests;
 
-
 import Hooks.EmailsHandlingResetPasswordFlow;
 import Hooks.Setup;
 import Pages.LoginPage;
@@ -8,9 +7,6 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 public class ForgotPassTest extends Setup {
-
-
-
 
     @DataProvider(name="EmailOrusername")
     public Object[][] EmailOrUsername() {
@@ -55,9 +51,6 @@ public class ForgotPassTest extends Setup {
             } else {
                 throw new AssertionError("Neither success nor error message was displayed.");
             }
-            
-
-
 
         } catch (Exception e) {
 

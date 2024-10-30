@@ -4,11 +4,9 @@ import com.microsoft.playwright.Browser;
 import com.microsoft.playwright.BrowserContext;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.RecordVideoSize;
-
 import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-
 
 public class ScreenshotsAndRecordings {
 
@@ -18,9 +16,7 @@ public class ScreenshotsAndRecordings {
 
         Page.ScreenshotOptions screenshotOptions = new Page.ScreenshotOptions();
         page.screenshot(screenshotOptions.setPath(Paths.get(screenshotPath)));
-
     }
-
 
     public static BrowserContext VideoCapture (Browser browser, String testName){
 
@@ -37,8 +33,5 @@ public class ScreenshotsAndRecordings {
                         .setRecordVideoDir(Paths.get(videoCapturePath))
                         .setRecordVideoSize(new RecordVideoSize(1280, 720))
         );
-
     }
-
-
 }

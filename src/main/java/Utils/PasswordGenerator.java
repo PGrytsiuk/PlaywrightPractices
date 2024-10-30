@@ -2,10 +2,7 @@ package Utils;
 
 import Configs.ConfigLoader;
 
-
-
 public class PasswordGenerator {
-
 
     private static final String COUNTER_KEY = "passwordCounter";
     private static final String PREFIX_KEY = "passwordPrefix";
@@ -15,7 +12,6 @@ public class PasswordGenerator {
 
     public PasswordGenerator(){
         configLoader = new ConfigLoader();
-
     }
 
     public String generateUniquePassword() {
@@ -31,24 +27,19 @@ public class PasswordGenerator {
     private int readCounter() {
             String counterStr = configLoader.getProperty(COUNTER_KEY);
             return counterStr == null ? 0 : Integer.parseInt(counterStr);
-
     }
 
     private String readPrefix() {
             return configLoader.getProperty(PREFIX_KEY) == null ? "Password" : configLoader.getProperty(PREFIX_KEY);
-
     }
 
     private void writeCounter(int counter) {
         configLoader.setProperty(COUNTER_KEY, String.valueOf(counter));
-
     }
 
     private void writeLatestPassword(String newPassword) {
         configLoader.setProperty(LATEST_PASSWORD_KEY, newPassword);
-
     }
-
 
     public static void main(String[] args) {
         PasswordGenerator passwordGenerator = new PasswordGenerator();

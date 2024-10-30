@@ -1,7 +1,7 @@
 package playWrightTests;
+
 import org.junit.Assert;
 import com.microsoft.playwright.*;
-
 
 public class CheckBoxHandling {
 

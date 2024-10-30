@@ -17,6 +17,4 @@ public class HomePage extends BasePage {
     public void verifyUserName(String expectedUsername) {
         assertThat(hostLabel).hasText(expectedUsername);
     }
-
-
 }
