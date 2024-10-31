@@ -3,6 +3,10 @@ package LangFitTests;
 import Hooks.EmailsHandlingResetPasswordFlow;
 import Hooks.Setup;
 import Pages.LoginPage;
+import io.qameta.allure.Description;
+import io.qameta.allure.Severity;
+import io.qameta.allure.SeverityLevel;
+import io.qameta.allure.Story;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
@@ -18,7 +22,9 @@ public class ForgotPassTest extends Setup {
     }
 
     @Test(priority = 1, dataProvider = "EmailOrusername")
-
+    @Story("Forgot password")
+    @Description("This test case verify if user is able to set up new password via reset password link")
+    @Severity(SeverityLevel.CRITICAL)
     public void ForgotPassword(String usernameOrEmail) {
         try {
             /*   setupContextWithVideo("FORGOT_PASSWORD");*/

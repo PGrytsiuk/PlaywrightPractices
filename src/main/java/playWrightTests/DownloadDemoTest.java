@@ -3,10 +3,7 @@ package playWrightTests;
 import Hooks.Setup;
 import com.microsoft.playwright.Download;
 import org.testng.annotations.Test;
-
-import java.io.File;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 
 
 public class DownloadDemoTest extends Setup {
@@ -15,15 +12,15 @@ public class DownloadDemoTest extends Setup {
     public void downloadTestWithHandler(){
 
         try{
-            page.navigate("https://www.win-rar.com/predownload.html?&L=4");
+            page.navigate("https://notepad-plus-plus.org/downloads/v8.7/");
 
             page.onDownload(download -> {
                 System.out.println(download.path());
-                 download.saveAs(Paths.get(new File("C:/Users/pgryt/Downloads").toURI()));
+                /* download.saveAs(Paths.get(new File("C:/Users/pgryt/Downloads").toURI()));*/
 
             });
 
-            page.click("//a[@id='download-button']");
+            page.click("//main[@id='main']//img[1]");
 
         } catch (Exception e) {
             System.err.println("An error occurred during the InvalidLoginCredentials test: " + e.getMessage());

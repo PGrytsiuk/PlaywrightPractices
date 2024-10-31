@@ -6,6 +6,7 @@ import Pages.LoginPage;
 import io.qameta.allure.Description;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
+import io.qameta.allure.Story;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.annotations.Test;
@@ -16,6 +17,7 @@ public class LogoTest extends Setup {
     private static final Logger logger = LoggerFactory.getLogger(LogoTest.class);
 
     @Test(priority = 4)
+    @Story("Logo test")
     @Description("This test case verify that page is refreshed after tapping on Logo image")
     @Severity(SeverityLevel.MINOR)
     public void logoTest(){

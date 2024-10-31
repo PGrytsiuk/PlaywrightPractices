@@ -5,6 +5,10 @@ import Hooks.Setup;
 import Pages.HomePage;
 import Pages.LoginPage;
 import com.microsoft.playwright.Page;
+import io.qameta.allure.Description;
+import io.qameta.allure.Severity;
+import io.qameta.allure.SeverityLevel;
+import io.qameta.allure.Story;
 import org.testng.annotations.Test;
 import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
@@ -15,6 +19,9 @@ import static Utils.ScreenshotsAndRecordings.setupContextWithVideo;
 public class ValidLoginTest extends Setup {
 
     @Test(priority = 5)
+    @Story("Valid login")
+    @Description("This test case verify if user is able to login with valid credentials")
+    @Severity(SeverityLevel.CRITICAL)
     public void validLoginTest() {
 
         setupContextWithVideo(browser,"VALID_LOGIN");

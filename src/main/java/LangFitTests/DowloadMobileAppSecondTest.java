@@ -3,13 +3,21 @@ package LangFitTests;
 import Hooks.Setup;
 import Pages.LoginPage;
 import com.microsoft.playwright.Page;
+import io.qameta.allure.Description;
+import io.qameta.allure.Severity;
+import io.qameta.allure.SeverityLevel;
+import io.qameta.allure.Story;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import java.util.List;
 
 public class DowloadMobileAppSecondTest extends Setup {
 
-    @Test(priority = 3)
+
+    @Test(priority = 3, invocationCount = 2)
+    @Story("Mobiles app pages")
+    @Description("This test case verify if user is able to download the mobile app from App store and Play market")
+    @Severity(SeverityLevel.MINOR)
     public void downloadMobileApp() {
         try {
             page.navigate("https://gym.langfit.net/login");
@@ -27,7 +35,6 @@ public class DowloadMobileAppSecondTest extends Setup {
                 tab.waitForLoadState();
                 System.out.println(tab.url());
             }
-
             // Switch to the iOS App Store page
             Page iOSAppsPage = pages.get(1);
             page = iOSAppsPage; // Set the current page to this tab for proper screenshot in case of failure

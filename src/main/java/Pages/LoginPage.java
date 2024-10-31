@@ -1,13 +1,18 @@
-
 package Pages;
 
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.WaitForSelectorState;
+import io.qameta.allure.Step;
 import org.junit.Assert;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
 
 public class LoginPage extends BasePage {
+
+    private static final Logger logger = LoggerFactory.getLogger(LoginPage.class);
 
     private final Locator usernameField;
     private final Locator passwordField;
@@ -56,57 +61,83 @@ public class LoginPage extends BasePage {
         this.ResetPasswordErrorMessage=page.locator("//div[@aria-label='Error']/following-sibling::div[1]");
     }
 
-    public boolean logoIsPresent(){
+    @Step("Check if logo is present")
+    public boolean logoIsPresent() {
+        logger.info("Checking if logo is present");
         return Logo.isVisible();
     }
 
+    @Step("Click on logo")
     public void clickLogo() {
+        logger.info("Clicking on logo");
         page.reload();
     }
 
-    public void pageIsRefreshedAfterTappingLogo(String username, String password){
+    @Step("Refresh the page after tapping logo with username: {username} and password: {password}")
+    public void pageIsRefreshedAfterTappingLogo(String username, String password) {
+        logger.info("Refreshing the page after tapping logo with username: {} and password: {}", username, password);
         enterUsername(username);
         enterPassword(password);
         clickLogo();
     }
 
-    public String getUsernameValue(){
+    @Step("Get username field value")
+    public String getUsernameValue() {
+        logger.info("Getting username field value");
         return usernameField.inputValue();
     }
 
-    public String  getPasswordValue(){
+    @Step("Get password field value")
+    public String getPasswordValue() {
+        logger.info("Getting password field value");
         return passwordField.inputValue();
     }
 
-    public boolean usernameIsEmpty(){
+    @Step("Check if username field is empty")
+    public boolean usernameIsEmpty() {
+        logger.info("Checking if username field is empty");
         return getUsernameValue().isEmpty();
     }
 
-    public boolean passwordIsEmpty(){
+    @Step("Check if password field is empty")
+    public boolean passwordIsEmpty() {
+        logger.info("Checking if password field is empty");
         return getPasswordValue().isEmpty();
     }
 
+    @Step("Tap on Forgot Password")
     public void tapForgotPassword() {
+        logger.info("Tapping on Forgot Password");
         ForgotPassword.click();
     }
 
+    @Step("Check if reset password popup is visible")
     public boolean resetPasswordpopup() {
+        logger.info("Checking if reset password popup is visible");
         return ResetPasswordpopup.isVisible();
     }
 
+    @Step("Assert reset password message: {expectedMessage}")
     public void assertResetPasswordMessage(String expectedMessage) {
+        logger.info("Asserting reset password message: {}", expectedMessage);
         assertThat(ResetPasswordMessage).hasText(expectedMessage);
     }
 
+    @Step("Enter username or email: {usernameOrEmail}")
     public void enterUsernameOrEmail(String usernameOrEmail) {
+        logger.info("Entering username or email: {}", usernameOrEmail);
         UsernameOREmail.fill(usernameOrEmail);
     }
 
+    @Step("Click on Send button")
     public void clickSend() {
+        logger.info("Clicking on Send button");
         Send.click();
     }
 
+    @Step("Assert popup success message: {expectedTitle}")
     public void assertPopupSuccessTitle(String expectedTitle) {
+        logger.info("Asserting popup success message: {}", expectedTitle);
         String actualMessage = ResetPasswordSuccessMessage.textContent();
         if (actualMessage != null && actualMessage.contains(expectedTitle)) {
             System.out.println("Success message verified: " + actualMessage);
@@ -115,17 +146,20 @@ public class LoginPage extends BasePage {
         }
     }
 
-    public boolean errorToastWhenResettingPassword(){
+    @Step("Check for error toast when resetting password")
+    public boolean errorToastWhenResettingPassword() {
+        logger.info("Checking for error toast when resetting password");
         try {
             ErrorToastResetPassword.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE).setTimeout(5000));
             return ErrorToastResetPassword.isVisible();
         } catch (Exception e) {
             return false;
         }
-
     }
 
+    @Step("Assert popup error message: {expectedMessage}")
     public void assertPopupErrorMessage(String expectedMessage) {
+        logger.info("Asserting popup error message: {}", expectedMessage);
         String actualErrorMessage = ResetPasswordErrorMessage.textContent();
         if (actualErrorMessage != null && actualErrorMessage.contains(expectedMessage)) {
             System.out.println("Error message verified: " + actualErrorMessage);
@@ -134,23 +168,21 @@ public class LoginPage extends BasePage {
         }
     }
 
-    private Locator welcomeMessageLocator() {
-        return WelcomeMessage;
-    }
-
+    @Step("Get welcome message text")
     public String getWelcomeMessageText() {
+        logger.info("Getting welcome message text");
         return welcomeMessageLocator().textContent();
     }
 
-    private Locator LanguageSelectorSizeLocator() {
-        return LanguageSelectorSize;
-    }
-
-    public void clickDropdownOption(int index){
+    @Step("Click on dropdown option at index: {index}")
+    public void clickDropdownOption(int index) {
+        logger.info("Clicking on dropdown option at index: {}", index);
         LanguageSelectorSizeLocator().nth(index).click();
     }
 
+    @Step("Verify welcome messages for different languages")
     public void verifyLanguageWelcomeMessages(String[] languages) {
+        logger.info("Verifying welcome messages for different languages");
         int optionCount = LanguageSelectorSizeLocator().count();
         for (int i = 0; i < optionCount; i++) {
             clickDropdownOption(i);
@@ -163,69 +195,108 @@ public class LoginPage extends BasePage {
         }
     }
 
-    public void termsAndConditions(){
+    @Step("Click on Terms and Conditions link")
+    public void termsAndConditions() {
+        logger.info("Clicking on Terms and Conditions link");
         TermsAndCondition.click();
     }
 
-    public void languageSelectordropdown(){
+    @Step("Open language selector dropdown")
+    public void languageSelectordropdown() {
+        logger.info("Opening language selector dropdown");
         LanguageSelector.click();
     }
 
-    public int languageSelectorSize(){
+    @Step("Get size of language selector")
+    public int languageSelectorSize() {
+        logger.info("Getting size of language selector");
         return LanguageSelectorSize.count();
     }
 
-    public void assertLanguageSelectorSize(){
+    @Step("Assert size of language selector")
+    public void assertLanguageSelectorSize() {
+        logger.info("Asserting size of language selector");
         int languageSelectorExpectedCount = 5;
         Assert.assertEquals(languageSelectorSize(), languageSelectorExpectedCount);
     }
 
-    public int errorMessageSize(){
+    @Step("Get size of error messages")
+    public int errorMessageSize() {
+        logger.info("Getting size of error messages");
         return ErrorMessage.count();
     }
 
-    public void assertErrorMessagesCount(){
+    @Step("Assert number of error messages")
+    public void assertErrorMessagesCount() {
+        logger.info("Asserting number of error messages");
         int errorMessagesExpectedCount = 1;
         Assert.assertEquals(errorMessageSize(), errorMessagesExpectedCount);
     }
 
+    @Step("Enter username: {username}")
     public void enterUsername(String username) {
+        logger.info("Entering username: {}", username);
         usernameField.fill(username);
     }
 
+    @Step("Enter password: {password}")
     public void enterPassword(String password) {
+        logger.info("Entering password: {}", password);
         passwordField.fill(password);
     }
 
+    @Step("Click on Sign In button")
     public void clickSignIn() {
+        logger.info("Clicking on Sign In button");
         signInButton.click();
     }
 
-    public boolean alertAppear(){
+    @Step("Check if toast alert appears")
+    public boolean alertAppear() {
+        logger.info("Checking if toast alert appears");
         ToastAlert.isVisible();
         return true;
     }
-    public void getToastMessageText(String expectedAlertMessage){
+
+    @Step("Get toast message text: {expectedAlertMessage}")
+    public void getToastMessageText(String expectedAlertMessage) {
+        logger.info("Getting toast message text: {}", expectedAlertMessage);
         assertThat(ToastMessage).hasText(expectedAlertMessage);
     }
 
-    public void emptyLogin(){
+    @Step("Perform empty login")
+    public void emptyLogin() {
+        logger.info("Performing empty login");
         enterUsername("");
         enterPassword("");
         clickSignIn();
     }
 
+    @Step("Perform login with username: {username} and password: {password}")
     public void login(String username, String password) {
+        logger.info("Performing login with username: {} and password: {}", username, password);
         enterUsername(username);
         enterPassword(password);
         clickSignIn();
     }
 
-    public void clickAppStoreRedirect(){
+    @Step("Click on App Store redirect")
+    public void clickAppStoreRedirect() {
+        logger.info("Clicking on App Store redirect");
         AppStoreRedirect.click();
     }
 
-    public void clickPlayMarketRedirect(){
+    @Step("Click on Play Market redirect")
+    public void clickPlayMarketRedirect() {
+        logger.info("Clicking on Play Market redirect");
         PlayMarketRedirect.click();
+    }
+
+    private Locator welcomeMessageLocator() {
+        return WelcomeMessage;
+    }
+
+    private Locator LanguageSelectorSizeLocator() {
+        return LanguageSelectorSize;
     }
 }

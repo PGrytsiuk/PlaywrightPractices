@@ -3,6 +3,10 @@ package LangFitTests;
 
 import Hooks.Setup;
 import Pages.LoginPage;
+import io.qameta.allure.Description;
+import io.qameta.allure.Severity;
+import io.qameta.allure.SeverityLevel;
+import io.qameta.allure.Story;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
@@ -13,6 +17,9 @@ import static Utils.ScreenshotsAndRecordings.setupContextWithVideo;
 public class LanguageSelectorTest extends Setup {
 
     @Test(priority = 2)
+    @Story("Language selector")
+    @Description("This test case verify the welcome message text when selection new language")
+    @Severity(SeverityLevel.MINOR)
     public void languageSelectorTest(){
         try {
             setupContextWithVideo(browser, "LANGUAGE_SELECTOR");
