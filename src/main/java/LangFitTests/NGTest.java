@@ -3,6 +3,10 @@ package LangFitTests;
 import Pages.LoginPage;
 import Utils.ScreenshotsAndRecordings;
 import com.microsoft.playwright.*;
+import io.qameta.allure.Description;
+import io.qameta.allure.Severity;
+import io.qameta.allure.SeverityLevel;
+import io.qameta.allure.Story;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
@@ -20,6 +24,9 @@ public class NGTest {
     }
 
     @Test(priority = 3, dataProvider = "Invalid users")
+    @Story("Invalid login(Duplicate)")
+    @Description("This test case verify if user is not able to login with invalid credentials with different set of data")
+    @Severity(SeverityLevel.CRITICAL)
     public void InvalidLogin(String login, String password) {
         Playwright playwright = Playwright.create();
         Browser browser = playwright.chromium().launch(

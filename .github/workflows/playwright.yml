@@ -55,6 +55,28 @@ jobs:
       - name: Ensure browsers are installed
         run: mvn exec:java -e -D exec.mainClass=com.microsoft.playwright.CLI -D exec.args="install --with-deps"
 
+      - name: Set up Allure Environment and Executor
+        run: |
+          mkdir -p allure-results
+          
+          # Create environment.properties file
+          echo "Browser=Chrome" >> allure-results/environment.properties
+          echo "URL=https://example.com" >> allure-results/environment.properties
+          echo "Operating System=${{ runner.os }}" >> allure-results/environment.properties
+          echo "Java Version=${{ steps.setup-java.outputs.java-version }}" >> allure-results/environment.properties
+          
+          # Create executor.json file
+          echo '{' > allure-results/executor.json
+          echo '  "name": "GitHub Actions",' >> allure-results/executor.json
+          echo '  "type": "github",' >> allure-results/executor.json
+          echo '  "url": "https://github.com/${{ github.repository }}",' >> allure-results/executor.json
+          echo '  "buildOrder": "${{ github.run_id }}",' >> allure-results/executor.json
+          echo '  "buildName": "${{ github.run_number }}",' >> allure-results/executor.json
+          echo '  "buildUrl": "https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}",' >> allure-results/executor.json
+          echo '  "reportUrl": "https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}",' >> allure-results/executor.json
+          echo '  "reportName": "Allure Report - GitHub Actions"' >> allure-results/executor.json
+          echo '}' >> allure-results/executor.json
+
       - name: Run tests
         run: xvfb-run --auto-servernum --server-args='-screen 0 1024x768x24' mvn test || true
         env:
@@ -67,6 +89,21 @@ jobs:
             ls -R allure-results
           else
             echo "Allure results directory does not exist"
+            exit 1
+          fi
+
+      - name: Verify Allure Environment and Executor Files
+        run: |
+          if [ -f "allure-results/environment.properties" ]; then
+            echo "environment.properties file exists"
+          else
+            echo "environment.properties file does not exist"
+            exit 1
+          fi
+          if [ -f "allure-results/executor.json" ]; then
+            echo "executor.json file exists"
+          else
+            echo "executor.json file does not exist"
             exit 1
           fi
 

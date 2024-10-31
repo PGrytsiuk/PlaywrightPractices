@@ -4,11 +4,18 @@ import Configs.ConfigLoader;
 import Hooks.Setup;
 import Pages.LoginPage;
 import Utils.ScreenshotsAndRecordings;
+import io.qameta.allure.Description;
+import io.qameta.allure.Severity;
+import io.qameta.allure.SeverityLevel;
+import io.qameta.allure.Story;
 import org.testng.annotations.Test;
 import static Utils.ScreenshotsAndRecordings.setupContextWithVideo;
 
 public class InvalidLoginTest extends Setup {
     @Test(priority = 2)
+    @Story("Invalid login")
+    @Description("This test case verify if user is not able to login with invalid credentials")
+    @Severity(SeverityLevel.CRITICAL)
     void InvalidLoginCredentials(){
         try {
              setupContextWithVideo(browser, "INVALID_LOGIN");

@@ -3,6 +3,10 @@ package LangFitTests;
 import Pages.LoginPage;
 import Utils.ScreenshotsAndRecordings;
 import com.microsoft.playwright.*;
+import io.qameta.allure.Description;
+import io.qameta.allure.Severity;
+import io.qameta.allure.SeverityLevel;
+import io.qameta.allure.Story;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
@@ -49,6 +53,9 @@ public class ViewPortTest {
     }
 
     @Test(priority = 3, dataProvider = "combinedData")
+    @Story("Test viewports")
+    @Description("This test case verify if login page with different resolutions")
+    @Severity(SeverityLevel.NORMAL)
     public void InvalidLogin(int width, int height, String login, String password) {
         Playwright playwright = Playwright.create();
         Browser browser = playwright.chromium().launch(
