@@ -139,12 +139,12 @@ public class EmailsHandlingResetPasswordFlow {
             page.navigate(resetLink);
             // Verify in New Password title is present
             if (resetPass.newPasswordTitle()) {
-                resetPass.assertNewPasswordtitle("New password");
+                resetPass.assertNewPasswordTitle("New password");
             } else {
                 System.out.println("New password title is not visible");
             }
             // Verify that Send button is blocked by default
-            resetPass.sendButtonDisabledbyDefault();
+            resetPass.sendButtonDisabledByDefault();
             // Fill New password and confirm password fields
             resetPass.enteringNewPassword(newPassword, confirmPassword);
             // Verify Success Toast for Rest Password journey

@@ -6,12 +6,19 @@ import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertTha
 import Utils.ScreenshotsAndRecordings;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
+import io.qameta.allure.Description;
+import io.qameta.allure.Severity;
+import io.qameta.allure.SeverityLevel;
+import io.qameta.allure.Story;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
 public class TandCandDowloadAMobileppTest extends Setup {
 
     @Test(priority = 2)
+    @Story("Mobiles app pages(Duplicate, different realization)")
+    @Description("This test case verify if user is able to download the mobile app from App store and Play market(Duplicate of DownloadMobileAppSecondTest)")
+    @Severity(SeverityLevel.MINOR)
     void downloadMobileApps(){
 
         try {

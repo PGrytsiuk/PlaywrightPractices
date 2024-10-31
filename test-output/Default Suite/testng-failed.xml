@@ -5,8 +5,8 @@
     <classes>
       <class name="LangFitTests.DowloadMobileAppSecondTest">
         <methods>
-          <include name="downloadMobileApp"/>
           <include name="tearDown"/>
+          <include name="downloadMobileApp"/>
           <include name="setUp"/>
           <include name="closeContextAndAddScreenshotIfFail"/>
           <include name="createContextAndPage"/>
