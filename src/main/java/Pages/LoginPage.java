@@ -1,17 +1,13 @@
 
 package Pages;
 
-
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.WaitForSelectorState;
 import org.junit.Assert;
-
 import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
 
 public class LoginPage extends BasePage {
-
-
 
     private final Locator usernameField;
     private final Locator passwordField;
@@ -34,7 +30,6 @@ public class LoginPage extends BasePage {
     private final Locator ErrorToastResetPassword;
     private final Locator ResetPasswordErrorMessage;
     private final Locator Logo;
-
 
     public LoginPage(Page page) {
         super(page);
@@ -59,58 +54,44 @@ public class LoginPage extends BasePage {
         this.ResetPasswordSuccessMessage=page.locator("//h2[@class='valid-email-message ng-scope']");
         this.ErrorToastResetPassword=page.locator("//div[@class='toast toast-error']");
         this.ResetPasswordErrorMessage=page.locator("//div[@aria-label='Error']/following-sibling::div[1]");
-
-
-
     }
 
     public boolean logoIsPresent(){
         return Logo.isVisible();
-
     }
 
     public void clickLogo() {
         page.reload();
-
     }
-
 
     public void pageIsRefreshedAfterTappingLogo(String username, String password){
         enterUsername(username);
         enterPassword(password);
         clickLogo();
-
     }
-
 
     public String getUsernameValue(){
         return usernameField.inputValue();
-
     }
 
     public String  getPasswordValue(){
         return passwordField.inputValue();
-
     }
 
     public boolean usernameIsEmpty(){
         return getUsernameValue().isEmpty();
-
     }
 
     public boolean passwordIsEmpty(){
         return getPasswordValue().isEmpty();
-
     }
 
     public void tapForgotPassword() {
         ForgotPassword.click();
-
     }
 
     public boolean resetPasswordpopup() {
         return ResetPasswordpopup.isVisible();
-
     }
 
     public void assertResetPasswordMessage(String expectedMessage) {
@@ -124,7 +105,6 @@ public class LoginPage extends BasePage {
     public void clickSend() {
         Send.click();
     }
-
 
     public void assertPopupSuccessTitle(String expectedTitle) {
         String actualMessage = ResetPasswordSuccessMessage.textContent();
@@ -180,7 +160,6 @@ public class LoginPage extends BasePage {
             if (i < optionCount - 1) {
                 languageSelectordropdown();
             }
-
         }
     }
 
@@ -201,10 +180,8 @@ public class LoginPage extends BasePage {
         Assert.assertEquals(languageSelectorSize(), languageSelectorExpectedCount);
     }
 
-
     public int errorMessageSize(){
         return ErrorMessage.count();
-
     }
 
     public void assertErrorMessagesCount(){
@@ -227,7 +204,6 @@ public class LoginPage extends BasePage {
     public boolean alertAppear(){
         ToastAlert.isVisible();
         return true;
-
     }
     public void getToastMessageText(String expectedAlertMessage){
         assertThat(ToastMessage).hasText(expectedAlertMessage);
@@ -243,7 +219,6 @@ public class LoginPage extends BasePage {
         enterUsername(username);
         enterPassword(password);
         clickSignIn();
-
     }
 
     public void clickAppStoreRedirect(){

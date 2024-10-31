@@ -1,9 +1,9 @@
 package playWrightTests;
+
 import com.microsoft.playwright.*;
 import com.microsoft.playwright.options.AriaRole;
 import org.junit.Assert;
 import com.microsoft.playwright.BrowserType.LaunchOptions;
-
 import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -11,8 +11,6 @@ import java.util.List;
 import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
 
 public class DefaultLoginTest {
-
-
 
     public static void main(String[] args) {
 
@@ -32,11 +30,10 @@ public class DefaultLoginTest {
         page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Sign In")).click();
         /*Locator SignIn =page.locator("[aria-label='sign in']");*/
             //Field masking for screenshot
-            String timestamp = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
-            String screenshotPath = "./snaps/scr" + timestamp + ".png";
-            Page.ScreenshotOptions screenshotOptions = new Page.ScreenshotOptions();
-            page.screenshot(screenshotOptions.setPath(Paths.get(screenshotPath)).setFullPage(false).setMask(List.of(username)));
-
+        String timestamp = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
+        String screenshotPath = "./snaps/scr" + timestamp + ".png";
+        Page.ScreenshotOptions screenshotOptions = new Page.ScreenshotOptions();
+        page.screenshot(screenshotOptions.setPath(Paths.get(screenshotPath)).setFullPage(false).setMask(List.of(username)));
 
        /* SignIn.click();*/
         Locator Host = page.locator("//*[contains (@class, 'user-name')]");
@@ -45,13 +42,12 @@ public class DefaultLoginTest {
         String SomeText =page.locator("//*[contains (@class, 'lt-mobile-app-promo__title')]").textContent();
         System.out.println(SomeText);
 
-
         Locator profile = page.locator("//*[contains (@class, 'menu-button')]");
         profile.click();
         Locator EditProfile = page.locator("//*[contains (@aria-label, 'edit profile')]");
         EditProfile.click();
 
-       page.navigate("https://gym.langfit.net/profile");
+        page.navigate("https://gym.langfit.net/profile");
         Locator edit =page.locator("//*[contains (@md-svg-icon, 'lt-icon-edit')]");
         edit.click();
         String inputValue1 =page.locator("//*[contains (@name, 'firstName')]").inputValue();
@@ -62,10 +58,6 @@ public class DefaultLoginTest {
 
         page.close();
         browser.close();
-
-
-        }
-
+       }
     }
-
 }

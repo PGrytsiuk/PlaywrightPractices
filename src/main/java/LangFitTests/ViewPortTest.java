@@ -6,7 +6,6 @@ import com.microsoft.playwright.*;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
-
 import java.nio.file.Paths;
 
 @Listeners(Hooks.CustomListeners.class)
@@ -83,10 +82,7 @@ public class ViewPortTest {
         context.tracing().stop(new Tracing.StopOptions()
                 .setPath(Paths.get("trace.zip")));
 
-
         playwright.close();
-
-
     }
 
 }

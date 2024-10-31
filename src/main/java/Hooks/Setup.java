@@ -7,7 +7,6 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeSuite;
-
 import java.nio.file.Paths;
 
 public class Setup {
@@ -31,8 +30,9 @@ public class Setup {
 
     @BeforeMethod
     public void createContextAndPage() {
-        context = browser.newContext();
+        context = browser.newContext(new Browser.NewContextOptions().setAcceptDownloads(true));
         page = context.newPage(); // Initialize the page
+        page.setViewportSize(1920, 1080);
     }
 
     @AfterMethod

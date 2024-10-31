@@ -32,14 +32,18 @@ public class DowloadMobileAppSecondTest extends Setup {
             Page iOSAppsPage = pages.get(1);
             page = iOSAppsPage; // Set the current page to this tab for proper screenshot in case of failure
             System.out.println(iOSAppsPage.title());
-            Assert.assertEquals(iOSAppsPage.title(), "LangFit on the App Store", "iOS App Store title mismatch");
+            Assert.assertEquals(iOSAppsPage.textContent("h1"), "\n" +
+                    "          LangFit\n" +
+                    "            4+\n" +
+                    "        ", "iOS App Store h1 tag mismatch");
+
             System.out.println(iOSAppsPage.textContent("h1"));
 
             // Switch to the Play Market page
             Page playMarketPage = pages.get(2);
             page = playMarketPage; // Set the current page to this tab for proper screenshot in case of failure
             System.out.println(playMarketPage.title());
-            Assert.assertEquals(playMarketPage.title(), "LangFit on the Play Market", "Play Market title mismatch");
+            Assert.assertEquals(playMarketPage.title(), "LangFit on the Play market", "Play Market title mismatch");
             System.out.println(playMarketPage.textContent("h1"));
 
         } catch (Exception e) {

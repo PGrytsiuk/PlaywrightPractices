@@ -1,9 +1,7 @@
 package playWrightTests;
 
 import com.microsoft.playwright.*;
-
 import java.util.List;
-
 import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
 
 public class WindowsHandling {
@@ -65,9 +63,6 @@ public class WindowsHandling {
             Page userpage=context1.newPage();
             userpage.navigate("https://accounts.lambdatest.com/register?_gl=1*ydrenx*_gcl_au*ODA3NzgyNDgzLjE3Mjc1MzM4MTM.");
             context1.close();
-
-
-
         }
     }
 

@@ -6,14 +6,11 @@ import Pages.HomePage;
 import Pages.LoginPage;
 import com.microsoft.playwright.Page;
 import org.testng.annotations.Test;
-
 import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.UUID;
-
 import static Utils.ScreenshotsAndRecordings.setupContextWithVideo;
-
 
 public class ValidLoginTest extends Setup {
 
@@ -34,7 +31,6 @@ public class ValidLoginTest extends Setup {
         Page.ScreenshotOptions screenshotOptions = new Page.ScreenshotOptions();
         page.screenshot(screenshotOptions.setPath(Paths.get(screenshotPath)));
 
-
         LoginPage loginPage = new LoginPage(page);
         HomePage homePage = new HomePage(page);
         loginPage.login(username, password);
@@ -45,7 +41,6 @@ public class ValidLoginTest extends Setup {
         String uuid = UUID.randomUUID().toString();
         String screenshotPathFullPage = "./snaps/ValidLogin" + uuid + ".png";
         page.screenshot(screenshotOptions.setFullPage(true).setPath(Paths.get(screenshotPathFullPage)));
-
     }
 
 }

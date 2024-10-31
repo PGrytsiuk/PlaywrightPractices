@@ -5,7 +5,6 @@ import Pages.ResetPassword;
 import Utils.PasswordGenerator;
 import com.microsoft.playwright.Browser;
 import com.microsoft.playwright.Page;
-
 import javax.mail.*;
 import javax.mail.internet.MimeMultipart;
 import javax.mail.search.SubjectTerm;

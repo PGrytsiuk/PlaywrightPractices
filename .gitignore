@@ -36,3 +36,10 @@ build/
 
 ### Mac OS ###
 .DS_Store
+
+### Custom ignores ###
+trace.zip
+allure-results/
+test-output/
+videos/
+snaps/

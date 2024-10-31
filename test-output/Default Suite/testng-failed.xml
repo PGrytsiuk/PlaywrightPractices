@@ -3,12 +3,15 @@
 <suite name="Failed suite [Default Suite]" guice-stage="DEVELOPMENT">
   <test thread-count="5" name="PlaywrightPractices(failed)">
     <classes>
-      <class name="playWrightTests.AxREsultsTest">
+      <class name="LangFitTests.DowloadMobileAppSecondTest">
         <methods>
-          <include name="shouldNotHaveAutomaticallyDetectableAccessibilityIssues"/>
-          <include name="navigationMenuFlyoutShouldNotHaveAutomaticallyDetectableAccessibilityViolations"/>
+          <include name="downloadMobileApp"/>
+          <include name="tearDown"/>
+          <include name="setUp"/>
+          <include name="closeContextAndAddScreenshotIfFail"/>
+          <include name="createContextAndPage"/>
         </methods>
-      </class> <!-- playWrightTests.AxREsultsTest -->
+      </class> <!-- LangFitTests.DowloadMobileAppSecondTest -->
     </classes>
   </test> <!-- PlaywrightPractices(failed) -->
 </suite> <!-- Failed suite [Default Suite] -->

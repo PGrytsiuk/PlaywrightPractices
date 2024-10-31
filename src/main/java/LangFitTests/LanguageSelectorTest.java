@@ -46,7 +46,5 @@ public class LanguageSelectorTest extends Setup {
             System.err.println("An error occurred during theDowloadAMobilepp test: " + e.getMessage());
             e.printStackTrace();
         }
-
     }
-
 }

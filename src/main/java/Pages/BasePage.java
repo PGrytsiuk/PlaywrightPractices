@@ -7,5 +7,4 @@ public class BasePage {
     public BasePage(Page page) {
         this.page = page;
     }
-
 }

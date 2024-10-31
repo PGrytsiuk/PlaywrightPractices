@@ -2,8 +2,6 @@ package Pages;
 
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
-
-
 import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
 import static org.testng.Assert.assertTrue;
 
@@ -24,8 +22,6 @@ public class ResetPassword extends BasePage {
         this.SendButton=page.locator("//button[@aria-label='send']");
         this.SuccessToast=page.locator("//div[@class='toast toast-success']");
         this.SuccessToastMessage=page.locator("//div[normalize-space(text())='Password successfully changed']");
-
-
     }
 
     public void successToastIsVisible(){
@@ -35,7 +31,6 @@ public class ResetPassword extends BasePage {
     public void assertSuccessToast(String expectedTitle){
         assertThat(SuccessToastMessage).hasText(expectedTitle);
     }
-
 
     public boolean newPasswordTitle(){
         return NewPasswordTitle.isVisible();
@@ -47,17 +42,14 @@ public class ResetPassword extends BasePage {
 
     public void enterNewPassword(String newPassword){
         NewPasswordInput.fill(newPassword);
-
     }
 
     public void enterConfirmPassword(String confirmPassword){
         ConfirmPasswordInput.fill(confirmPassword);
-
     }
 
     public void clickSendButton(){
         SendButton.click();
-
     }
     public void sendButtonDisabledbyDefault(){
         assertTrue(SendButton.isDisabled(), "Button should be disabled by default.");
@@ -68,9 +60,5 @@ public class ResetPassword extends BasePage {
         enterNewPassword(newPassword);
         enterConfirmPassword(confirmPassword);
         clickSendButton();
-
     }
-
-
-
 }
