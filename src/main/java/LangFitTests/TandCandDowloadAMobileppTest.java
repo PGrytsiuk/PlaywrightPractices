@@ -2,16 +2,12 @@ package LangFitTests;
 
 import Hooks.Setup;
 import Pages.LoginPage;
-
 import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
-
 import Utils.ScreenshotsAndRecordings;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import org.testng.Assert;
 import org.testng.annotations.Test;
-
-
 
 public class TandCandDowloadAMobileppTest extends Setup {
 
@@ -27,6 +23,7 @@ public class TandCandDowloadAMobileppTest extends Setup {
             TermsAndCondtion.waitForLoadState();
             System.out.println(TermsAndCondtion.title());
             TermsAndCondtion.close();
+
 
             //Tap on the App Store icon
             Page AppStorePage = page.context().waitForPage(loginPage::clickAppStoreRedirect);
@@ -50,15 +47,9 @@ public class TandCandDowloadAMobileppTest extends Setup {
 
             PlayMarketPage.close();
 
-
         } catch (Exception e){
             System.err.println("An error occurred during theDowloadAMobilepp test: " + e.getMessage());
             e.printStackTrace();
         }
-
-
-
     }
-
-
 }

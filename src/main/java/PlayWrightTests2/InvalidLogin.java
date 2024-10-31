@@ -4,10 +4,7 @@ import Pages.LoginPage;
 import Utils.ScreenshotsAndRecordings;
 import com.microsoft.playwright.*;
 
-
-
 public class InvalidLogin {
-
 
     public static void main(String[] args) {
 
@@ -37,8 +34,6 @@ public class InvalidLogin {
         context.close();
         browser.close();
         playwright.close();
-
-
     }
 
 }

@@ -16,10 +16,7 @@ public class DropDownsHandling {
             );
             Page page = browser.newPage();
 
-
-
             page.navigate("https://www.lambdatest.com/selenium-playground/select-dropdown-demo");
-
 
             String path ="#select-demo";
             Locator dropdown =page.locator(path).first();
@@ -46,9 +43,6 @@ public class DropDownsHandling {
             }*/
            allOptions.forEach(System.out::println);
 
-
-
-
             page.navigate("https://designsystem.digital.gov/patterns/create-a-user-profile/address/");
             Locator but = page.locator("//button[contains (@aria-label, 'Toggle the dropdown list')]").first();
             but.click();
@@ -57,9 +51,7 @@ public class DropDownsHandling {
             selectOption.click();
             assertThat(selectOption).containsText("AL - Alabama");
             System.out.println(selectOption.textContent()+" Passed");
-
-            }
         }
-
     }
+}
 

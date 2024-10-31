@@ -11,12 +11,9 @@ import org.slf4j.LoggerFactory;
 import org.testng.annotations.Test;
 import org.testng.Assert;
 
-
-
 public class LogoTest extends Setup {
 
     private static final Logger logger = LoggerFactory.getLogger(LogoTest.class);
-
 
     @Test(priority = 4)
     @Description("This test case verify that page is refreshed after tapping on Logo image")
@@ -42,17 +39,9 @@ public class LogoTest extends Setup {
             logger.info("Assert that fields are refreshed");
             Assert.assertTrue(login.usernameIsEmpty() &&  login.passwordIsEmpty(), "Username and Password fields are empty");
 
-
-
-
         }catch (Exception e){
             System.err.println("An error occurred during the InvalidLoginCredentials test: " + e.getMessage());
             e.printStackTrace();
         }
-
-
-
     }
-
-
 }

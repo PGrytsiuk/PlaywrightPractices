@@ -6,7 +6,6 @@ import com.microsoft.playwright.*;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
-
 import java.nio.file.Paths;
 
 @Listeners(Hooks.CustomListeners.class)
@@ -14,7 +13,6 @@ public class NGTest {
 
     @DataProvider(name = "Invalid users")
     public Object[][] InvalidUsers() {
-
 
         return new Object[][]{{"1pavlo_grytsiuk1233", "pgry2412123"},
                 {"2pavlo_grytsiuk1235", "pgry24121223"},
@@ -56,8 +54,6 @@ public class NGTest {
 
 
         playwright.close();
-
-
     }
 
 }
