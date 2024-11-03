@@ -55,16 +55,22 @@ jobs:
       - name: Ensure browsers are installed
         run: mvn exec:java -e -D exec.mainClass=com.microsoft.playwright.CLI -D exec.args="install --with-deps"
 
+      - name: Download Allure History
+        uses: actions/download-artifact@v3
+        with:
+          name: allure-history
+          path: allure-results/history
+
       - name: Set up Allure Environment and Executor
         run: |
           mkdir -p allure-results
           
           # Create environment.properties file
           echo "Browser=Chrome" >> allure-results/environment.properties
-          echo "URL=https://example.com" >> allure-results/environment.properties
+          echo "URL=https://gym.langfit.net/login" >> allure-results/environment.properties
           echo "Operating System=${{ runner.os }}" >> allure-results/environment.properties
-          echo "Java Version=${{ steps.setup-java.outputs.java-version }}" >> allure-results/environment.properties
-          
+          echo "Java Version=22" >> allure-results/environment.properties
+
           # Create executor.json file
           echo '{' > allure-results/executor.json
           echo '  "name": "GitHub Actions",' >> allure-results/executor.json
@@ -119,6 +125,12 @@ jobs:
             echo "Allure report directory does not exist"
             exit 1
           fi
+
+      - name: Save Allure History
+        uses: actions/upload-artifact@v3
+        with:
+          name: allure-history
+          path: allure-report/history
 
       - name: Deploy Allure Report to GitHub Pages
         if: ${{ github.event_name == 'push' }} # Only deploy on push events

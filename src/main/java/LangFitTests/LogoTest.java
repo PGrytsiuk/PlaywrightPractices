@@ -9,10 +9,16 @@ import io.qameta.allure.SeverityLevel;
 import io.qameta.allure.Story;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import org.testng.Assert;
 
+@Listeners(Hooks.CustomListeners.class)
 public class LogoTest extends Setup {
+
+    public LogoTest(String browserType) {
+        super(browserType); // Pass the browser type to the Setup constructor
+    }
 
     private static final Logger logger = LoggerFactory.getLogger(LogoTest.class);
 
@@ -44,6 +50,7 @@ public class LogoTest extends Setup {
         }catch (Exception e){
             System.err.println("An error occurred during the InvalidLoginCredentials test: " + e.getMessage());
             e.printStackTrace();
+
         }
     }
 }

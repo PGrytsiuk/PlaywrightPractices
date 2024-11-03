@@ -51,6 +51,7 @@ public class DropDownsHandling {
             selectOption.click();
             assertThat(selectOption).containsText("AL - Alabama");
             System.out.println(selectOption.textContent()+" Passed");
+
         }
     }
 }

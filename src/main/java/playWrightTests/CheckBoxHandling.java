@@ -49,6 +49,7 @@ public class CheckBoxHandling {
             browser.close();
         } catch (Exception e) {
             e.fillInStackTrace();
+
         }
     }
 }

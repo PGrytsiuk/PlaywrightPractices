@@ -34,6 +34,6 @@ public class InvalidLogin {
         context.close();
         browser.close();
         playwright.close();
-    }
 
+    }
 }

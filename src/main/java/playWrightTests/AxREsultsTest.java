@@ -49,5 +49,6 @@ public class AxREsultsTest {
                 .analyze();
 
         assertEquals(Collections.emptyList(), accessibilityScanResults.getViolations());
+
     }
 }

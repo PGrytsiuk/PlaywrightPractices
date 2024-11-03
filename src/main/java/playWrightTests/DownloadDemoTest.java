@@ -5,8 +5,11 @@ import com.microsoft.playwright.Download;
 import org.testng.annotations.Test;
 import java.nio.file.Path;
 
-
 public class DownloadDemoTest extends Setup {
+
+    public DownloadDemoTest(String browserType) {
+        super(browserType); // Pass the browser type to the Setup constructor
+    }
 
     @Test
     public void downloadTestWithHandler(){
@@ -58,11 +61,12 @@ public class DownloadDemoTest extends Setup {
             );
 
             System.out.println(download.path());
-           /* download.saveAs(Paths.get(new File("C:/Users/pgryt/Downloads/terms_of_use-2.pdf").toURI()));*/
+       /*    download.saveAs(Paths.get(new File("C:/Users/pgryt/Downloads/terms_of_use-2.pdf").toURI()));*/
 
         }catch (Exception e) {
             System.err.println("An error occurred during the InvalidLoginCredentials test: " + e.getMessage());
             e.printStackTrace();
+
         }
     }
 }

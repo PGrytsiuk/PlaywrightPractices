@@ -47,5 +47,6 @@ public class ValidLogin {
         page.close();
         browser.close();
         playwright.close();
+
     }
 }
