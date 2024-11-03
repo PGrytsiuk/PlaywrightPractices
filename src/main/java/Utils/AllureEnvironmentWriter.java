@@ -42,4 +42,11 @@ public class AllureEnvironmentWriter {
 
         return browserName + " " + browserVersion;
     }
+
+    public static void main(String[] args) {
+        try (Playwright playwright = Playwright.create()) {
+            Browser browser = playwright.chromium().launch();
+            writeEnvironment(playwright, browser);
+        }
+    }
 }
