@@ -39,7 +39,7 @@ jobs:
         uses: actions/setup-java@v3
         with:
           distribution: 'temurin'
-          java-version: '22'
+          java-version: '17'
 
       - name: Set up Node.js (for Allure CLI and other dependencies)
         uses: actions/setup-node@v3
@@ -55,12 +55,6 @@ jobs:
       - name: Ensure browsers are installed
         run: mvn exec:java -e -D exec.mainClass=com.microsoft.playwright.CLI -D exec.args="install --with-deps"
 
-      - name: Download Allure History
-        uses: actions/download-artifact@v3
-        with:
-          name: allure-history
-          path: allure-results/history
-
       - name: Set up Allure Environment and Executor
         run: |
           mkdir -p allure-results
@@ -69,7 +63,7 @@ jobs:
           echo "Browser=Chrome" >> allure-results/environment.properties
           echo "URL=https://gym.langfit.net/login" >> allure-results/environment.properties
           echo "Operating System=${{ runner.os }}" >> allure-results/environment.properties
-          echo "Java Version=22" >> allure-results/environment.properties
+          echo "Java Version=17" >> allure-results/environment.properties
 
           # Create executor.json file
           echo '{' > allure-results/executor.json
@@ -84,7 +78,7 @@ jobs:
           echo '}' >> allure-results/executor.json
 
       - name: Run tests
-        run: xvfb-run --auto-servernum --server-args='-screen 0 1024x768x24' mvn test || true
+        run: xvfb-run --auto-servernum --server-args='-screen 0 1024x768x24' mvn test
         env:
           CI: true
 
@@ -125,12 +119,6 @@ jobs:
             echo "Allure report directory does not exist"
             exit 1
           fi
-
-      - name: Save Allure History
-        uses: actions/upload-artifact@v3
-        with:
-          name: allure-history
-          path: allure-report/history
 
       - name: Deploy Allure Report to GitHub Pages
         if: ${{ github.event_name == 'push' }} # Only deploy on push events
