@@ -37,7 +37,9 @@ public class TandCandDowloadAMobileppTest extends Setup {
             Download download = page.waitForDownload(loginPage::termsAndConditions);
             Assert.assertNotNull(download, "Download object is null");
             System.out.println("Download path: " + download.path());
+/*
             TermsAndCondtion.close();
+*/
 
             //Tap on the App Store icon
             Page AppStorePage = page.context().waitForPage(loginPage::clickAppStoreRedirect);
@@ -47,7 +49,9 @@ public class TandCandDowloadAMobileppTest extends Setup {
             assertThat(LangFitIOSicon).hasText("LangFit 4+");
 
             //Close App Store tab
+/*
             AppStorePage.close();
+*/
 
             //Back to Langfit and tap on the Android icon
             Page PlayMarketPage = page.context().waitForPage(loginPage::clickPlayMarketRedirect);
@@ -56,8 +60,10 @@ public class TandCandDowloadAMobileppTest extends Setup {
             Assert.assertEquals(PlayMarketPage.title(), "LangFit on the Play Market");
             Locator LangFitAndroid = PlayMarketPage.locator("//span[text()='LangFit']");
             assertThat(LangFitAndroid).hasText("LangFit");
-
+//
+/*
             PlayMarketPage.close();
+*/
 
         } catch (Exception e){
             System.err.println("An error occurred during theDowloadAMobilepp test: " + e.getMessage());
