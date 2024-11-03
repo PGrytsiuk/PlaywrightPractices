@@ -45,5 +45,6 @@ public class PasswordGenerator {
         PasswordGenerator passwordGenerator = new PasswordGenerator();
         String newPassword = passwordGenerator.generateUniquePassword();
         System.out.println("Generated Password: " + newPassword);
+
     }
 }

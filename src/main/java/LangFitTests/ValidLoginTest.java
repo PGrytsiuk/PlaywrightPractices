@@ -9,6 +9,7 @@ import io.qameta.allure.Description;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import io.qameta.allure.Story;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
@@ -16,7 +17,12 @@ import java.util.Date;
 import java.util.UUID;
 import static Utils.ScreenshotsAndRecordings.setupContextWithVideo;
 
+@Listeners(Hooks.CustomListeners.class)
 public class ValidLoginTest extends Setup {
+
+    public ValidLoginTest(String browserType) {
+        super(browserType); // Pass the browser type to the Setup constructor
+    }
 
     @Test(priority = 5)
     @Story("Valid login")
@@ -48,6 +54,6 @@ public class ValidLoginTest extends Setup {
         String uuid = UUID.randomUUID().toString();
         String screenshotPathFullPage = "./snaps/ValidLogin" + uuid + ".png";
         page.screenshot(screenshotOptions.setFullPage(true).setPath(Paths.get(screenshotPathFullPage)));
-    }
 
+    }
 }

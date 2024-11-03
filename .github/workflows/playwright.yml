@@ -19,6 +19,34 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            libwoff1 \
+            libopus0 \
+            libvpx7 \
+            libevent-2.1-7 \
+            libgstreamer-plugins-base1.0-0 \
+            libgstreamer1.0-0 \
+            libgstreamer-plugins-good1.0-0 \
+            libgstreamer-gl1.0-0 \
+            libgstreamer-plugins-bad1.0-0 \
+            gstreamer1.0-libav \
+            gstreamer1.0-gl \
+            gstreamer1.0-gtk3 \
+            gstreamer1.0-pulseaudio \
+            gstreamer1.0-tools \
+            gstreamer1.0-x \
+            libharfbuzz-icu0 \
+            libhyphen0 \
+            libgles2-mesa \
+            libx264-dev \
+            flite1-dev \
+            libgstreamer-plugins-bad1.0-0 \
+            libmanette-0.2-0 \
+            libsndio-dev
+
       - name: Cache Maven repository
         uses: actions/cache@v2
         with:
@@ -60,10 +88,8 @@ jobs:
           mkdir -p allure-results
           
           # Create environment.properties file
-          echo "Browser=Chrome" >> allure-results/environment.properties
-          echo "URL=https://example.com" >> allure-results/environment.properties
-          echo "Operating System=${{ runner.os }}" >> allure-results/environment.properties
-          echo "Java Version=${{ steps.setup-java.outputs.java-version }}" >> allure-results/environment.properties
+          # Run the environment writer class to generate environment.properties
+          mvn exec:java -Dexec.mainClass="Utils.AllureEnvironmentWriter"
           
           # Create executor.json file
           echo '{' > allure-results/executor.json

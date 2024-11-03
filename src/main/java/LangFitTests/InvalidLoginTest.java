@@ -8,15 +8,22 @@ import io.qameta.allure.Description;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import io.qameta.allure.Story;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import static Utils.ScreenshotsAndRecordings.setupContextWithVideo;
 
+@Listeners(Hooks.CustomListeners.class)
 public class InvalidLoginTest extends Setup {
+
+    public InvalidLoginTest(String browserType) {
+        super(browserType); // Pass the browser type to the Setup constructor
+    }
+
     @Test(priority = 2)
     @Story("Invalid login")
     @Description("This test case verify if user is not able to login with invalid credentials")
     @Severity(SeverityLevel.CRITICAL)
-    void InvalidLoginCredentials(){
+    public void InvalidLoginCredentials(){
         try {
              setupContextWithVideo(browser, "INVALID_LOGIN");
              ConfigLoader config = new ConfigLoader();
@@ -48,6 +55,7 @@ public class InvalidLoginTest extends Setup {
         }catch (Exception e){
             System.err.println("An error occurred during the InvalidLoginCredentials test: " + e.getMessage());
             e.printStackTrace();
+
         }
     }
 }

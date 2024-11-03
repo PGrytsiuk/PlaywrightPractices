@@ -8,9 +8,15 @@ import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import io.qameta.allure.Story;
 import org.testng.annotations.DataProvider;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
+@Listeners(Hooks.CustomListeners.class)
 public class ForgotPassTest extends Setup {
+
+    public ForgotPassTest(String browserType) {
+        super(browserType); // Pass the browser type to the Setup constructor
+    }
 
     @DataProvider(name="EmailOrusername")
     public Object[][] EmailOrUsername() {
@@ -61,8 +67,7 @@ public class ForgotPassTest extends Setup {
         } catch (Exception e) {
 
             System.err.println("An error occurred during theDowloadAMobilepp test: " + e.getMessage());
+
         }
-
     }
-
 }
