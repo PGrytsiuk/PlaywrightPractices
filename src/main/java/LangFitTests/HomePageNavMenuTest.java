@@ -7,6 +7,7 @@ import io.qameta.allure.Description;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import io.qameta.allure.Story;
+import org.testng.Assert;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
@@ -25,6 +26,7 @@ public class HomePageNavMenuTest extends SetupForLoggedUser {
     @Severity(SeverityLevel.MINOR)
     public void NavMenuTest(){
         try{
+            page.navigate("https://gym.langfit.net/");
 
             //RandomCheck
            Locator navMenuLocator = page.locator("(//div[contains(@class,'lt-join-lesson-button ng-isolate-scope')]//button)[1]");

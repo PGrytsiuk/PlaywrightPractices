@@ -57,21 +57,8 @@ public class SetupForLoggedUser {
             if (browser == null) {
                 throw new RuntimeException("Browser initialization failed!");
             }
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    @BeforeMethod
-    public void createContextAndPage() {
-        try {
-            if (browser == null) {
-                throw new RuntimeException("Browser instance is null in BeforeMethod. Ensure setUp was called correctly.");
-            }
             context = browser.newContext(new Browser.NewContextOptions().setAcceptDownloads(true));
             page = context.newPage();
-            page.setViewportSize(1920, 1080);
 
             ConfigLoader config = new ConfigLoader();
             String username = config.getProperty("Valid_username");
@@ -81,10 +68,23 @@ public class SetupForLoggedUser {
 
             LoginPage loginPage = new LoginPage(page);
             loginPage.login(username, password);
-            /*Assert.assertEquals(page.url(), "https://gym.langfit.net/");*/
 
             context.storageState(new BrowserContext.StorageStateOptions().setPath(Paths.get("state.json")));
+            context.close();
 
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @BeforeMethod
+    public void createContextAndPage() {
+        try {
+            context = browser.newContext(
+                    new Browser.NewContextOptions().setStorageStatePath(Paths.get("state.json"))
+            );
+            page = context.newPage();
+            page.setViewportSize(1920, 1080);
 
         } catch (Exception e) {
             e.printStackTrace();
