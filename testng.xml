@@ -1,57 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="All Test Suite" parallel="classes" thread-count="1">
+<suite name="All Test Suite" parallel="tests" thread-count="1" verbose="2">
     <listeners>
-        <listener class-name="Hooks.CustomListeners">
-        </listener>
+        <listener class-name="Hooks.CustomListeners"/>
     </listeners>
-    <test verbose="2" name="C:\Users\pgryt\IdeaProjects\PlaywrightPractices">
+
+    <!-- Test for Chrome -->
+    <test name="Chrome Tests">
+        <parameter name="browser" value="chromium"/>
         <classes>
-            <class name="LangFitTests.InvalidLoginTest">
-                <methods>
-                    <include name="InvalidLoginCredentials"/>
-                </methods>
-            </class>
-            <class name="LangFitTests.LanguageSelectorTest">
-                <methods>
-                    <include name="languageSelectorTest"/>
-                </methods>
-            </class>
-            <class name="LangFitTests.ValidLoginTest">
-                <methods>
-                    <include name="validLoginTest"/>
-                </methods>
-            </class>
-            <class name="LangFitTests.ForgotPassTest">
-                <methods>
-                    <include name="ForgotPassword"/>
-                </methods>
-            </class>
-            <class name="LangFitTests.NGTest">
-                <methods>
-                    <include name="InvalidLogin"/>
-                </methods>
-            </class>
-            <class name="LangFitTests.DowloadMobileAppSecondTest">
-                <methods>
-                    <include name="downloadMobileApp"/>
-                </methods>
-            </class>
-            <class name="LangFitTests.TandCandDowloadAMobileppTest">
-                <methods>
-                    <include name="downloadMobileApps"/>
-                </methods>
-            </class>
-            <class name="LangFitTests.ViewPortTest">
-                <methods>
-                    <include name="InvalidLogin"/>
-                </methods>
-            </class>
-            <class name="LangFitTests.LogoTest">
-                <methods>
-                    <include name="logoTest"/>
-                </methods>
-            </class>
+            <class name="Hooks.TestFactory"/>
+        </classes>
+    </test>
+
+    <!-- Test for Firefox -->
+    <test name="Firefox Tests">
+        <parameter name="browser" value="firefox"/>
+        <classes>
+            <class name="Hooks.TestFactory"/>
+        </classes>
+    </test>
+
+    <!-- Test for WebKit -->
+    <test name="WebKit Tests">
+        <parameter name="browser" value="webkit"/>
+        <classes>
+            <class name="Hooks.TestFactory"/>
         </classes>
     </test>
 </suite>

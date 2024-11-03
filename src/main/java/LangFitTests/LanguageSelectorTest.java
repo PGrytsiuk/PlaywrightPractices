@@ -16,6 +16,10 @@ import static Utils.ScreenshotsAndRecordings.setupContextWithVideo;
 @Listeners(Hooks.CustomListeners.class)
 public class LanguageSelectorTest extends Setup {
 
+    public LanguageSelectorTest(String browserType) {
+        super(browserType); // Pass the browser type to the Setup constructor
+    }
+
     @Test(priority = 2)
     @Story("Language selector")
     @Description("This test case verify the welcome message text when selection new language")
@@ -52,6 +56,7 @@ public class LanguageSelectorTest extends Setup {
         }catch (Exception e){
             System.err.println("An error occurred during theDowloadAMobilepp test: " + e.getMessage());
             e.printStackTrace();
+
         }
     }
 }

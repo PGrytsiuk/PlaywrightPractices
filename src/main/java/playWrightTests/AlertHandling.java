@@ -42,6 +42,7 @@ public class AlertHandling {
             System.out.println(page.locator("#prompt-demo").textContent());
 
             page.waitForTimeout(3000);
+
         }
     }
 }

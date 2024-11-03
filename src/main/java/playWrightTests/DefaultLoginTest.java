@@ -58,6 +58,7 @@ public class DefaultLoginTest {
 
         page.close();
         browser.close();
+
        }
     }
 }

@@ -39,6 +39,7 @@ build/
 
 ### Custom ignores ###
 trace.zip
+allure-report/
 allure-results/
 test-output/
 videos/

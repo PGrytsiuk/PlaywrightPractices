@@ -8,11 +8,16 @@ import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import io.qameta.allure.Story;
 import org.testng.Assert;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import java.util.List;
 
+@Listeners(Hooks.CustomListeners.class)
 public class DowloadMobileAppSecondTest extends Setup {
 
+    public DowloadMobileAppSecondTest(String browserType) {
+        super(browserType); // Pass the browser type to the Setup constructor
+    }
 
     @Test(priority = 3, invocationCount = 2)
     @Story("Mobiles app pages")
@@ -56,6 +61,7 @@ public class DowloadMobileAppSecondTest extends Setup {
         } catch (Exception e) {
             System.err.println("An error occurred during the downloadMobileApp test: " + e.getMessage());
             e.printStackTrace();
+
         }
     }
 }

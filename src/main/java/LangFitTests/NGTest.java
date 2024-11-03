@@ -1,5 +1,6 @@
 package LangFitTests;
 
+import Hooks.Setup;
 import Pages.LoginPage;
 import Utils.ScreenshotsAndRecordings;
 import com.microsoft.playwright.*;
@@ -13,7 +14,11 @@ import org.testng.annotations.Test;
 import java.nio.file.Paths;
 
 @Listeners(Hooks.CustomListeners.class)
-public class NGTest {
+public class NGTest extends Setup {
+
+    public NGTest(String browserType) {
+        super(browserType); // Pass the browser type to the Setup constructor
+    }
 
     @DataProvider(name = "Invalid users")
     public Object[][] InvalidUsers() {
@@ -28,12 +33,7 @@ public class NGTest {
     @Description("This test case verify if user is not able to login with invalid credentials with different set of data")
     @Severity(SeverityLevel.CRITICAL)
     public void InvalidLogin(String login, String password) {
-        Playwright playwright = Playwright.create();
-        Browser browser = playwright.chromium().launch(
-                new BrowserType.LaunchOptions().setHeadless(true)
-        );
         BrowserContext context = ScreenshotsAndRecordings.VideoCapture(browser, "Invalid Login");
-        Page page = context.newPage();
 
         // Start tracing before creating / navigating a page.
         context.tracing().start(new Tracing.StartOptions()
@@ -59,8 +59,5 @@ public class NGTest {
         context.tracing().stop(new Tracing.StopOptions()
                 .setPath(Paths.get("trace.zip")));
 
-
-        playwright.close();
     }
-
 }

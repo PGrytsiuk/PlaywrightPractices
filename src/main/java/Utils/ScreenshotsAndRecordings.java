@@ -33,5 +33,6 @@ public class ScreenshotsAndRecordings {
                         .setRecordVideoDir(Paths.get(videoCapturePath))
                         .setRecordVideoSize(new RecordVideoSize(1280, 720))
         );
+
     }
 }
