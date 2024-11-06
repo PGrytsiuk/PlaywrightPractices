@@ -33,7 +33,6 @@ public class TandCandDowloadAMobileppTest extends Setup {
 
             LoginPage loginPage = new LoginPage(page);
             //Tap on the Terms and conditions link
-            Page TermsAndCondtion = page.context().waitForPage(loginPage::termsAndConditions);
             Download download = page.waitForDownload(loginPage::termsAndConditions);
             Assert.assertNotNull(download, "Download object is null");
             System.out.println("Download path: " + download.path());

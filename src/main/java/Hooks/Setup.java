@@ -14,7 +14,6 @@ public class Setup {
     protected static Browser browser;
     protected static BrowserContext context;
     protected static Page page;
-
     protected String browserType;
 
     public Setup() {}
@@ -27,47 +26,33 @@ public class Setup {
     @Parameters("browser")
     public void setUp(@Optional("chromium") String browserType) {
         this.browserType = browserType;
-        try {
-            if (playwright == null) {
-                playwright = Playwright.create();
-            }
-            BrowserType.LaunchOptions options = new BrowserType.LaunchOptions().setHeadless(true);
 
-            switch (browserType.toLowerCase()) {
-                case "firefox":
-                    browser = playwright.firefox().launch(options);
-                    break;
-                case "webkit":
-                    browser = playwright.webkit().launch(options);
-                    break;
-                case "chromium":
-                default:
-                    browser = playwright.chromium().launch(options);
-            }
+        // Check for Playwright initialization
+        playwright = Playwright.create();
+        BrowserType.LaunchOptions options = new BrowserType.LaunchOptions().setHeadless(false);
 
-            // Write Allure environment information
-            AllureEnvironmentWriter.writeEnvironment(playwright, browser);
-
-            if (browser == null) {
-                throw new RuntimeException("Browser initialization failed!");
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
+        switch (browserType.toLowerCase()) {
+            case "firefox":
+                browser = playwright.firefox().launch(options);
+                break;
+            case "webkit":
+                browser = playwright.webkit().launch(options);
+                break;
+            case "chromium":
+            default:
+                browser = playwright.chromium().launch(options);
         }
+
+        // Write Allure environment information
+        AllureEnvironmentWriter.writeEnvironment(playwright, browser);
     }
 
     @BeforeMethod
     public void createContextAndPage() {
-        try {
-            if (browser == null) {
-                throw new RuntimeException("Browser instance is null in BeforeMethod. Ensure setUp was called correctly.");
-            }
-            context = browser.newContext(new Browser.NewContextOptions().setAcceptDownloads(true));
-            page = context.newPage();
-            page.setViewportSize(1920, 1080);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        String baseURL = "https://gym.langfit.net/";
+        context = browser.newContext(new Browser.NewContextOptions().setBaseURL(baseURL).setAcceptDownloads(false));
+        page = context.newPage();
+        page.setViewportSize(1920, 1080);
     }
 
     @AfterMethod
@@ -76,10 +61,9 @@ public class Setup {
             if (result.getStatus() == ITestResult.FAILURE) {
                 takeScreenshotForPage(page, result.getName());
             }
+        } finally {
             if (page != null) page.close();
             if (context != null) context.close();
-        } catch (Exception e) {
-            e.printStackTrace();
         }
     }
 
@@ -99,20 +83,18 @@ public class Setup {
 
     @AfterSuite(alwaysRun = true)
     public void tearDown() {
-        try {
-            if (browser != null) {
-                for (BrowserContext ctx : browser.contexts()) {
-                    for (Page p : ctx.pages()) {
-                        if (p != null) p.close();
-                    }
-                    ctx.close();
+        if (browser != null) {
+            for (BrowserContext ctx : browser.contexts()) {
+                for (Page p : ctx.pages()) {
+                    if (p != null) p.close();
                 }
-                browser.close();
+                ctx.close();
             }
+            browser.close();
+        }
 
-            if (playwright != null) playwright.close();
-        } catch (Exception e) {
-            e.printStackTrace();
+        if (playwright != null) {
+            playwright.close();
         }
     }
 }

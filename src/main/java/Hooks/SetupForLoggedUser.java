@@ -1,18 +1,13 @@
 package Hooks;
 
 import Configs.ConfigLoader;
-import Pages.HomePage;
 import Pages.LoginPage;
 import Utils.AllureEnvironmentWriter;
 import com.microsoft.playwright.*;
 import io.qameta.allure.Attachment;
-import org.testng.Assert;
 import org.testng.ITestResult;
 import org.testng.annotations.*;
-
 import java.nio.file.Paths;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 public class SetupForLoggedUser {
 
@@ -33,75 +28,60 @@ public class SetupForLoggedUser {
     @Parameters("browser")
     public void setUp(@Optional("chromium") String browserType) {
         this.browserType = browserType;
-        try {
-            if (playwright == null) {
-                playwright = Playwright.create();
-            }
-            BrowserType.LaunchOptions options = new BrowserType.LaunchOptions().setHeadless(false);
+        initPlaywright();
+        browser = launchBrowser();
+        AllureEnvironmentWriter.writeEnvironment(playwright, browser);
 
-            switch (browserType.toLowerCase()) {
-                case "firefox":
-                    browser = playwright.firefox().launch(options);
-                    break;
-                case "webkit":
-                    browser = playwright.webkit().launch(options);
-                    break;
-                case "chromium":
-                default:
-                    browser = playwright.chromium().launch(options);
-            }
+        context = browser.newContext(new Browser.NewContextOptions().setAcceptDownloads(true));
+        page = context.newPage();
 
-            // Write Allure environment information
-            AllureEnvironmentWriter.writeEnvironment(playwright, browser);
+        ConfigLoader config = new ConfigLoader();
+        String username = config.getProperty("Valid_username");
+        String password = config.getProperty("latestPassword");
 
-            if (browser == null) {
-                throw new RuntimeException("Browser initialization failed!");
-            }
-            context = browser.newContext(new Browser.NewContextOptions().setAcceptDownloads(true));
-            page = context.newPage();
+        loginAndSaveState(username, password);
+    }
 
-            ConfigLoader config = new ConfigLoader();
-            String username = config.getProperty("Valid_username");
-            String password = config.getProperty("latestPassword");
+    private void initPlaywright() {
+        playwright = Playwright.create();
+    }
 
-            page.navigate("https://gym.langfit.net/login");
+    private Browser launchBrowser() {
+        BrowserType.LaunchOptions options = new BrowserType.LaunchOptions().setHeadless(true);
 
-            LoginPage loginPage = new LoginPage(page);
-            loginPage.login(username, password);
+        return switch (browserType.toLowerCase()) {
+            case "firefox" -> playwright.firefox().launch(options);
+            case "webkit" -> playwright.webkit().launch(options);
+            default -> playwright.chromium().launch(options);
+        };
+    }
 
-            context.storageState(new BrowserContext.StorageStateOptions().setPath(Paths.get("state.json")));
-            context.close();
+    private void loginAndSaveState(String username, String password) {
+        page.navigate("https://gym.langfit.net/login");
 
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        LoginPage loginPage = new LoginPage(page);
+        loginPage.login(username, password);
+
+        context.storageState(new BrowserContext.StorageStateOptions().setPath(Paths.get("state.json")));
+        context.close();
     }
 
     @BeforeMethod
     public void createContextAndPage() {
-        try {
-            context = browser.newContext(
-                    new Browser.NewContextOptions().setStorageStatePath(Paths.get("state.json"))
-            );
-            page = context.newPage();
-            page.setViewportSize(1920, 1080);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        context = browser.newContext(
+                new Browser.NewContextOptions().setStorageStatePath(Paths.get("state.json"))
+        );
+        page = context.newPage();
+        page.setViewportSize(1920, 1080);
     }
 
     @AfterMethod
     public void closeContextAndAddScreenshotIfFail(ITestResult result) {
-        try {
-            if (result.getStatus() == ITestResult.FAILURE) {
-                takeScreenshotForPage(page, result.getName());
-            }
-            if (page != null) page.close();
-            if (context != null) context.close();
-        } catch (Exception e) {
-            e.printStackTrace();
+        if (result.getStatus() == ITestResult.FAILURE) {
+            takeScreenshotForPage(page, result.getName());
         }
+        if (page != null) page.close();
+        if (context != null) context.close();
     }
 
     private void takeScreenshotForPage(Page page, String testName) {
@@ -120,20 +100,18 @@ public class SetupForLoggedUser {
 
     @AfterSuite(alwaysRun = true)
     public void tearDown() {
-        try {
-            if (browser != null) {
-                for (BrowserContext ctx : browser.contexts()) {
-                    for (Page p : ctx.pages()) {
-                        if (p != null) p.close();
-                    }
-                    ctx.close();
+        if (browser != null) {
+            for (BrowserContext ctx : browser.contexts()) {
+                for (Page p : ctx.pages()) {
+                    if (p != null) p.close();
                 }
-                browser.close();
+                ctx.close();
             }
+            browser.close();
+        }
 
-            if (playwright != null) playwright.close();
-        } catch (Exception e) {
-            e.printStackTrace();
+        if (playwright != null) {
+            playwright.close();
         }
     }
 }
