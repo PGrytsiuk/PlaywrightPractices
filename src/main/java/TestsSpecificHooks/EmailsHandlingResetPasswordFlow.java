@@ -1,10 +1,14 @@
-package Hooks;
+package TestsSpecificHooks;
 
-import Configs.ConfigLoader;
+import Data.TestData;
 import Pages.ResetPassword;
 import Utils.PasswordGenerator;
+import Utils.TestInitializer;
 import com.microsoft.playwright.Browser;
 import com.microsoft.playwright.Page;
+
+import org.testng.annotations.BeforeMethod;
+
 import javax.mail.*;
 import javax.mail.internet.MimeMultipart;
 import javax.mail.search.SubjectTerm;
@@ -18,14 +22,12 @@ public class EmailsHandlingResetPasswordFlow {
 
     public EmailsHandlingResetPasswordFlow(Page page) {
         this.page = page;
+        setUpTest();
     }
 
     public void executeResetPasswordMail() throws Exception {
-        ConfigLoader config = new ConfigLoader();
-        String emailUsername = config.getProperty("Email_username");
-        String emailPassword = config.getProperty("Email_password");
 
-        if (emailUsername == null || emailPassword == null) {
+        if (TestData.getEmailUsername() == null || TestData.getLastPassword() == null) {
             throw new IllegalArgumentException("Email_username or Email_password is not set in the configuration.");
         }
 
@@ -36,7 +38,7 @@ public class EmailsHandlingResetPasswordFlow {
         Store store = session.getStore("imap");
 
         try {
-            store.connect(host, emailUsername, emailPassword);
+            store.connect(host, TestData.getEmailUsername(), TestData.getEmailPassword());
 
             // Access inbox folder
             Folder inbox = store.getFolder("INBOX");
@@ -127,35 +129,38 @@ public class EmailsHandlingResetPasswordFlow {
         return null;
     }
 
-    public void completePasswordReset(String resetLink) {
-        try {
-            //Fixture
-            ResetPassword resetPass = new ResetPassword(page);
-            PasswordGenerator passwordGenerator = new PasswordGenerator();
-            String newPassword = passwordGenerator.generateUniquePassword();
-            String confirmPassword = newPassword;
+    private ResetPassword resetPassword;
+    private PasswordGenerator passwordGenerator;
 
+    @BeforeMethod
+    public void setUpTest() {
+        // Initialize TestInitializer
+        TestInitializer testInitializer = new TestInitializer(page);
+        // Initialize the LoginPage object
+       resetPassword = testInitializer.getResetPassword();
+       passwordGenerator = testInitializer.getPasswordGenerator();
+    }
+
+
+    public void completePasswordReset(String resetLink) {
+        String newPassword = passwordGenerator.generateUniquePassword();
+        String confirmPassword = newPassword;
             // Load the reset link
             page.navigate(resetLink);
             // Verify in New Password title is present
-            if (resetPass.newPasswordTitle()) {
-                resetPass.assertNewPasswordTitle("New password");
+            if (resetPassword.newPasswordTitle()) {
+                resetPassword.assertNewPasswordTitle("New password");
             } else {
                 System.out.println("New password title is not visible");
             }
             // Verify that Send button is blocked by default
-            resetPass.sendButtonDisabledByDefault();
+            resetPassword.sendButtonDisabledByDefault();
             // Fill New password and confirm password fields
-            resetPass.enteringNewPassword(newPassword, confirmPassword);
+            resetPassword.enteringNewPassword(newPassword, confirmPassword);
             // Verify Success Toast for Rest Password journey
-            resetPass.successToastIsVisible();
-            resetPass.assertSuccessToast("Password successfully changed");
+            resetPassword.successToastIsVisible();
+            resetPassword.assertSuccessToast("Password successfully changed");
 
             System.out.println("Generated Password: " + newPassword);
-
-        } catch (Exception e) {
-            System.err.println("Failed to complete the password reset process: " + e.getMessage());
-            e.printStackTrace();
-        }
     }
 }

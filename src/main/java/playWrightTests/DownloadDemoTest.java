@@ -1,11 +1,11 @@
 package playWrightTests;
 
-import Hooks.Setup;
+import Hooks.BasicSetup;
 import com.microsoft.playwright.Download;
 import org.testng.annotations.Test;
 import java.nio.file.Path;
 
-public class DownloadDemoTest extends Setup {
+public class DownloadDemoTest extends BasicSetup {
 
     public DownloadDemoTest(String browserType) {
         super(browserType); // Pass the browser type to the Setup constructor
@@ -13,8 +13,6 @@ public class DownloadDemoTest extends Setup {
 
     @Test
     public void downloadTestWithHandler(){
-
-        try{
             page.navigate("https://notepad-plus-plus.org/downloads/v8.7/");
 
             page.onDownload(download -> {
@@ -24,17 +22,11 @@ public class DownloadDemoTest extends Setup {
             });
 
             page.click("//main[@id='main']//img[1]");
-
-        } catch (Exception e) {
-            System.err.println("An error occurred during the InvalidLoginCredentials test: " + e.getMessage());
-            e.printStackTrace();
-        }
     }
 
     @Test
     public void downloadTestWithHandler1(){
 
-        try{
             page.navigate("https://www.google.com/chrome/");
 
              Download download = page.waitForDownload(()->{
@@ -43,17 +35,10 @@ public class DownloadDemoTest extends Setup {
 
             Path path = download.path();
             System.out.println(path);
-
-        }catch (Exception e) {
-            System.err.println("An error occurred during the InvalidLoginCredentials test: " + e.getMessage());
-            e.printStackTrace();
-        }
     }
 
     @Test
     public void downloadHeadlessTest(){
-
-        try{
             page.navigate("https://gym.langfit.net/login");
 
             Download download = page.waitForDownload(()->
@@ -62,11 +47,5 @@ public class DownloadDemoTest extends Setup {
 
             System.out.println(download.path());
        /*    download.saveAs(Paths.get(new File("C:/Users/pgryt/Downloads/terms_of_use-2.pdf").toURI()));*/
-
-        }catch (Exception e) {
-            System.err.println("An error occurred during the InvalidLoginCredentials test: " + e.getMessage());
-            e.printStackTrace();
-
-        }
     }
 }

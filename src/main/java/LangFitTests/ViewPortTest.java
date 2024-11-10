@@ -1,23 +1,36 @@
 package LangFitTests;
 
-import Hooks.Setup;
+import Hooks.SetupForLangFit;
+import Pages.HomePage;
 import Pages.LoginPage;
 import Utils.ScreenshotsAndRecordings;
+import Utils.TestInitializer;
 import com.microsoft.playwright.*;
 import io.qameta.allure.Description;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import io.qameta.allure.Story;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import java.nio.file.Paths;
 
 @Listeners(Hooks.CustomListeners.class)
-public class ViewPortTest extends Setup {
+public class ViewPortTest extends SetupForLangFit {
 
     public ViewPortTest(String browserType) {
         super(browserType); // Pass the browser type to the Setup constructor
+    }
+
+    private LoginPage loginPage;
+
+    @BeforeMethod
+    public void setUpTest() {
+        // Initialize TestInitializer
+        TestInitializer testInitializer = new TestInitializer(page);
+        // Initialize the LoginPage object
+        loginPage = testInitializer.getLoginPage();
     }
 
     @DataProvider(name = "Invalid users")
@@ -68,11 +81,10 @@ public class ViewPortTest extends Setup {
                 .setSnapshots(true)
                 .setSources(true));
 
-        page.navigate("https://gym.langfit.net/login");
+        page.navigate("/login");
 
-        LoginPage loginPage = new LoginPage(page);
+
         page.setViewportSize(width, height);
-
         loginPage.login(login, password);
         // Verify the alert
         boolean Toast = loginPage.alertAppear();
@@ -86,6 +98,5 @@ public class ViewPortTest extends Setup {
         // Stop tracing and export it into a zip archive.
         context.tracing().stop(new Tracing.StopOptions()
                 .setPath(Paths.get("trace.zip")));
-
     }
 }

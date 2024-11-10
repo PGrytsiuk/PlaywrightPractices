@@ -1,23 +1,34 @@
 package LangFitTests;
 
 
-import Hooks.Setup;
+import Hooks.SetupForLangFit;
 import Pages.LoginPage;
+import Utils.TestInitializer;
 import io.qameta.allure.Description;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import io.qameta.allure.Story;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
 import static Utils.ScreenshotsAndRecordings.setupContextWithVideo;
 
-
 @Listeners(Hooks.CustomListeners.class)
-public class LanguageSelectorTest extends Setup {
+public class LanguageSelectorTest extends SetupForLangFit {
 
     public LanguageSelectorTest(String browserType) {
         super(browserType); // Pass the browser type to the Setup constructor
+    }
+
+    private LoginPage loginPage;
+
+    @BeforeMethod
+    public void setUpTest() {
+        // Initialize TestInitializer
+        TestInitializer testInitializer = new TestInitializer(page);
+        // Initialize the LoginPage object
+        loginPage = testInitializer.getLoginPage();
     }
 
     @Test(priority = 2)
@@ -25,9 +36,8 @@ public class LanguageSelectorTest extends Setup {
     @Description("This test case verify the welcome message text when selection new language")
     @Severity(SeverityLevel.MINOR)
     public void languageSelectorTest(){
-        try {
             setupContextWithVideo(browser, "LANGUAGE_SELECTOR");
-            page.navigate("https://gym.langfit.net/login");
+            page.navigate("/login");
 
             String [] languages = new String[]{
                     "Welcome to LangFit Gym",
@@ -38,25 +48,14 @@ public class LanguageSelectorTest extends Setup {
             };
 
             //Tap on the LanguageSelector
-            LoginPage loginPage = new LoginPage(page);
             loginPage.languageSelectordropdown();
-            Thread.sleep(3000);
             //Verify if 5 languages are present in the selector
             loginPage.assertLanguageSelectorSize();
             int languagesCount = loginPage.languageSelectorSize();
                 if(languagesCount>0){
-
                 System.out.println("Languages are present");
-
-                 }
-
+            }
             //Go through each language and verify the Welcome message for each localization
             loginPage.verifyLanguageWelcomeMessages(languages);
-
-        }catch (Exception e){
-            System.err.println("An error occurred during theDowloadAMobilepp test: " + e.getMessage());
-            e.printStackTrace();
-
-        }
     }
 }

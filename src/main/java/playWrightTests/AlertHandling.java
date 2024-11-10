@@ -4,6 +4,7 @@ import com.microsoft.playwright.*;
 
 public class AlertHandling {
 
+
     public static void main(String[] args) {
 
         try (Playwright playwright = Playwright.create()) {
@@ -11,10 +12,12 @@ public class AlertHandling {
             Browser browser = playwright.chromium().launch(
                     new BrowserType.LaunchOptions().setHeadless(true)
             );
-            BrowserContext context = browser.newContext();
+            String baseURL = "https://www.lambdatest.com/";
+            BrowserContext context = browser.newContext(new Browser.NewContextOptions().setBaseURL(baseURL));
 
             Page page = context.newPage();
-            page.navigate("https://www.lambdatest.com/selenium-playground/javascript-alert-box-demo");
+            page.navigate("/selenium-playground/javascript-alert-box-demo");
+
 
             //alert with one Ok option
             Locator buttons=page.locator("text='Click Me'");
