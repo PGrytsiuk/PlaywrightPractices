@@ -29,7 +29,7 @@ public class Setup {
 
         // Check for Playwright initialization
         playwright = Playwright.create();
-        BrowserType.LaunchOptions options = new BrowserType.LaunchOptions().setHeadless(false);
+        BrowserType.LaunchOptions options = new BrowserType.LaunchOptions().setHeadless(true);
 
         switch (browserType.toLowerCase()) {
             case "firefox":

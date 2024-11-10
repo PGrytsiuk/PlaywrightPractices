@@ -1,6 +1,5 @@
 package LangFitTests;
 
-import Configs.ConfigLoader;
 import Data.TestData;
 import Hooks.Setup;
 import Pages.LoginPage;
@@ -24,46 +23,34 @@ public class LogoTest extends Setup {
     }
 
     private static final Logger logger = LoggerFactory.getLogger(LogoTest.class);
+    private LoginPage loginPage;
 
-    private LoginPage login;
     @BeforeMethod
     public void setUpTest() {
         // Initialize TestInitializer
         TestInitializer testInitializer = new TestInitializer(page);
-
         // Initialize the LoginPage object
-        login = testInitializer.getLoginPage();
+        loginPage = testInitializer.getLoginPage();
     }
 
     @Test(priority = 4)
     @Story("Logo test")
     @Description("This test case verify that page is refreshed after tapping on Logo image")
     @Severity(SeverityLevel.MINOR)
-    public void logoTest(){
-        try{
+    public void logoTest() {
+        page.navigate("/login");
+        logger.info("Navigate to page");
 
-            /*//Fixture
-            ConfigLoader config = new ConfigLoader();
-            String username = config.getProperty("Valid_username");
-            String password = config.getProperty("Valid_password");
+        // Verify if logo is present
+        logger.info("Verify if logo is present");
+        Assert.assertTrue(loginPage.logoIsPresent(), "Logo is visible");
 
-            LoginPage login = new LoginPage(page);*/
-            page.navigate("/login");
-            logger.info("Navigate to page");
-            //Verify if logo is present
-            logger.info("Verify if logo is present");
-            Assert.assertTrue(login.logoIsPresent(), "Logo is visible");
-            //Fill the username and password and tap on the Logo
-            logger.info("Fill the username and password and tap on the Logo");
-            login.pageIsRefreshedAfterTappingLogo(TestData.VALID_USERNAME, TestData.VALID_PASSWORD);
-            //Assert that fields are refreshed
-            logger.info("Assert that fields are refreshed");
-            Assert.assertTrue(login.usernameIsEmpty() &&  login.passwordIsEmpty(), "Username and Password fields are empty");
+        // Fill the username and password and tap on the Logo
+        logger.info("Fill the username and password and tap on the Logo");
+        loginPage.pageIsRefreshedAfterTappingLogo(TestData.VALID_USERNAME, TestData.VALID_PASSWORD);
 
-        }catch (Exception e){
-            System.err.println("An error occurred during the InvalidLoginCredentials test: " + e.getMessage());
-            e.printStackTrace();
-
-        }
+        // Assert that fields are refreshed
+        logger.info("Assert that fields are refreshed");
+        Assert.assertTrue(loginPage.usernameIsEmpty() && loginPage.passwordIsEmpty(), "Username and Password fields are empty");
     }
 }

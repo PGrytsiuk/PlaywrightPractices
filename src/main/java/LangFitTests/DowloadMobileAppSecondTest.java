@@ -2,12 +2,14 @@ package LangFitTests;
 
 import Hooks.Setup;
 import Pages.LoginPage;
+import Utils.TestInitializer;
 import com.microsoft.playwright.Page;
 import io.qameta.allure.Description;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import io.qameta.allure.Story;
 import org.testng.Assert;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import java.util.List;
@@ -19,15 +21,22 @@ public class DowloadMobileAppSecondTest extends Setup {
         super(browserType); // Pass the browser type to the Setup constructor
     }
 
+    private LoginPage loginPage;
+
+    @BeforeMethod
+    public void setUpTest() {
+        // Initialize TestInitializer
+        TestInitializer testInitializer = new TestInitializer(page);
+        // Initialize the LoginPage object
+        loginPage = testInitializer.getLoginPage();
+    }
+
     @Test(priority = 3, invocationCount = 2)
     @Story("Mobiles app pages")
     @Description("This test case verify if user is able to download the mobile app from App store and Play market")
     @Severity(SeverityLevel.MINOR)
     public void downloadMobileApp() {
-        try {
-            page.navigate("https://gym.langfit.net/login");
-
-            LoginPage loginPage = new LoginPage(page);
+            page.navigate("/login");
 
             // Open new tabs/windows by clicking buttons
             page.waitForPopup(new Page.WaitForPopupOptions().setPredicate(p -> p.context().pages().size() == 3), () -> {
@@ -57,11 +66,5 @@ public class DowloadMobileAppSecondTest extends Setup {
             System.out.println(playMarketPage.title());
             Assert.assertEquals(playMarketPage.title(), "LangFit on the Play market", "Play Market title mismatch");
             System.out.println(playMarketPage.textContent("h1"));
-
-        } catch (Exception e) {
-            System.err.println("An error occurred during the downloadMobileApp test: " + e.getMessage());
-            e.printStackTrace();
-
-        }
     }
 }

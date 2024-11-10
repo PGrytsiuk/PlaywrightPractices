@@ -25,17 +25,12 @@ public class HomePageNavMenuTest extends SetupForLoggedUser {
     @Description("This test case verifies if user to check left Navigation menu options")
     @Severity(SeverityLevel.MINOR)
     public void NavMenuTest(){
-        try{
             page.navigate("https://gym.langfit.net/");
 
             //RandomCheck
-           Locator navMenuLocator = page.locator("(//div[contains(@class,'lt-join-lesson-button ng-isolate-scope')]//button)[1]");
+            Locator navMenuLocator = page.locator("(//div[contains(@class,'lt-join-lesson-button ng-isolate-scope')]//button)[1]");
             assertThat(navMenuLocator).isVisible();
             HomePage homePage = new HomePage(page);
             homePage.verifyUserName("Pavlo Grytsiuk");
-
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
     }
 }
