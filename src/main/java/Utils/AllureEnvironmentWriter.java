@@ -25,19 +25,31 @@ public class AllureEnvironmentWriter {
 
     private static String getBrowserVersion(Playwright playwright, Browser browser) {
         String browserName = browser.browserType().name();
-        String browserVersion = switch (browserName.toLowerCase()) {
-            case "chromium" -> playwright.chromium().launch(new LaunchOptions().setHeadless(true)).version();
-            case "firefox" -> playwright.firefox().launch(new LaunchOptions().setHeadless(true)).version();
-            case "webkit" -> playwright.webkit().launch(new LaunchOptions().setHeadless(true)).version();
-            default -> throw new IllegalArgumentException("Unsupported browser: " + browserName);
-        };
+        String browserVersion = null;
+
+        switch (browserName.toLowerCase()) {
+            case "chromium":
+                browserVersion = playwright.chromium().launch(new LaunchOptions().setHeadless(true)).version();
+                break;
+            case "firefox":
+                browserVersion = playwright.firefox().launch(new LaunchOptions().setHeadless(true)).version();
+                break;
+            case "webkit":
+                browserVersion = playwright.webkit().launch(new LaunchOptions().setHeadless(true)).version();
+                break;
+            default:
+                throw new IllegalArgumentException("Unsupported browser: " + browserName);
+        }
 
         return browserName + " " + browserVersion;
     }
 
     public static void main(String[] args) {
-        Playwright playwright = Playwright.create();
-        Browser browser = playwright.chromium().launch(new LaunchOptions().setHeadless(true));
-        writeEnvironment(playwright, browser);
+        try (Playwright playwright = Playwright.create()) {
+            Browser browser = playwright.chromium().launch(new LaunchOptions().setHeadless(true));
+            writeEnvironment(playwright, browser);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

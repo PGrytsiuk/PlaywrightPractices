@@ -1,18 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
-<suite name="Failed suite [Default Suite]" guice-stage="DEVELOPMENT">
+<suite name="Failed suite [Default Suite]">
   <test thread-count="5" name="PlaywrightPractices(failed)">
     <classes>
-      <class name="LangFitTests.TandCandDowloadAMobileppTest">
+      <class name="playWrightTests.AxREsultsTest">
         <methods>
-          <include name="setUp"/>
-          <include name="tearDown"/>
-          <include name="closeContextAndAddScreenshotIfFail"/>
-          <include name="setUpTest"/>
-          <include name="downloadMobileApps"/>
-          <include name="createContextAndPage"/>
+          <include name="shouldNotHaveAutomaticallyDetectableAccessibilityIssues"/>
         </methods>
-      </class> <!-- LangFitTests.TandCandDowloadAMobileppTest -->
+      </class> <!-- playWrightTests.AxREsultsTest -->
     </classes>
   </test> <!-- PlaywrightPractices(failed) -->
 </suite> <!-- Failed suite [Default Suite] -->
