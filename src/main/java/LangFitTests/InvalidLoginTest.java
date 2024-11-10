@@ -1,8 +1,7 @@
 package LangFitTests;
 
-import Configs.ConfigLoader;
 import Data.TestData;
-import Hooks.Setup;
+import Hooks.SetupForLangFit;
 import Pages.LoginPage;
 import Utils.ScreenshotsAndRecordings;
 import Utils.TestInitializer;
@@ -16,7 +15,7 @@ import org.testng.annotations.Test;
 import static Utils.ScreenshotsAndRecordings.setupContextWithVideo;
 
 @Listeners(Hooks.CustomListeners.class)
-public class InvalidLoginTest extends Setup {
+public class InvalidLoginTest extends SetupForLangFit {
 
     public InvalidLoginTest(String browserType) {
         super(browserType); // Pass the browser type to the Setup constructor
@@ -48,7 +47,7 @@ public class InvalidLoginTest extends Setup {
               }
               loginPage.assertErrorMessagesCount();
               //Enter invalid credentials
-              loginPage.login(TestData.INVALID_USERNAME, TestData.INVALID_PASSWORD);
+              loginPage.login(TestData.getInvalidUsername(), TestData.getInvalidPassword());
               // Verify the alert
               boolean Toast = loginPage.alertAppear();
               loginPage.getToastMessageText("Invalid username or password");

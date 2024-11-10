@@ -1,7 +1,8 @@
 package Utils;
 
-import Hooks.EmailsHandlingResetPasswordFlow;
+import TestsSpecificHooks.EmailsHandlingResetPasswordFlow;
 import Pages.HomePage;
+import Pages.ResetPassword;
 import com.microsoft.playwright.Page;
 import Pages.LoginPage;
 
@@ -10,7 +11,9 @@ public class TestInitializer {
     private Page page;
     private LoginPage loginPage;
     private HomePage homepage;
-    private EmailsHandlingResetPasswordFlow EmailsHandlingResetPasswordFlow;
+    private EmailsHandlingResetPasswordFlow emailsHandlingResetPasswordFlow;
+    private ResetPassword resetPassword;
+    private PasswordGenerator passwordGenerator;
 
 
     public TestInitializer(Page page) {
@@ -25,10 +28,10 @@ public class TestInitializer {
     }
 
     public EmailsHandlingResetPasswordFlow getEmailsHandlingResetPasswordFlow(){
-        if(EmailsHandlingResetPasswordFlow == null){
-                EmailsHandlingResetPasswordFlow = new EmailsHandlingResetPasswordFlow(page);
+        if(emailsHandlingResetPasswordFlow == null){
+                emailsHandlingResetPasswordFlow = new EmailsHandlingResetPasswordFlow(page);
             }
-        return EmailsHandlingResetPasswordFlow;
+        return emailsHandlingResetPasswordFlow;
     }
 
     public HomePage getHomepage(){
@@ -37,6 +40,22 @@ public class TestInitializer {
         }
         return homepage;
     }
+
+    public ResetPassword getResetPassword(){
+        if(resetPassword == null){
+            resetPassword = new ResetPassword(page);
+        }
+        return resetPassword;
+    }
+
+    public PasswordGenerator getPasswordGenerator(){
+        if(passwordGenerator == null){
+            passwordGenerator = new PasswordGenerator();
+        }
+        return passwordGenerator;
+    }
+
+
 
     // Add more page initializations as needed
 }

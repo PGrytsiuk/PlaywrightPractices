@@ -1,7 +1,7 @@
 package LangFitTests;
 
-import Hooks.EmailsHandlingResetPasswordFlow;
-import Hooks.Setup;
+import TestsSpecificHooks.EmailsHandlingResetPasswordFlow;
+import Hooks.SetupForLangFit;
 import Pages.LoginPage;
 import Utils.TestInitializer;
 import io.qameta.allure.Description;
@@ -14,7 +14,7 @@ import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
 @Listeners(Hooks.CustomListeners.class)
-public class ForgotPassTest extends Setup {
+public class ForgotPassTest extends SetupForLangFit {
 
     public ForgotPassTest(String browserType) {
         super(browserType); // Pass the browser type to the Setup constructor

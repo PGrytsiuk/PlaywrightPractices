@@ -1,20 +1,19 @@
 package LangFitTests;
 
-import Hooks.SetupForLoggedUser;
+import Hooks.SetupForLoggedUserOnLangfit;
 import Pages.HomePage;
 import com.microsoft.playwright.Locator;
 import io.qameta.allure.Description;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import io.qameta.allure.Story;
-import org.testng.Assert;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
 import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
 
 @Listeners(Hooks.CustomListeners.class)
-public class HomePageNavMenuTest extends SetupForLoggedUser {
+public class HomePageNavMenuTest extends SetupForLoggedUserOnLangfit {
 
     public HomePageNavMenuTest(String browserType){
         super(browserType);

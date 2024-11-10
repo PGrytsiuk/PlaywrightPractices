@@ -1,6 +1,6 @@
 package LangFitTests;
 
-import Hooks.Setup;
+import Hooks.SetupForLangFit;
 import Pages.LoginPage;
 import Utils.TestInitializer;
 import com.microsoft.playwright.Page;
@@ -15,7 +15,7 @@ import org.testng.annotations.Test;
 import java.util.List;
 
 @Listeners(Hooks.CustomListeners.class)
-public class DowloadMobileAppSecondTest extends Setup {
+public class DowloadMobileAppSecondTest extends SetupForLangFit {
 
     public DowloadMobileAppSecondTest(String browserType) {
         super(browserType); // Pass the browser type to the Setup constructor

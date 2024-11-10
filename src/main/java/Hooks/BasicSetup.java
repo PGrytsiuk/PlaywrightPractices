@@ -8,23 +8,24 @@ import org.testng.annotations.*;
 
 import java.nio.file.Paths;
 
-public class Setup {
+public class BasicSetup {
 
     protected static Playwright playwright;
     protected static Browser browser;
     protected static BrowserContext context;
     protected static Page page;
+
     protected String browserType;
 
-    public Setup() {}
+    public BasicSetup() {}
 
-    public Setup(String browserType) {
+    public BasicSetup(String browserType) {
         this.browserType = browserType;
     }
 
     @BeforeSuite(alwaysRun = true)
     @Parameters("browser")
-    public void setUp(@Optional("chromium") String browserType) {
+    public void basicSetUp(@Optional("chromium") String browserType) {
         this.browserType = browserType;
 
         // Check for Playwright initialization
@@ -49,8 +50,7 @@ public class Setup {
 
     @BeforeMethod
     public void createContextAndPage() {
-        String baseURL = "https://gym.langfit.net/";
-        context = browser.newContext(new Browser.NewContextOptions().setBaseURL(baseURL).setAcceptDownloads(false));
+        context = browser.newContext(new Browser.NewContextOptions().setAcceptDownloads(true));
         page = context.newPage();
         page.setViewportSize(1920, 1080);
     }

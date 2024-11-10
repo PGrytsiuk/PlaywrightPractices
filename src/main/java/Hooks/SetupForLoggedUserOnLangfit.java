@@ -1,6 +1,7 @@
 package Hooks;
 
 import Configs.ConfigLoader;
+import Data.TestData;
 import Pages.LoginPage;
 import Utils.AllureEnvironmentWriter;
 import com.microsoft.playwright.*;
@@ -9,7 +10,7 @@ import org.testng.ITestResult;
 import org.testng.annotations.*;
 import java.nio.file.Paths;
 
-public class SetupForLoggedUser {
+public class SetupForLoggedUserOnLangfit {
 
     protected static Playwright playwright;
     protected static Browser browser;
@@ -18,9 +19,9 @@ public class SetupForLoggedUser {
 
     protected String browserType;
 
-    public SetupForLoggedUser() {}
+    public SetupForLoggedUserOnLangfit() {}
 
-    public SetupForLoggedUser(String browserType) {
+    public SetupForLoggedUserOnLangfit(String browserType) {
         this.browserType = browserType;
     }
 
@@ -57,6 +58,8 @@ public class SetupForLoggedUser {
     }
 
     private void loginAndSaveState(String username, String password) {
+        // force reload config before each test
+        TestData.reloadConfig();
         page.navigate("https://gym.langfit.net/login");
 
         LoginPage loginPage = new LoginPage(page);

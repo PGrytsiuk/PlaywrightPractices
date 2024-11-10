@@ -6,7 +6,7 @@ public class PasswordGenerator {
 
     private static final String COUNTER_KEY = "passwordCounter";
     private static final String PREFIX_KEY = "passwordPrefix";
-    private static final String LATEST_PASSWORD_KEY = "latestPassword";
+    private static final String LATEST_PASSWORD_KEY = "Latest_password";
 
     private final ConfigLoader configLoader;
 
