@@ -27,15 +27,17 @@ public class AllureEnvironmentWriter {
         String browserName = browser.browserType().name();
         String browserVersion = null;
 
+        LaunchOptions options = new LaunchOptions().setHeadless(true);
+
         switch (browserName.toLowerCase()) {
             case "chromium":
-                browserVersion = playwright.chromium().launch(new LaunchOptions().setHeadless(true)).version();
+                browserVersion = playwright.chromium().launch(options).version();
                 break;
             case "firefox":
-                browserVersion = playwright.firefox().launch(new LaunchOptions().setHeadless(true)).version();
+                browserVersion = playwright.firefox().launch(options).version();
                 break;
             case "webkit":
-                browserVersion = playwright.webkit().launch(new LaunchOptions().setHeadless(true)).version();
+                browserVersion = playwright.webkit().launch(options).version();
                 break;
             default:
                 throw new IllegalArgumentException("Unsupported browser: " + browserName);
