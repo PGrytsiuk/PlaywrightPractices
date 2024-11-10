@@ -23,7 +23,6 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y \
-            xvfb \
             libwoff1 \
             libopus0 \
             libvpx7 \
@@ -44,6 +43,7 @@ jobs:
             libgles2-mesa \
             libx264-dev \
             flite1-dev \
+            libgstreamer-plugins-bad1.0-0 \
             libmanette-0.2-0 \
             libsndio-dev
 
@@ -103,9 +103,8 @@ jobs:
           echo '  "reportName": "Allure Report - GitHub Actions"' >> allure-results/executor.json
           echo '}' >> allure-results/executor.json
 
-      - name: Run tests with xvfb
-        run: |
-          xvfb-run --auto-servernum --server-args='-screen 0 1024x768x24' mvn test || true
+      - name: Run tests
+        run: xvfb-run --auto-servernum --server-args='-screen 0 1024x768x24' mvn test || true
         env:
           CI: true
 
