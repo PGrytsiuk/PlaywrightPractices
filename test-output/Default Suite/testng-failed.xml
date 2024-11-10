@@ -3,16 +3,16 @@
 <suite name="Failed suite [Default Suite]" guice-stage="DEVELOPMENT">
   <test thread-count="5" name="PlaywrightPractices(failed)">
     <classes>
-      <class name="LangFitTests.ForgotPassTest">
+      <class name="LangFitTests.TandCandDowloadAMobileppTest">
         <methods>
           <include name="setUp"/>
-          <include name="setUpTest"/>
           <include name="tearDown"/>
           <include name="closeContextAndAddScreenshotIfFail"/>
-          <include name="ForgotPassword" invocation-numbers="0"/>
+          <include name="setUpTest"/>
+          <include name="downloadMobileApps"/>
           <include name="createContextAndPage"/>
         </methods>
-      </class> <!-- LangFitTests.ForgotPassTest -->
+      </class> <!-- LangFitTests.TandCandDowloadAMobileppTest -->
     </classes>
   </test> <!-- PlaywrightPractices(failed) -->
 </suite> <!-- Failed suite [Default Suite] -->
