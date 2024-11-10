@@ -48,9 +48,7 @@ public class SetupForLoggedUserOnLangfit {
     }
 
     private Browser launchBrowser() {
-        boolean isCI = System.getenv("CI") != null;
-        BrowserType.LaunchOptions options = new BrowserType.LaunchOptions()
-                .setHeadless(isCI); // Set headless to true if running in CI
+        BrowserType.LaunchOptions options = new BrowserType.LaunchOptions().setHeadless(true);
 
         return switch (browserType.toLowerCase()) {
             case "firefox" -> playwright.firefox().launch(options);

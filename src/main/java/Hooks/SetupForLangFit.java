@@ -30,9 +30,7 @@ public class SetupForLangFit {
 
         // Check for Playwright initialization
         playwright = Playwright.create();
-        boolean isCI = System.getenv("CI") != null;
-        BrowserType.LaunchOptions options = new BrowserType.LaunchOptions()
-                .setHeadless(isCI); // Set headless to true if running in CI
+        BrowserType.LaunchOptions options = new BrowserType.LaunchOptions().setHeadless(true);
 
         switch (browserType.toLowerCase()) {
             case "firefox":
