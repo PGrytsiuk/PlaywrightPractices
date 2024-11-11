@@ -92,7 +92,7 @@ jobs:
           echo "Java Version=$(java -version 2>&1 | awk -F '\"' '/version/ {print $2}')" >> allure-results/environment.properties
 
           # Dynamic Browser Version
-          BROWSER_NAME=$(mvn exec:java -Dexec.mainClass='Utils.AllureEnvironmentWriter' -q -Dexec.args='browserName')
+          BROWSER_NAME=$(mvn exec:java -Dexec.mainClass='Utils.AllureEnvironmentWriter' -Dexec.args="browserName" -q)
           BROWSER_VERSION=""
           if [ -z "$BROWSER_NAME" ]; then
             echo "Warning: Browser name is empty. Cannot detect browser version."

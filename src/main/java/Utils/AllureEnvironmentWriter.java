@@ -33,7 +33,7 @@ public class AllureEnvironmentWriter {
     }
 
     public static void main(String[] args) {
-        if (args.length > 0 && "browserName".equals(args[0])) {
+        if (args.length > 0 && args[0].equals("browserName")) {
             System.out.println(getBrowserName());
         } else {
             try (Playwright playwright = Playwright.create()) {
