@@ -93,7 +93,7 @@ jobs:
           echo "Java Version=$(java -version 2>&1 | awk -F '\"' '/version/ {print $2}')" >> allure-results/environment.properties
           
           # Retrieve Browser Version using a Playwright command
-          BROWSER_VERSION=$(xvfb-run --auto-servernum --server-args='-screen 0 1024x768x24' mvn exec:java -Dexec.mainClass="Utils.GetBrowserVersion")
+          BROWSER_VERSION=$(mvn exec:java -Dexec.mainClass="Utils.GetBrowserVersion")
           echo "Browser Version=${BROWSER_VERSION}" >> allure-results/environment.properties
                 
           # Create executor.json file
