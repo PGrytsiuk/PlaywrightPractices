@@ -1,6 +1,7 @@
 package Utils;
 
-import com.microsoft.playwright.*;
+import com.microsoft.playwright.Browser;
+import com.microsoft.playwright.Playwright;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -8,22 +9,17 @@ import java.util.Properties;
 
 public class AllureEnvironmentWriter {
 
-    public static void writeEnvironment() {
-            Playwright playwright = Playwright.create();
-            BrowserType.LaunchOptions options = new BrowserType.LaunchOptions();
-            Browser browser = playwright.chromium().launch(options);
+    public static void writeEnvironment(Playwright playwright, Browser browser) {
+        Properties properties = new Properties();
+        properties.setProperty("os_platform", System.getProperty("os.name"));
+        properties.setProperty("java_version", System.getProperty("java.version"));
+        properties.setProperty("browser_version", getBrowserVersion(playwright, browser));
 
-            Properties properties = new Properties();
-            properties.setProperty("os_platform", System.getProperty("os.name"));
-            properties.setProperty("java_version", System.getProperty("java.version"));
-            properties.setProperty("browser_version", getBrowserVersion(playwright, browser));
-
-            try (FileWriter writer = new FileWriter("allure-results/environment.properties")) {
-                properties.store(writer, "Allure Environment Properties");
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
+        try (FileWriter writer = new FileWriter("allure-results/environment.properties")) {
+            properties.store(writer, "Allure Environment Properties");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private static String getBrowserVersion(Playwright playwright, Browser browser) {
@@ -48,6 +44,9 @@ public class AllureEnvironmentWriter {
     }
 
     public static void main(String[] args) {
-        writeEnvironment();
+        try (Playwright playwright = Playwright.create()) {
+            Browser browser = playwright.chromium().launch();
+            writeEnvironment(playwright, browser);
+        }
     }
 }
