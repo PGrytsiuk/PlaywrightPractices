@@ -2,9 +2,9 @@ name: Playwright Tests
 
 on:
   push:
-    branches: [ "master", "develop" ]
+    branches: [ master, develop ]
   pull_request:
-    branches: [ "master", "develop" ]
+    branches: [ master, develop ]
   workflow_dispatch: # Add manual trigger
 
 jobs:
@@ -81,7 +81,7 @@ jobs:
         run: mvn -B install -DskipTests --no-transfer-progress
 
       - name: Ensure browsers are installed
-        run: mvn exec:java -e -Dexec.mainClass=com.microsoft.playwright.CLI -Dexec.args="install --with-deps"
+        run: mvn exec:java -e -D exec.mainClass=com.microsoft.playwright.CLI -D exec.args="install --with-deps"
 
       - name: Create Allure Environment and Executor Files
         run: |
@@ -90,30 +90,8 @@ jobs:
           # Create environment.properties file dynamically
           echo "OS=$(uname -s)" >> allure-results/environment.properties
           echo "Java Version=$(java -version 2>&1 | awk -F '\"' '/version/ {print $2}')" >> allure-results/environment.properties
+          echo "Browser Version=$(mvn exec:java -Dexec.mainClass='Utils.AllureEnvironmentWriter' -q -Dexec.args='version')" >> allure-results/environment.properties
 
-          # Dynamic Browser Version
-          BROWSER_NAME=$(mvn exec:java -Dexec.mainClass='Utils.AllureEnvironmentWriter' -Dexec.args="browserName" -q)
-          BROWSER_VERSION=""
-          if [ -z "$BROWSER_NAME" ]; then
-            echo "Warning: Browser name is empty. Cannot detect browser version."
-          else
-            case "$BROWSER_NAME" in
-              "chromium")  
-                BROWSER_VERSION=$(google-chrome --version | awk '{print $3}') 
-                ;;
-              "firefox")   
-                BROWSER_VERSION=$(firefox --version | head -1 | awk '{print $3}')  
-                ;;
-              "webkit")    
-                BROWSER_VERSION=$(jsc --version 2>&1 | head -1 | awk '{print $4}')
-                ;; # Assuming JavaScriptCore for simplicity 
-              *)           
-                echo "Warning: Unsupported browser '$BROWSER_NAME'. Version detection might fail."
-                ;;
-            esac
-            echo "Browser Version=${BROWSER_VERSION}" >> allure-results/environment.properties
-          fi
-          
           # Create executor.json file dynamically
           cat <<EOF > allure-results/executor.json
           {

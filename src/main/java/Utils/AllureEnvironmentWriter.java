@@ -1,6 +1,7 @@
 package Utils;
 
-import com.microsoft.playwright.*;
+import com.microsoft.playwright.Browser;
+import com.microsoft.playwright.Playwright;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -8,11 +9,11 @@ import java.util.Properties;
 
 public class AllureEnvironmentWriter {
 
-    public static void writeEnvironment(Browser browser) {
+    public static void writeEnvironment(Playwright playwright, Browser browser) {
         Properties properties = new Properties();
         properties.setProperty("os_platform", System.getProperty("os.name"));
         properties.setProperty("java_version", System.getProperty("java.version"));
-        properties.setProperty("browser_version", getBrowserVersion(browser));
+        properties.setProperty("browser_version", getBrowserVersion(playwright, browser));
 
         try (FileWriter writer = new FileWriter("allure-results/environment.properties")) {
             properties.store(writer, "Allure Environment Properties");
@@ -21,25 +22,31 @@ public class AllureEnvironmentWriter {
         }
     }
 
-    private static String getBrowserVersion(Browser browser) {
-        return browser.browserType().name() + " " + browser.version();
-    }
+    private static String getBrowserVersion(Playwright playwright, Browser browser) {
+        String browserName = browser.browserType().name();
+        String browserVersion = null;
 
-    public static String getBrowserName() {
-        try (Playwright playwright = Playwright.create()) {
-            Browser browser = playwright.chromium().launch(new BrowserType.LaunchOptions().setHeadless(true));
-            return browser.browserType().name();
+        switch (browserName.toLowerCase()) {
+            case "chromium":
+                browserVersion = playwright.chromium().launch().version();
+                break;
+            case "firefox":
+                browserVersion = playwright.firefox().launch().version();
+                break;
+            case "webkit":
+                browserVersion = playwright.webkit().launch().version();
+                break;
+            default:
+                throw new IllegalArgumentException("Unsupported browser: " + browserName);
         }
+
+        return browserName + " " + browserVersion;
     }
 
     public static void main(String[] args) {
-        if (args.length > 0 && args[0].equals("browserName")) {
-            System.out.println(getBrowserName());
-        } else {
-            try (Playwright playwright = Playwright.create()) {
-                Browser browser = playwright.chromium().launch(new BrowserType.LaunchOptions().setHeadless(true));
-                writeEnvironment(browser);
-            }
+        try (Playwright playwright = Playwright.create()) {
+            Browser browser = playwright.chromium().launch();
+            writeEnvironment(playwright, browser);
         }
     }
 }
