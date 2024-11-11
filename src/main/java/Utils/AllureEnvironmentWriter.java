@@ -1,8 +1,6 @@
 package Utils;
 
-import com.microsoft.playwright.Browser;
-import com.microsoft.playwright.Playwright;
-import com.microsoft.playwright.BrowserType.LaunchOptions;
+import com.microsoft.playwright.*;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -10,15 +8,23 @@ import java.util.Properties;
 
 public class AllureEnvironmentWriter {
 
-    public static void writeEnvironment(Playwright playwright, Browser browser) {
-        Properties properties = new Properties();
-        properties.setProperty("os_platform", System.getProperty("os.name"));
-        properties.setProperty("java_version", System.getProperty("java.version"));
-        properties.setProperty("browser_version", getBrowserVersion(playwright, browser));
+    public static void writeEnvironment() {
+        try (Playwright playwright = Playwright.create()) {
+            BrowserType.LaunchOptions options = new BrowserType.LaunchOptions().setHeadless(true);
 
-        try (FileWriter writer = new FileWriter("allure-results/environment.properties")) {
-            properties.store(writer, "Allure Environment Properties");
-        } catch (IOException e) {
+            Browser browser = playwright.chromium().launch(options);
+
+            Properties properties = new Properties();
+            properties.setProperty("os_platform", System.getProperty("os.name"));
+            properties.setProperty("java_version", System.getProperty("java.version"));
+            properties.setProperty("browser_version", getBrowserVersion(playwright, browser));
+
+            try (FileWriter writer = new FileWriter("allure-results/environment.properties")) {
+                properties.store(writer, "Allure Environment Properties");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -27,17 +33,15 @@ public class AllureEnvironmentWriter {
         String browserName = browser.browserType().name();
         String browserVersion = null;
 
-        LaunchOptions options = new LaunchOptions().setHeadless(true);
-
         switch (browserName.toLowerCase()) {
             case "chromium":
-                browserVersion = playwright.chromium().launch(options).version();
+                browserVersion = playwright.chromium().launch(new BrowserType.LaunchOptions().setHeadless(true)).version();
                 break;
             case "firefox":
-                browserVersion = playwright.firefox().launch(options).version();
+                browserVersion = playwright.firefox().launch(new BrowserType.LaunchOptions().setHeadless(true)).version();
                 break;
             case "webkit":
-                browserVersion = playwright.webkit().launch(options).version();
+                browserVersion = playwright.webkit().launch(new BrowserType.LaunchOptions().setHeadless(true)).version();
                 break;
             default:
                 throw new IllegalArgumentException("Unsupported browser: " + browserName);
@@ -47,11 +51,6 @@ public class AllureEnvironmentWriter {
     }
 
     public static void main(String[] args) {
-        try (Playwright playwright = Playwright.create()) {
-            Browser browser = playwright.chromium().launch(new LaunchOptions().setHeadless(true));
-            writeEnvironment(playwright, browser);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        writeEnvironment();
     }
 }

@@ -32,7 +32,7 @@ public class SetupForLoggedUserOnLangfit {
         this.browserType = browserType;
         initPlaywright();
         browser = launchBrowser();
-        AllureEnvironmentWriter.writeEnvironment(playwright, browser);
+        AllureEnvironmentWriter.writeEnvironment();
 
         context = browser.newContext(new Browser.NewContextOptions().setAcceptDownloads(true));
         page = context.newPage();

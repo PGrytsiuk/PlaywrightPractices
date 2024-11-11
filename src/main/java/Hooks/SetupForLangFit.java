@@ -45,7 +45,7 @@ public class SetupForLangFit {
         }
 
         // Write Allure environment information
-        AllureEnvironmentWriter.writeEnvironment(playwright, browser);
+        AllureEnvironmentWriter.writeEnvironment();
     }
 
     @BeforeMethod
