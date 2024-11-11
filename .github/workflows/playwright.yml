@@ -89,11 +89,13 @@ jobs:
           
           # Create environment.properties file
           # Run the environment writer class to generate environment.properties
-          echo "OS=$(uname -s)" >> allure-results/environment.properties
+          echo "OS=$(uname -s)" > allure-results/environment.properties
           echo "Java Version=$(java -version 2>&1 | awk -F '\"' '/version/ {print $2}')" >> allure-results/environment.properties
-          echo "Browser Version=$(mvn exec:java -Dexec.mainClass='Utils.AllureEnvironmentWriter' -q -Dexec.args='version')" >> allure-results/environment.properties
           
-          
+          # Retrieve Browser Version using a Playwright command
+          BROWSER_VERSION=$(xvfb-run --auto-servernum --server-args='-screen 0 1024x768x24' mvn exec:java -Dexec.mainClass="Utils.GetBrowserVersion")
+          echo "Browser Version=${BROWSER_VERSION}" >> allure-results/environment.properties
+                
           # Create executor.json file
           echo '{' > allure-results/executor.json
           echo '  "name": "GitHub Actions",' >> allure-results/executor.json
