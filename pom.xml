@@ -46,7 +46,7 @@
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>RELEASE</version>
+            <version>4.13.2</version>
             <scope>compile</scope>
         </dependency>
 
@@ -74,7 +74,7 @@
         <dependency>
             <groupId>org.jetbrains</groupId>
             <artifactId>annotations</artifactId>
-            <version>RELEASE</version>
+            <version>23.0.0</version>
             <scope>compile</scope>
         </dependency>
 
@@ -151,6 +151,10 @@
                 </executions>
                 <configuration>
                     <mainClass>Utils.AllureEnvironmentWriter</mainClass>
+                    <mainClass>com.microsoft.playwright.CLI</mainClass>
+                    <arguments>
+                        <argument>codegen</argument>
+                    </arguments>
                 </configuration>
             </plugin>
         </plugins>
