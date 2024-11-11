@@ -89,7 +89,10 @@ jobs:
           
           # Create environment.properties file
           # Run the environment writer class to generate environment.properties
-          mvn exec:java -D exec.mainClass="Utils.AllureEnvironmentWriter"
+          echo "OS=$(uname -s)" >> allure-results/environment.properties
+          echo "Java Version=$(java -version 2>&1 | awk -F '\"' '/version/ {print $2}')" >> allure-results/environment.properties
+          echo "Browser Version=$(mvn exec:java -Dexec.mainClass='Utils.AllureEnvironmentWriter' -q -Dexec.args='version')" >> allure-results/environment.properties
+          
           
           # Create executor.json file
           echo '{' > allure-results/executor.json
