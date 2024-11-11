@@ -31,7 +31,7 @@ public class HomePageNavMenuTest extends SetupForLoggedUserOnLangfit {
         homePage = testInitializer.getHomepage();
     }
 
-    @Test(priority = 5)
+    @Test(priority = 6)
     @Story("Home Page Navigation menu test")
     @Description("This test case verifies if user to check left Navigation menu options")
     @Severity(SeverityLevel.MINOR)
