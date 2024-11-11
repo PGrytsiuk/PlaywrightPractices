@@ -3,16 +3,16 @@
 <suite name="Failed suite [Default Suite]" guice-stage="DEVELOPMENT">
   <test thread-count="5" name="PlaywrightPractices(failed)">
     <classes>
-      <class name="LangFitTests.HomePageNavMenuTest">
+      <class name="LangFitTests.ValidLoginTest">
         <methods>
+          <include name="validLoginTest"/>
           <include name="setUp"/>
-          <include name="createContextAndPage"/>
           <include name="tearDown"/>
-          <include name="NavMenuTest"/>
           <include name="setUpTest"/>
           <include name="closeContextAndAddScreenshotIfFail"/>
+          <include name="createContextAndPage"/>
         </methods>
-      </class> <!-- LangFitTests.HomePageNavMenuTest -->
+      </class> <!-- LangFitTests.ValidLoginTest -->
     </classes>
   </test> <!-- PlaywrightPractices(failed) -->
 </suite> <!-- Failed suite [Default Suite] -->

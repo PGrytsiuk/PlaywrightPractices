@@ -45,7 +45,7 @@ public class BasicSetup {
         }
 
         // Write Allure environment information
-        AllureEnvironmentWriter.writeEnvironment();
+        AllureEnvironmentWriter.writeEnvironment(playwright, browser);
     }
 
     @BeforeMethod

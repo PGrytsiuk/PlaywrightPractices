@@ -24,7 +24,8 @@ public class TestFactory {
                 new TandCandDowloadAMobileppTest(browserType),
                 new ValidLoginTest(browserType),
                 new NGTest(browserType),
-                new ViewPortTest(browserType)
+                new ViewPortTest(browserType),
+                new HomePageNavMenuTest(browserType)
         };
     }
 }
