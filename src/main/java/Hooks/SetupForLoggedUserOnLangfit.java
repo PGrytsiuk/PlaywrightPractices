@@ -1,6 +1,5 @@
 package Hooks;
 
-import Configs.ConfigLoader;
 import Data.TestData;
 import Pages.LoginPage;
 import Utils.AllureEnvironmentWriter;
@@ -8,6 +7,7 @@ import com.microsoft.playwright.*;
 import io.qameta.allure.Attachment;
 import org.testng.ITestResult;
 import org.testng.annotations.*;
+
 import java.nio.file.Paths;
 
 public class SetupForLoggedUserOnLangfit {
@@ -19,7 +19,8 @@ public class SetupForLoggedUserOnLangfit {
 
     protected String browserType;
 
-    public SetupForLoggedUserOnLangfit() {}
+    public SetupForLoggedUserOnLangfit() {
+    }
 
     public SetupForLoggedUserOnLangfit(String browserType) {
         this.browserType = browserType;
@@ -36,11 +37,7 @@ public class SetupForLoggedUserOnLangfit {
         context = browser.newContext(new Browser.NewContextOptions().setAcceptDownloads(true));
         page = context.newPage();
 
-        ConfigLoader config = new ConfigLoader();
-        String username = config.getProperty("Valid_username");
-        String password = config.getProperty("latestPassword");
-
-        loginAndSaveState(username, password);
+        loginAndSaveState();
     }
 
     private void initPlaywright() {
@@ -57,13 +54,12 @@ public class SetupForLoggedUserOnLangfit {
         };
     }
 
-    private void loginAndSaveState(String username, String password) {
+    private void loginAndSaveState() {
         // force reload config before each test
         TestData.reloadConfig();
         page.navigate("https://gym.langfit.net/login");
-
         LoginPage loginPage = new LoginPage(page);
-        loginPage.login(username, password);
+        loginPage.login(TestData.getValidUsername(), TestData.getLastPassword());
 
         context.storageState(new BrowserContext.StorageStateOptions().setPath(Paths.get("state.json")));
         context.close();
