@@ -9,9 +9,8 @@ import java.util.Properties;
 public class AllureEnvironmentWriter {
 
     public static void writeEnvironment() {
-        try (Playwright playwright = Playwright.create()) {
-            BrowserType.LaunchOptions options = new BrowserType.LaunchOptions().setHeadless(true);
-
+            Playwright playwright = Playwright.create();
+            BrowserType.LaunchOptions options = new BrowserType.LaunchOptions();
             Browser browser = playwright.chromium().launch(options);
 
             Properties properties = new Properties();
@@ -24,9 +23,7 @@ public class AllureEnvironmentWriter {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+
     }
 
     private static String getBrowserVersion(Playwright playwright, Browser browser) {
@@ -35,13 +32,13 @@ public class AllureEnvironmentWriter {
 
         switch (browserName.toLowerCase()) {
             case "chromium":
-                browserVersion = playwright.chromium().launch(new BrowserType.LaunchOptions().setHeadless(true)).version();
+                browserVersion = playwright.chromium().launch().version();
                 break;
             case "firefox":
-                browserVersion = playwright.firefox().launch(new BrowserType.LaunchOptions().setHeadless(true)).version();
+                browserVersion = playwright.firefox().launch().version();
                 break;
             case "webkit":
-                browserVersion = playwright.webkit().launch(new BrowserType.LaunchOptions().setHeadless(true)).version();
+                browserVersion = playwright.webkit().launch().version();
                 break;
             default:
                 throw new IllegalArgumentException("Unsupported browser: " + browserName);
