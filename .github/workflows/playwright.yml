@@ -89,7 +89,7 @@ jobs:
           
           # Create environment.properties file
           # Run the environment writer class to generate environment.properties
-          mvn exec:java -D exec.mainClass="Utils.AllureEnvironmentWriter"
+          mvn exec:java -Dexec.mainClass="Utils.AllureEnvironmentWriter"
           
           # Create executor.json file
           echo '{' > allure-results/executor.json
