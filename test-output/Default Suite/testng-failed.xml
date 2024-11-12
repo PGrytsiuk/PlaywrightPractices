@@ -3,15 +3,15 @@
 <suite name="Failed suite [Default Suite]" guice-stage="DEVELOPMENT">
   <test thread-count="5" name="PlaywrightPractices(failed)">
     <classes>
-      <class name="APITests.RequestResponseOverview">
+      <class name="APITests.imageBlockDemo">
         <methods>
           <include name="basicSetUp"/>
           <include name="tearDown"/>
           <include name="closeContextAndAddScreenshotIfFail"/>
-          <include name="monitorHttpTrafficDemo"/>
+          <include name="jsBlockDemo2"/>
           <include name="createContextAndPage"/>
         </methods>
-      </class> <!-- APITests.RequestResponseOverview -->
+      </class> <!-- APITests.imageBlockDemo -->
     </classes>
   </test> <!-- PlaywrightPractices(failed) -->
 </suite> <!-- Failed suite [Default Suite] -->

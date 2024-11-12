@@ -61,4 +61,22 @@ public class RequestResponseOverview extends BasicSetup {
 
     }
 
+    @Test
+    public void codeChallenge(){
+        List<Boolean> responses = new ArrayList<>();
+        page.onResponse(response ->{
+            boolean isOk = response.ok();
+            responses.add(isOk);
+                    System.out.println("Response status: " + (isOk ? "OK" : "Not OK"));
+                }
+            );
+        page.navigate("https://gym.langfit.net/login");
+
+        System.out.println("List if responses status: " + responses);
+
+        boolean foundNotOk = responses.stream().anyMatch(ok -> !ok);
+        Assert.assertFalse(foundNotOk);
+
+    }
+
 }
