@@ -3,12 +3,16 @@
 <suite name="Failed suite [Default Suite]" guice-stage="DEVELOPMENT">
   <test thread-count="5" name="PlaywrightPractices(failed)">
     <classes>
-      <class name="PlayWrightTests2.ValidLoginTraceViewFailingDemo">
+      <class name="LangFitTests.ValidLoginTest">
         <methods>
-          <include name="traceViewerFailingTestDemo"/>
-          <include name="cleanup"/>
+          <include name="validLoginTest"/>
+          <include name="setUp"/>
+          <include name="setUpTest"/>
+          <include name="tearDown"/>
+          <include name="closeContextAndAddScreenshotIfFail"/>
+          <include name="createContextAndPage"/>
         </methods>
-      </class> <!-- PlayWrightTests2.ValidLoginTraceViewFailingDemo -->
+      </class> <!-- LangFitTests.ValidLoginTest -->
     </classes>
   </test> <!-- PlaywrightPractices(failed) -->
 </suite> <!-- Failed suite [Default Suite] -->
