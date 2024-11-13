@@ -3,28 +3,41 @@ package PlayWrightTests2;
 import Configs.ConfigLoader;
 import Pages.HomePage;
 import Pages.LoginPage;
-import com.microsoft.playwright.Browser;
+import com.microsoft.playwright.*;
 import com.microsoft.playwright.BrowserType.LaunchOptions;
-import com.microsoft.playwright.Page;
-import com.microsoft.playwright.Playwright;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.Test;
+
 import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.UUID;
 
-public class ValidLogin {
+public class ValidLoginTraceViewFailingDemo {
 
-    public static void main(String[] args) {
+    Playwright pw;
+    Browser browser;
+    BrowserContext context;
 
-        Playwright playwright = Playwright.create();
-        Browser browser = playwright.chromium().launch(
+    @Test
+    public void traceViewerFailingTestDemo() {
+
+        pw = Playwright.create();
+        browser = pw.chromium().launch(
                 new LaunchOptions().setHeadless(true)
         );
+        context = browser.newContext();
         ConfigLoader config = new ConfigLoader();
         String username = config.getProperty("Valid_username");
         String password = config.getProperty("Valid_password");
 
-        Page page = browser.newPage();
+        //Start tracing before creating / navigating page.
+        context.tracing().start(new Tracing.StartOptions()
+                .setScreenshots(true)
+                .setSnapshots(true)
+                .setSources(true));
+
+        Page page = context.newPage();
         page.navigate("https://gym.langfit.net/login");
 
         String timestamp = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
@@ -43,10 +56,14 @@ public class ValidLogin {
         String uuid = UUID.randomUUID().toString();
         String screenshotPathFullPage = "./snaps/scr" + uuid + ".png";
         page.screenshot(screenshotOptions.setFullPage(true).setPath(Paths.get(screenshotPathFullPage)));
+    }
 
-        page.close();
+    @AfterMethod
+    public void cleanup(){
+        //Stop tracing and export it into a zip archive.
+        context.tracing().stop(new Tracing.StopOptions()
+                .setPath(Paths.get("trace.zip")));
         browser.close();
-        playwright.close();
-
+        pw.close();
     }
 }
