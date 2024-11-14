@@ -150,7 +150,7 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <mainClass>Utils.AllureEnvironmentWriter</mainClass>
+                    <mainClass>utils.AllureEnvironmentWriter</mainClass>
                     <mainClass>com.microsoft.playwright.CLI</mainClass>
                     <arguments>
                         <argument>codegen</argument>
