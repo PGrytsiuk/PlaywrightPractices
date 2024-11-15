@@ -2,12 +2,12 @@
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
 <suite thread-count="1" parallel="tests" name="Failed suite [All Test Suite]" guice-stage="DEVELOPMENT" verbose="2">
   <listeners>
-    <listener class-name="Hooks.CustomListeners"/>
+    <listener class-name="com.common.hooks.CustomListeners"/>
   </listeners>
   <test thread-count="1" parallel="tests" name="Chrome Tests(failed)" verbose="2">
     <parameter name="browser" value="chromium"/>
     <classes>
-      <class name="LangFitTests.DowloadMobileAppSecondTest">
+      <class name="com.langfit.webui.DowloadMobileAppSecondTest">
         <methods>
           <include name="tearDown"/>
           <include name="downloadMobileApp"/>
@@ -16,7 +16,7 @@
           <include name="createContextAndPage"/>
         </methods>
       </class> <!-- LangFitTests.DowloadMobileAppSecondTest -->
-      <class name="LangFitTests.LanguageSelectorTest">
+      <class name="com.langfit.webui.LanguageSelectorTest">
         <methods>
           <include name="tearDown"/>
           <include name="setUp"/>
@@ -30,7 +30,7 @@
   <test thread-count="1" parallel="tests" name="Firefox Tests(failed)" verbose="2">
     <parameter name="browser" value="firefox"/>
     <classes>
-      <class name="LangFitTests.DowloadMobileAppSecondTest">
+      <class name="com.langfit.webui.DowloadMobileAppSecondTest">
         <methods>
           <include name="tearDown"/>
           <include name="downloadMobileApp"/>
@@ -39,7 +39,7 @@
           <include name="createContextAndPage"/>
         </methods>
       </class> <!-- LangFitTests.DowloadMobileAppSecondTest -->
-      <class name="LangFitTests.LanguageSelectorTest">
+      <class name="com.langfit.webui.LanguageSelectorTest">
         <methods>
           <include name="tearDown"/>
           <include name="setUp"/>
@@ -53,7 +53,7 @@
   <test thread-count="1" parallel="tests" name="WebKit Tests(failed)" verbose="2">
     <parameter name="browser" value="webkit"/>
     <classes>
-      <class name="LangFitTests.DowloadMobileAppSecondTest">
+      <class name="com.langfit.webui.DowloadMobileAppSecondTest">
         <methods>
           <include name="tearDown"/>
           <include name="downloadMobileApp"/>
@@ -62,7 +62,7 @@
           <include name="createContextAndPage"/>
         </methods>
       </class> <!-- LangFitTests.DowloadMobileAppSecondTest -->
-      <class name="LangFitTests.LanguageSelectorTest">
+      <class name="com.langfit.webui.LanguageSelectorTest">
         <methods>
           <include name="tearDown"/>
           <include name="setUp"/>
