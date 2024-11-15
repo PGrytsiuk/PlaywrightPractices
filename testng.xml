@@ -2,14 +2,14 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="All Test Suite" parallel="tests" thread-count="1" verbose="2">
     <listeners>
-        <listener class-name="Hooks.CustomListeners"/>
+        <listener class-name="com.common.hooks.CustomListeners"/>
     </listeners>
 
     <!-- Test for Chrome -->
     <test name="Chrome Tests">
         <parameter name="browser" value="chromium"/>
         <classes>
-            <class name="Hooks.TestFactory"/>
+            <class name="com.langfit.testdata.TestFactory"/>
         </classes>
     </test>
 
@@ -17,7 +17,7 @@
     <test name="Firefox Tests">
         <parameter name="browser" value="firefox"/>
         <classes>
-            <class name="Hooks.TestFactory"/>
+            <class name="com.langfit.testdata.TestFactory"/>
         </classes>
     </test>
 
@@ -25,7 +25,7 @@
     <test name="WebKit Tests">
         <parameter name="browser" value="webkit"/>
         <classes>
-            <class name="Hooks.TestFactory"/>
+            <class name="com.langfit.testdata.TestFactory"/>
         </classes>
     </test>
 </suite>
