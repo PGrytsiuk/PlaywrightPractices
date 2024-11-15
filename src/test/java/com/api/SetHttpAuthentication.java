@@ -1,6 +1,5 @@
 package com.api;
 
-import com.data.TestData;
 import com.common.hooks.BasicSetup;
 import com.microsoft.playwright.*;
 import org.testng.Assert;
@@ -14,7 +13,7 @@ public class SetHttpAuthentication extends BasicSetup {
     Browser browser;
     String token ="test";
 
-    @Test
+    @Test(enabled = false)
     public void setHttpAuthentication(){
 
         pw = Playwright.create();

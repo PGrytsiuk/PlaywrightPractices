@@ -35,12 +35,6 @@ public class TestData {
         return config.getProperty("Email_password");
     }
 
-    public static String getGH() {
-        return config.getProperty("GH");
-    }
-
-
-
     // Add more test data as needed
 }
 

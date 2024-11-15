@@ -2,7 +2,7 @@ package com.langfit.webui;
 
 import langfit.web.hooks.SetupForLoggedUserOnLangfit;
 import langfit.web.pages.HomePage;
-import com.langfit.testdata.TestInitializer;
+import com.langfit.testfixture.TestInitializer;
 import com.microsoft.playwright.Locator;
 import com.common.hooks.CustomListeners;
 import io.qameta.allure.Description;

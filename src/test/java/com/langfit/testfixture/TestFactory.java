@@ -1,4 +1,4 @@
-package com.langfit.testdata;
+package com.langfit.testfixture;
 
 import com.langfit.webui.*;
 import org.testng.annotations.Factory;

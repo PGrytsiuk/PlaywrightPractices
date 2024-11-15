@@ -1,4 +1,4 @@
-package com.langfit.testdata;
+package com.langfit.testfixture;
 
 import com.langfit.testsspecifichooks.EmailsHandlingResetPasswordFlow;
 import langfit.web.pages.HomePage;

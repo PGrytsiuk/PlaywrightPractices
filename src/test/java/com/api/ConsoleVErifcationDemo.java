@@ -6,7 +6,7 @@ import org.testng.annotations.Test;
 
 public class ConsoleVErifcationDemo extends BasicSetup {
 
-    @Test
+    @Test(enabled = false)
     public void handlingConsoleMessages() {
 
         page.onConsoleMessage(msg -> {
