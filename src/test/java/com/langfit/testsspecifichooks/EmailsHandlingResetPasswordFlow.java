@@ -3,7 +3,7 @@ package com.langfit.testsspecifichooks;
 import com.data.TestData;
 import langfit.web.pages.ResetPassword;
 import utils.PasswordGenerator;
-import com.langfit.testdata.TestInitializer;
+import com.langfit.testfixture.TestInitializer;
 import com.microsoft.playwright.Browser;
 import com.microsoft.playwright.Page;
 

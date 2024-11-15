@@ -4,7 +4,7 @@ import com.data.TestData;
 import langfit.web.hooks.SetupForLangFit;
 import langfit.web.pages.HomePage;
 import langfit.web.pages.LoginPage;
-import com.langfit.testdata.TestInitializer;
+import com.langfit.testfixture.TestInitializer;
 import com.microsoft.playwright.Page;
 import com.common.hooks.CustomListeners;
 import io.qameta.allure.Description;

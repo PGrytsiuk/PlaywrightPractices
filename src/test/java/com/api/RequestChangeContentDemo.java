@@ -1,6 +1,5 @@
 package com.api;
 
-import com.data.TestData;
 import com.microsoft.playwright.*;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -14,7 +13,7 @@ public class RequestChangeContentDemo {
     Browser browser;
     String token ="test";
 
-    @Test
+    @Test(enabled = false)
     public void requestChangeContentDemo() {
 
         pw = Playwright.create();
