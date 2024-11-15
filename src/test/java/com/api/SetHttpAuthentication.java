@@ -12,7 +12,7 @@ public class SetHttpAuthentication extends BasicSetup {
 
     Playwright pw;
     Browser browser;
-    String token = "token";
+    String token ="test";
 
     @Test
     public void setHttpAuthentication(){
