@@ -9,7 +9,7 @@
     <test name="Chrome Tests">
         <parameter name="browser" value="chromium"/>
         <classes>
-            <class name="com.langfit.testfixture.TestFactory"/>
+            <class name="com.langfit.test.fixture.TestFactory"/>
         </classes>
     </test>
 
@@ -17,7 +17,7 @@
     <test name="Firefox Tests">
         <parameter name="browser" value="firefox"/>
         <classes>
-            <class name="com.langfit.testfixture.TestFactory"/>
+            <class name="com.langfit.test.fixture.TestFactory"/>
         </classes>
     </test>
 
@@ -25,7 +25,7 @@
     <test name="WebKit Tests">
         <parameter name="browser" value="webkit"/>
         <classes>
-            <class name="com.langfit.testfixture.TestFactory"/>
+            <class name="com.langfit.test.fixture.TestFactory"/>
         </classes>
     </test>
 </suite>
