@@ -1,6 +1,6 @@
 package langfit.web.hooks;
 
-import com.data.TestData;
+import com.langfit.data.TestData;
 import utils.AllureEnvironmentWriter;
 import com.microsoft.playwright.*;
 import io.qameta.allure.Attachment;
