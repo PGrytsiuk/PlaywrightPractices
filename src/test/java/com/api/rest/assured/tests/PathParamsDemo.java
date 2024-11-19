@@ -58,11 +58,10 @@ public class PathParamsDemo {
 
     @Test
     void withParamAsMap() {
-        Map<String, String> reusableMap = Map.of("user", "Pgrytsiuk",
-                "repo_name", "PlaywrightPractices");
         RestAssured
                 .given()
-                .pathParams(reusableMap)
+                .pathParams(Map.of("user", "Pgrytsiuk",
+                "repo_name", "PlaywrightPractices"))
                 .get(REPO_EP + "/{user}/{repo_name}")
                 .then()
                 .statusCode(200)
