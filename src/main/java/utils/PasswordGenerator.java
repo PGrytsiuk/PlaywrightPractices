@@ -1,6 +1,6 @@
 package utils;
 
-import com.configs.ConfigLoader;
+import com.common.configs.ConfigLoader;
 
 public class PasswordGenerator {
 
