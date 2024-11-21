@@ -7,7 +7,6 @@ import com.microsoft.playwright.BrowserContext;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.Playwright;
 import org.testng.annotations.Test;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 

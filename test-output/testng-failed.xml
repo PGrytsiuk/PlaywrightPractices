@@ -3,11 +3,11 @@
 <suite name="Failed suite [Default Suite]" guice-stage="DEVELOPMENT">
   <test thread-count="5" name="PlaywrightPractices(failed)">
     <classes>
-      <class name="com.api.rest.assured.tests.ValidatableResponseBodyDemo">
+      <class name="com.api.rest.assured.tests.ValidatableResponseItemsDemo">
         <methods>
-          <include name="matcherExample"/>
+          <include name="repeatingItems"/>
         </methods>
-      </class> <!-- com.api.rest.assured.tests.ValidatableResponseBodyDemo -->
+      </class> <!-- com.api.rest.assured.tests.ValidatableResponseItemsDemo -->
     </classes>
   </test> <!-- PlaywrightPractices(failed) -->
 </suite> <!-- Failed suite [Default Suite] -->
