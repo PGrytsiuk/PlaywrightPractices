@@ -4,7 +4,7 @@ import com.common.hooks.BasicSetup;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-public class ConsoleVErifcationDemo extends BasicSetup {
+public class ConsoleVerifcationDemo extends BasicSetup {
 
     @Test
     public void handlingConsoleMessages() {

@@ -7,8 +7,9 @@ import com.microsoft.playwright.BrowserContext;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.Playwright;
 import org.testng.annotations.Test;
-import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
+
 import static org.junit.Assert.assertEquals;
 
 public class AxREsultsTest {
@@ -45,7 +46,7 @@ public class AxREsultsTest {
         page.locator("(//md-option[contains(@class,'option ng-scope')])//div[@class='md-text ng-binding']").waitFor();
 
         AxeResults accessibilityScanResults = new AxeBuilder(page)
-                .include(Arrays.asList("(//md-option[contains(@class,'option ng-scope')])//div[@class='md-text ng-binding']"))
+                .include(List.of("(//md-option[contains(@class,'option ng-scope')])//div[@class='md-text ng-binding']"))
                 .analyze();
 
         assertEquals(Collections.emptyList(), accessibilityScanResults.getViolations());

@@ -9,7 +9,7 @@ import langfit.web.pages.LoginPage;
 
 public class TestInitializer {
 
-    private Page page;
+    private final Page page;
     private LoginPage loginPage;
     private HomePage homepage;
     private EmailsHandlingResetPasswordFlow emailsHandlingResetPasswordFlow;
