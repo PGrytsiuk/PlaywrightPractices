@@ -3,6 +3,8 @@ package com.api.rest.assured.tests;
 import io.restassured.RestAssured;
 import org.testng.annotations.Test;
 
+import java.util.Map;
+
 import static org.hamcrest.Matchers.equalTo;
 
 public class PathParamsDemo {
@@ -33,5 +35,37 @@ public class PathParamsDemo {
                 .body("id", equalTo(860106649));
     }
 
+    @Test
+    void withOverloadedGet() {
+        RestAssured
+                .get("https://api.github.com/repos/{user}/{repo}", "Pgrytsiuk", "PlaywrightPractices")
+                .then()
+                .statusCode(200)
+                .body("id", equalTo(860106649));
+    }
 
+    @Test
+    void withParam() {
+        RestAssured
+                .given()
+                .pathParam("user", "Pgrytsiuk")
+                .pathParam("repo_name", "PlaywrightPractices")
+                    .get(REPO_EP + "/{user}/{repo_name}")
+                .then()
+                    .statusCode(200)
+                    .body("id", equalTo(860106649));
+    }
+
+    @Test
+    void withParamAsMap() {
+        RestAssured
+                .given()
+                .pathParams(Map.of("user", "Pgrytsiuk",
+                "repo_name", "PlaywrightPractices"))
+                .get(REPO_EP + "/{user}/{repo_name}")
+                .then()
+                .statusCode(200)
+                .body("id", equalTo(860106649));
+    }
 }
+
