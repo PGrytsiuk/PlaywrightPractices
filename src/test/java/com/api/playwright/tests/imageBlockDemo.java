@@ -1,7 +1,7 @@
 package com.api.playwright.tests;
 
 import com.common.hooks.BasicSetup;
-import utils.ScreenshotsAndRecordings;
+import com.utils.ScreenshotsAndRecordings;
 import org.junit.Assert;
 import org.testng.annotations.Test;
 

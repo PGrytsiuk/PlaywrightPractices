@@ -1,8 +1,8 @@
 package com.playwright.tests2;
 
 import com.common.configs.ConfigLoader;
-import langfit.web.pages.HomePage;
-import langfit.web.pages.LoginPage;
+import com.langfit.data.web.pages.HomePage;
+import com.langfit.data.web.pages.LoginPage;
 import com.microsoft.playwright.*;
 import com.microsoft.playwright.BrowserType.LaunchOptions;
 import org.testng.annotations.AfterMethod;

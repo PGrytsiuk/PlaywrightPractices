@@ -1,8 +1,8 @@
 package com.langfit.webui.login.tests;
 
-import langfit.web.hooks.SetupForLangFit;
-import langfit.web.pages.LoginPage;
-import utils.ScreenshotsAndRecordings;
+import com.langfit.data.web.hooks.SetupForLangFit;
+import com.langfit.data.web.pages.LoginPage;
+import com.utils.ScreenshotsAndRecordings;
 import com.langfit.test.fixture.TestInitializer;
 import com.microsoft.playwright.BrowserContext;
 import com.microsoft.playwright.Tracing;
@@ -47,7 +47,7 @@ public class NGTest extends SetupForLangFit {
     @Story("Invalid login(Duplicate)")
     @Description("This test case verify if user is not able to login with invalid credentials with different set of data")
     @Severity(SeverityLevel.CRITICAL)
-    public void InvalidLogin(String login, String password) {
+    public void invalidLogin(String login, String password) {
         BrowserContext context = ScreenshotsAndRecordings.VideoCapture(browser, "Invalid Login");
 
         // Start tracing before creating / navigating a page.

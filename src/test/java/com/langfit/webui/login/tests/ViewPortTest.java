@@ -1,8 +1,8 @@
 package com.langfit.webui.login.tests;
 
-import langfit.web.hooks.SetupForLangFit;
-import langfit.web.pages.LoginPage;
-import utils.ScreenshotsAndRecordings;
+import com.langfit.data.web.hooks.SetupForLangFit;
+import com.langfit.data.web.pages.LoginPage;
+import com.utils.ScreenshotsAndRecordings;
 import com.langfit.test.fixture.TestInitializer;
 import com.microsoft.playwright.Tracing;
 import com.common.hooks.CustomListeners;
@@ -74,7 +74,7 @@ public class ViewPortTest extends SetupForLangFit {
     @Story("Test viewports")
     @Description("This test case verify if login page with different resolutions")
     @Severity(SeverityLevel.NORMAL)
-    public void InvalidLogin(int width, int height, String login, String password) {
+    public void invalidLogin(int width, int height, String login, String password) {
 
         // Start tracing before creating / navigating a page.
         context.tracing().start(new Tracing.StartOptions()

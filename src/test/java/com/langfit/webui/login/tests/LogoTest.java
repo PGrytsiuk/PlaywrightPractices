@@ -1,8 +1,8 @@
 package com.langfit.webui.login.tests;
 
 import com.langfit.data.TestData;
-import langfit.web.hooks.SetupForLangFit;
-import langfit.web.pages.LoginPage;
+import com.langfit.data.web.hooks.SetupForLangFit;
+import com.langfit.data.web.pages.LoginPage;
 import com.langfit.test.fixture.TestInitializer;
 import com.common.hooks.CustomListeners;
 import io.qameta.allure.Description;

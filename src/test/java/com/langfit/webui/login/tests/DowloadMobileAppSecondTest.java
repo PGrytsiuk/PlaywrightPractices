@@ -1,7 +1,7 @@
 package com.langfit.webui.login.tests;
 
-import langfit.web.hooks.SetupForLangFit;
-import langfit.web.pages.LoginPage;
+import com.langfit.data.web.hooks.SetupForLangFit;
+import com.langfit.data.web.pages.LoginPage;
 import com.langfit.test.fixture.TestInitializer;
 import com.microsoft.playwright.Page;
 import com.common.hooks.CustomListeners;

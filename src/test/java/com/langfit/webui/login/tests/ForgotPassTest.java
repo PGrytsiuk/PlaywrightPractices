@@ -1,7 +1,7 @@
 package com.langfit.webui.login.tests;
 
-import langfit.web.hooks.SetupForLangFit;
-import langfit.web.pages.LoginPage;
+import com.langfit.data.web.hooks.SetupForLangFit;
+import com.langfit.data.web.pages.LoginPage;
 import com.langfit.tests.specific.hooks.EmailsHandlingResetPasswordFlow;
 import com.langfit.test.fixture.TestInitializer;
 import com.common.hooks.CustomListeners;
@@ -22,7 +22,7 @@ public class ForgotPassTest extends SetupForLangFit {
     }
 
     @DataProvider(name="EmailOrusername")
-    public Object[][] EmailOrUsername() {
+    public Object[][] emailOrUsername() {
         return new Object[][] {
                { "testpgrytsiuk@gmail.com" },
                 { "<EMAIL>[0]"}
@@ -41,11 +41,11 @@ public class ForgotPassTest extends SetupForLangFit {
         ExecuteResetEmail = testInitializer.getEmailsHandlingResetPasswordFlow();
     }
 
-    @Test(priority = 1, dataProvider = "EmailOrusername", enabled = false)
+    @Test(priority = 1, dataProvider = "emailOrUsername", enabled = false)
     @Story("Forgot password")
     @Description("This test case verify if user is able to set up new password via reset password link")
     @Severity(SeverityLevel.CRITICAL)
-    public void ForgotPassword(String usernameOrEmail) throws Exception {
+    public void forgotPassword(String usernameOrEmail) throws Exception {
             page.navigate("/login");
 
             //Tap on the Forgot Password link

@@ -1,76 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
 <suite thread-count="1" parallel="tests" name="Failed suite [All Test Suite]" guice-stage="DEVELOPMENT" verbose="2">
-  <listeners>
-    <listener class-name="com.common.hooks.CustomListeners"/>
-  </listeners>
-  <test thread-count="1" parallel="tests" name="Chrome Tests(failed)" verbose="2">
-    <parameter name="browser" value="chromium"/>
+  <test thread-count="1" parallel="tests" name="Api Tests(failed)" verbose="2">
     <classes>
-      <class name="com.langfit.webui.DowloadMobileAppSecondTest">
+      <class name="com.api.restassured.tests.usingOOPconcepts.RateLimitCoreTest">
         <methods>
-          <include name="tearDown"/>
-          <include name="downloadMobileApp"/>
-          <include name="setUp"/>
-          <include name="closeContextAndAddScreenshotIfFail"/>
-          <include name="createContextAndPage"/>
+          <include name="resourcesCoreDefaultValuesAreCorrect"/>
+          <include name="cleanup"/>
+          <include name="setup"/>
         </methods>
-      </class> <!-- LangFitTests.DowloadMobileAppSecondTest -->
-      <class name="com.langfit.webui.LanguageSelectorTest">
-        <methods>
-          <include name="tearDown"/>
-          <include name="setUp"/>
-          <include name="closeContextAndAddScreenshotIfFail"/>
-          <include name="createContextAndPage"/>
-          <include name="languageSelectorTest"/>
-        </methods>
-      </class> <!-- LangFitTests.LanguageSelectorTest -->
+      </class> <!-- com.api.restassured.tests.usingOOPconcepts.RateLimitCoreTest -->
     </classes>
-  </test> <!-- Chrome Tests(failed) -->
-  <test thread-count="1" parallel="tests" name="Firefox Tests(failed)" verbose="2">
-    <parameter name="browser" value="firefox"/>
-    <classes>
-      <class name="com.langfit.webui.DowloadMobileAppSecondTest">
-        <methods>
-          <include name="tearDown"/>
-          <include name="downloadMobileApp"/>
-          <include name="setUp"/>
-          <include name="closeContextAndAddScreenshotIfFail"/>
-          <include name="createContextAndPage"/>
-        </methods>
-      </class> <!-- LangFitTests.DowloadMobileAppSecondTest -->
-      <class name="com.langfit.webui.LanguageSelectorTest">
-        <methods>
-          <include name="tearDown"/>
-          <include name="setUp"/>
-          <include name="closeContextAndAddScreenshotIfFail"/>
-          <include name="createContextAndPage"/>
-          <include name="languageSelectorTest"/>
-        </methods>
-      </class> <!-- LangFitTests.LanguageSelectorTest -->
-    </classes>
-  </test> <!-- Firefox Tests(failed) -->
-  <test thread-count="1" parallel="tests" name="WebKit Tests(failed)" verbose="2">
-    <parameter name="browser" value="webkit"/>
-    <classes>
-      <class name="com.langfit.webui.DowloadMobileAppSecondTest">
-        <methods>
-          <include name="tearDown"/>
-          <include name="downloadMobileApp"/>
-          <include name="setUp"/>
-          <include name="closeContextAndAddScreenshotIfFail"/>
-          <include name="createContextAndPage"/>
-        </methods>
-      </class> <!-- LangFitTests.DowloadMobileAppSecondTest -->
-      <class name="com.langfit.webui.LanguageSelectorTest">
-        <methods>
-          <include name="tearDown"/>
-          <include name="setUp"/>
-          <include name="closeContextAndAddScreenshotIfFail"/>
-          <include name="createContextAndPage"/>
-          <include name="languageSelectorTest"/>
-        </methods>
-      </class> <!-- LangFitTests.LanguageSelectorTest -->
-    </classes>
-  </test> <!-- WebKit Tests(failed) -->
+  </test> <!-- Api Tests(failed) -->
 </suite> <!-- Failed suite [All Test Suite] -->
