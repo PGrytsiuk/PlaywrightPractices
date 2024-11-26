@@ -85,7 +85,7 @@ jobs:
 
       - name: Create Allure Environment and Executor Files
         run: |
-          mkdir -p allure-results
+          mkdir -p target/allure-results
           
           # Create environment.properties file dynamically
           echo "OS=$(uname -s)" >> target/allure-results/environment.properties
