@@ -83,9 +83,15 @@ jobs:
       - name: Ensure browsers are installed
         run: mvn exec:java -e -D exec.mainClass=com.microsoft.playwright.CLI -D exec.args="install --with-deps"
 
-      - name: Create Allure Environment and Executor Files
+      - name: Set up default environment properties
         run: |
           mkdir -p target/allure-results
+          if [ -f "src/test/resources/default_environment.properties" ]; then
+            cp src/test/resources/default_environment.properties target/allure-results/environment.properties
+          fi 
+
+      - name: Create Allure Environment and Executor Files
+        run: |
           
           # Create environment.properties file dynamically
           echo "OS=$(uname -s)" >> target/allure-results/environment.properties
