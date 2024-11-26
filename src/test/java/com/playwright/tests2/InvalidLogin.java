@@ -1,7 +1,7 @@
 package com.playwright.tests2;
 
-import langfit.web.pages.LoginPage;
-import utils.ScreenshotsAndRecordings;
+import com.langfit.data.web.pages.LoginPage;
+import com.utils.ScreenshotsAndRecordings;
 import com.microsoft.playwright.*;
 
 public class InvalidLogin {

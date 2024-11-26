@@ -1,8 +1,8 @@
 package com.langfit.webui.login.tests;
 
 
-import langfit.web.hooks.SetupForLangFit;
-import langfit.web.pages.LoginPage;
+import com.langfit.data.web.hooks.SetupForLangFit;
+import com.langfit.data.web.pages.LoginPage;
 import com.langfit.test.fixture.TestInitializer;
 import com.common.hooks.CustomListeners;
 import io.qameta.allure.Description;
@@ -13,7 +13,7 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
-import static utils.ScreenshotsAndRecordings.setupContextWithVideo;
+import static com.utils.ScreenshotsAndRecordings.setupContextWithVideo;
 
 @Listeners(CustomListeners.class)
 public class LanguageSelectorTest extends SetupForLangFit {
