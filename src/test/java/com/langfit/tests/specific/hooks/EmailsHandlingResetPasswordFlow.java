@@ -1,8 +1,8 @@
 package com.langfit.tests.specific.hooks;
 
 import com.langfit.data.TestData;
-import langfit.web.pages.ResetPassword;
-import utils.PasswordGenerator;
+import com.langfit.data.web.pages.ResetPassword;
+import com.utils.PasswordGenerator;
 import com.langfit.test.fixture.TestInitializer;
 import com.microsoft.playwright.Browser;
 import com.microsoft.playwright.Page;

@@ -1,9 +1,9 @@
 package com.langfit.webui.home.tests;
 
 import com.langfit.data.TestData;
-import langfit.web.hooks.SetupForLangFit;
-import langfit.web.pages.HomePage;
-import langfit.web.pages.LoginPage;
+import com.langfit.data.web.hooks.SetupForLangFit;
+import com.langfit.data.web.pages.HomePage;
+import com.langfit.data.web.pages.LoginPage;
 import com.langfit.test.fixture.TestInitializer;
 import com.microsoft.playwright.Page;
 import com.common.hooks.CustomListeners;
@@ -20,7 +20,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.UUID;
 
-import static utils.ScreenshotsAndRecordings.setupContextWithVideo;
+import static com.utils.ScreenshotsAndRecordings.setupContextWithVideo;
 
 @Listeners(CustomListeners.class)
 public class ValidLoginTest extends SetupForLangFit {

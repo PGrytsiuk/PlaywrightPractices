@@ -1,6 +1,6 @@
 package com.common.hooks;
 
-import utils.AllureEnvironmentWriter;
+import com.utils.AllureEnvironmentWriter;
 import com.microsoft.playwright.*;
 import io.qameta.allure.Attachment;
 import org.testng.ITestResult;

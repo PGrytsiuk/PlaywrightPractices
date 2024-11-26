@@ -1,9 +1,9 @@
 package com.langfit.webui.login.tests;
 
 import com.langfit.data.TestData;
-import langfit.web.hooks.SetupForLangFit;
-import langfit.web.pages.LoginPage;
-import utils.ScreenshotsAndRecordings;
+import com.langfit.data.web.hooks.SetupForLangFit;
+import com.langfit.data.web.pages.LoginPage;
+import com.utils.ScreenshotsAndRecordings;
 import com.langfit.test.fixture.TestInitializer;
 import com.common.hooks.CustomListeners;
 import io.qameta.allure.Description;
@@ -14,7 +14,7 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
-import static utils.ScreenshotsAndRecordings.setupContextWithVideo;
+import static com.utils.ScreenshotsAndRecordings.setupContextWithVideo;
 
 @Listeners(CustomListeners.class)
 public class InvalidLoginTest extends SetupForLangFit {
@@ -37,7 +37,7 @@ public class InvalidLoginTest extends SetupForLangFit {
     @Story("Invalid login")
     @Description("This test case verify if user is not able to login with invalid credentials")
     @Severity(SeverityLevel.CRITICAL)
-    public void InvalidLoginCredentials(){
+    public void invalidLoginCredentials(){
              setupContextWithVideo(browser, "INVALID_LOGIN");
              page.navigate("/login");
 

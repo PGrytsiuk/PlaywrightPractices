@@ -1,11 +1,11 @@
 package com.langfit.test.fixture;
 
 import com.langfit.tests.specific.hooks.EmailsHandlingResetPasswordFlow;
-import langfit.web.pages.HomePage;
-import langfit.web.pages.ResetPassword;
-import utils.PasswordGenerator;
+import com.langfit.data.web.pages.HomePage;
+import com.langfit.data.web.pages.ResetPassword;
+import com.utils.PasswordGenerator;
 import com.microsoft.playwright.Page;
-import langfit.web.pages.LoginPage;
+import com.langfit.data.web.pages.LoginPage;
 
 public class TestInitializer {
 
