@@ -19,6 +19,17 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
+      - name: Download Allure History
+        uses: actions/download-artifact@v3
+        with:
+          name: allure-history
+          path: target/allure-results/history
+
+      - name: Verify TestNG Suite Files
+        run: |
+          ls -l src/test/resources/testng.xml
+          ls -l src/test/resources/apiTesting.xml
+
       - name: Install dependencies
         run: |
           sudo apt-get update
@@ -117,6 +128,12 @@ jobs:
         env:
           CI: true
 
+      - name: Upload Allure results
+        uses: actions/upload-artifact@v2
+        with:
+          name: allure-results
+          path: target/allure-results
+
       - name: Verify Allure Results Directory
         run: |
           if [ -d "target/allure-results" ]; then
@@ -129,13 +146,13 @@ jobs:
 
       - name: Verify Allure Environment and Executor Files
         run: |
-          if [ -f "allure-results/environment.properties" ]; then
+          if [ -f "target/allure-results/environment.properties" ]; then
             echo "environment.properties file exists"
           else
             echo "environment.properties file does not exist"
             exit 1
           fi
-          if [ -f "allure-results/executor.json" ]; then
+          if [ -f "target/allure-results/executor.json" ]; then
             echo "executor.json file exists"
           else
             echo "executor.json file does not exist"
