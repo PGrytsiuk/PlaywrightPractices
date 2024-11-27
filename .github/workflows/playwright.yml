@@ -88,6 +88,12 @@ jobs:
       - name: Install Allure CLI
         run: npm install -g allure-commandline --save-dev
 
+      - name: Download previous Allure results
+        uses: actions/download-artifact@v3
+        with:
+          name: allure-results
+          path: target/allure-results
+
       - name: Build & Install
         run: mvn -B install -DskipTests --no-transfer-progress
 
@@ -129,7 +135,7 @@ jobs:
           CI: true
 
       - name: Upload Allure results
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: allure-results
           path: target/allure-results
