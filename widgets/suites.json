@@ -1,1 +1,1 @@
-{"total":0,"items":[]}
+{"total":2,"items":[{"uid":"ad0589fd3e1f582fe3c181915a80ccd4","name":"Langfit Test Suite","statistic":{"failed":9,"broken":0,"skipped":0,"passed":30,"unknown":3,"total":42}},{"uid":"d71b2bcdc75023cfe61e78332035056e","name":"API Test Suite","statistic":{"failed":0,"broken":0,"skipped":0,"passed":2,"unknown":0,"total":2}}]}
