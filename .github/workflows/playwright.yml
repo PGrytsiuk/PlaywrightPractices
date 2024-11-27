@@ -20,10 +20,16 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Download Allure History
-        uses: actions/download-artifact@v3
-        with:
-          name: allure-history
-          path: target/allure-results/history
+        run: |
+          if ! gh api -H "Accept: application/vnd.github+json" \
+            /repos/${{ github.repository }}/actions/artifacts \
+            | grep -q allure-history; then
+            echo "No allure-history found. Creating directory."
+            mkdir -p target/allure-results/history
+          else
+            echo "Downloading allure-history artifact."
+            gh run download -n allure-history --dir target/allure-results/history || exit 1
+          fi
 
       - name: Verify TestNG Suite Files
         run: |
