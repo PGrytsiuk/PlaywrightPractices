@@ -94,11 +94,17 @@ jobs:
       - name: Install Allure CLI
         run: npm install -g allure-commandline --save-dev
 
-      - name: Download previous Allure results
-        uses: actions/download-artifact@v3
-        with:
-          name: allure-results
-          path: target/allure-results
+      - name: Download Allure History
+        run: |
+          if ! gh api -H "Accept: application/vnd.github+json" \
+            /repos/${{ github.repository }}/actions/artifacts \
+            | grep -q allure-history; then
+            echo "No allure-history found. Creating directory."
+            mkdir -p target/allure-results/history
+          else
+            echo "Downloading allure-history artifact."
+            gh run download -n allure-history --dir target/allure-results/history || exit 1
+          fi
 
       - name: Build & Install
         run: mvn -B install -DskipTests --no-transfer-progress
