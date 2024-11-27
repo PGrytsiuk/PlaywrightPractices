@@ -3,8 +3,11 @@ package com.utils;
 import com.microsoft.playwright.Browser;
 import com.microsoft.playwright.Playwright;
 
-import java.io.FileWriter;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Properties;
 
 public class AllureEnvironmentWriter {
@@ -15,9 +18,17 @@ public class AllureEnvironmentWriter {
         properties.setProperty("java_version", System.getProperty("java.version"));
         properties.setProperty("browser_version", getBrowserVersion(playwright, browser));
 
-        try (FileWriter writer = new FileWriter("allure-results/environment.properties")) {
-            properties.store(writer, "Allure Environment Properties");
+        try {
+            // Ensure the target/allure-results directory exists.
+            Path allureResultsPath = Paths.get("target/allure-results");
+            Files.createDirectories(allureResultsPath);  // Create directory if it doesn't exist
+
+            // Write the properties file
+            try (FileOutputStream output = new FileOutputStream(allureResultsPath.resolve("environment.properties").toFile())) {
+                properties.store(output, "Allure Environment Properties");
+            }
         } catch (IOException e) {
+            System.err.println("Failed to write to environment.properties: " + e.getMessage());
             e.printStackTrace();
         }
     }
