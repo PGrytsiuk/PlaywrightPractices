@@ -1,19 +1,17 @@
 package com.langfit.webui.home.tests;
 
+import com.langfit.data.web.components.NavMenu;
 import com.langfit.data.web.hooks.SetupForLoggedUserOnLangfit;
-import com.langfit.data.web.pages.HomePage;
 import com.langfit.test.fixture.TestInitializer;
-import com.microsoft.playwright.Locator;
 import com.common.hooks.CustomListeners;
 import io.qameta.allure.Description;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import io.qameta.allure.Story;
+import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
-
-import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
 
 @Listeners(CustomListeners.class)
 public class HomePageNavMenuTest extends SetupForLoggedUserOnLangfit {
@@ -22,14 +20,14 @@ public class HomePageNavMenuTest extends SetupForLoggedUserOnLangfit {
         super(browserType);
     }
 
-    private HomePage homePage;
+    private NavMenu leftnavMenu;
 
     @BeforeMethod
     public void setUpTest() {
         // Initialize TestInitializer
         TestInitializer testInitializer = new TestInitializer(page);
-        // Initialize the HomePage object
-        homePage = testInitializer.getHomepage();
+        // Initialize the left navigation menu object
+        leftnavMenu = testInitializer.getLeftnavMenu();
     }
 
     @Test(priority = 6)
@@ -37,11 +35,23 @@ public class HomePageNavMenuTest extends SetupForLoggedUserOnLangfit {
     @Description("This test case verifies if user to check left Navigation menu options")
     @Severity(SeverityLevel.MINOR)
     public void NavMenuTest() {
+        //Login to user account
         page.navigate("https://gym.langfit.net/");
 
-        // Random check
-        Locator navMenuLocator = page.locator("(//div[contains(@class,'lt-join-lesson-button ng-isolate-scope')]//button)[1]");
-        assertThat(navMenuLocator).isVisible();
-        homePage.verifyUserName("Pavlo Grytsiuk");
+        String[] expectedUrls = new String[] {
+                "https://gym.langfit.net/",
+                "https://gym.langfit.net/homeworks",
+                "https://gym.langfit.net/lessons_history",
+                "https://gym.langfit.net/settings",
+                "https://gym.langfit.net/help"
+        };
+        //Verify if left navigation menu is visible
+        Assert.assertTrue(leftnavMenu.leftMenuIsPresent(), "Navigation menu is visible");
+        //verify the amount of available options for the left navigation menu
+        Assert.assertEquals(leftnavMenu.leftNavMenuOptionsAmountSize(), 5);
+        //Verify if all navigation menu components are visible
+        Assert.assertTrue(leftnavMenu.verifyLeftNavigationMenuComponents(), "All navigation menu components are visible");
+        //Verify left menu navigation functionality by tapping on each option
+        leftnavMenu.leftNavigationMenuFunctionalityChecking(expectedUrls);
     }
 }

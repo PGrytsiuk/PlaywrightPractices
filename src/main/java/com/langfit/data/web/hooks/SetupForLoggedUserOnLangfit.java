@@ -25,7 +25,7 @@ public class SetupForLoggedUserOnLangfit {
 
     @BeforeSuite(alwaysRun = true)
     @Parameters("browser")
-    public void setUp(@Optional("chromium") String browserType) {
+    public void setUp(@Optional("chrome") String browserType) {
         this.browserType = browserType;
         initPlaywright();
         browser = launchBrowser();
