@@ -137,30 +137,30 @@ public class EmailsHandlingResetPasswordFlow {
         // Initialize TestInitializer
         TestInitializer testInitializer = new TestInitializer(page);
         // Initialize the LoginPage object
-       resetPassword = testInitializer.getResetPassword();
-       passwordGenerator = testInitializer.getPasswordGenerator();
+        resetPassword = testInitializer.getResetPassword();
+        passwordGenerator = testInitializer.getPasswordGenerator();
     }
 
 
     public void completePasswordReset(String resetLink) {
         String newPassword = passwordGenerator.generateUniquePassword();
         String confirmPassword = newPassword;
-            // Load the reset link
-            page.navigate(resetLink);
-            // Verify in New Password title is present
-            if (resetPassword.newPasswordTitle()) {
-                resetPassword.assertNewPasswordTitle("New password");
-            } else {
-                System.out.println("New password title is not visible");
-            }
-            // Verify that Send button is blocked by default
-            resetPassword.sendButtonDisabledByDefault();
-            // Fill New password and confirm password fields
-            resetPassword.enteringNewPassword(newPassword, confirmPassword);
-            // Verify Success Toast for Rest Password journey
-            resetPassword.successToastIsVisible();
-            resetPassword.assertSuccessToast("Password successfully changed");
+        // Load the reset link
+        page.navigate(resetLink);
+        // Verify in New Password title is present
+        if (resetPassword.newPasswordTitle()) {
+            resetPassword.assertNewPasswordTitle("New password");
+        } else {
+            System.out.println("New password title is not visible");
+        }
+        // Verify that Send button is blocked by default
+        resetPassword.sendButtonDisabledByDefault();
+        // Fill New password and confirm password fields
+        resetPassword.enteringNewPassword(newPassword, confirmPassword);
+        // Verify Success Toast for Rest Password journey
+        resetPassword.successToastIsVisible();
+        resetPassword.assertSuccessToast("Password successfully changed");
 
-            System.out.println("Generated Password: " + newPassword);
+        System.out.println("Generated Password: " + newPassword);
     }
 }
