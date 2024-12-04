@@ -30,10 +30,10 @@ public class HomePageNavMenuTest extends SetupForLoggedUserOnLangfit {
         leftnavMenu = testInitializer.getLeftnavMenu();
     }
 
-    @Test(priority = 6)
+    @Test(priority = 2)
     @Story("Home Page Navigation menu test")
     @Description("This test case verifies if user to check left Navigation menu options")
-    @Severity(SeverityLevel.MINOR)
+    @Severity(SeverityLevel.NORMAL)
     public void NavMenuTest() {
         //Login to user account
         page.navigate("https://gym.langfit.net/");

@@ -1,6 +1,7 @@
 package com.langfit.test.fixture;
 
 import com.langfit.webui.home.tests.HomePageNavMenuTest;
+import com.langfit.webui.home.tests.LogoutTest;
 import com.langfit.webui.home.tests.ValidLoginTest;
 import com.langfit.webui.login.tests.*;
 import org.testng.annotations.Factory;
@@ -27,7 +28,8 @@ public class TestFactory {
                 new ValidLoginTest(browserType),
                 new NGTest(browserType),
                 new ViewPortTest(browserType),
-                new HomePageNavMenuTest(browserType)
+                new HomePageNavMenuTest(browserType),
+                new LogoutTest(browserType)
         };
     }
 }
