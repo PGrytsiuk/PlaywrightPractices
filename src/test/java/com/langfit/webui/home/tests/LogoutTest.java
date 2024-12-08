@@ -9,16 +9,20 @@ import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import io.qameta.allure.Story;
 import org.testng.Assert;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.Listeners;
-import org.testng.annotations.Test;
+import org.testng.annotations.*;
 
 @Listeners(CustomListeners.class)
 public class LogoutTest extends SetupForLoggedUserOnLangfit {
 
-    public LogoutTest(String browserType) {
-        super(browserType);
+
+   /* public LogoutTest() {
+        super();
     }
+
+    @Parameters("browserType")
+    public void setBrowserType(String browserType) {
+        this.browserType = browserType; // Set the browserType for the superclass
+    }*/
 
     private Header header;
 
@@ -30,7 +34,7 @@ public class LogoutTest extends SetupForLoggedUserOnLangfit {
         header = testInitializer.getHeader();
     }
 
-    @Test(priority = 1)
+    @Test(priority = 11)
     @Story("Logout test")
     @Description("This test case verifies if is able to logout from his account")
     @Severity(SeverityLevel.CRITICAL)

@@ -1,6 +1,7 @@
 package com.langfit.data.web.hooks;
 
 import com.langfit.data.TestData;
+import com.langfit.data.web.pages.LoginPage;
 import com.utils.AllureEnvironmentWriter;
 import com.microsoft.playwright.*;
 import io.qameta.allure.Attachment;
@@ -9,64 +10,74 @@ import org.testng.annotations.*;
 
 import java.nio.file.Paths;
 
-public class SetupForLangFit {
+public class SetupForLoggedUserOnLangfitWithPersistedState {
 
     protected static Playwright playwright;
     protected static Browser browser;
     protected static BrowserContext context;
     protected static Page page;
+
     protected String browserType;
 
-    public SetupForLangFit(String browserType) {
+    public SetupForLoggedUserOnLangfitWithPersistedState(String browserType) {
         this.browserType = browserType;
     }
 
     @BeforeSuite(alwaysRun = true)
-    @Parameters("browserType")
-    public void setUp(@Optional("chromium") String browserType) {
+    @Parameters("browser")
+    public void setUp(@Optional("chrome") String browserType) {
         this.browserType = browserType;
-        System.out.println("Initializing tests on browser: " + browserType);
-
-        // Check for Playwright initialization
-        playwright = Playwright.create();
-        BrowserType.LaunchOptions options = new BrowserType.LaunchOptions().setHeadless(true).setSlowMo(500);
-
-        switch (browserType.toLowerCase()) {
-            case "firefox":
-                browser = playwright.firefox().launch(options);
-                break;
-            case "webkit":
-                browser = playwright.webkit().launch(options);
-                break;
-            case "chromium":
-            default:
-                browser = playwright.chromium().launch(options);
-        }
-
+        initPlaywright();
+        browser = launchBrowser();
         // Write Allure environment information
         AllureEnvironmentWriter.writeEnvironment(playwright, browser);
+        context = browser.newContext(new Browser.NewContextOptions().setAcceptDownloads(true));
+        page = context.newPage();
+
+        loginAndSaveState();
+    }
+
+    private void initPlaywright() {
+        playwright = Playwright.create();
+    }
+
+    private Browser launchBrowser() {
+        BrowserType.LaunchOptions options = new BrowserType.LaunchOptions().setHeadless(true).setSlowMo(500);
+
+        return switch (browserType.toLowerCase()) {
+            case "firefox" -> playwright.firefox().launch(options);
+            case "webkit" -> playwright.webkit().launch(options);
+            default -> playwright.chromium().launch(options);
+        };
+    }
+
+    private void loginAndSaveState() {
+        // force reload config before each test
+        TestData.reloadConfig();
+        page.navigate("https://gym.langfit.net/login");
+        LoginPage loginPage = new LoginPage(page);
+        loginPage.login(TestData.getValidUsername(), TestData.getLastPassword());
+
+        context.storageState(new BrowserContext.StorageStateOptions().setPath(Paths.get("state.json")));
+        context.close();
     }
 
     @BeforeMethod
     public void createContextAndPage() {
-        // force reload config before each test
-        TestData.reloadConfig();
-        String baseURL = "https://gym.langfit.net/";
-        context = browser.newContext(new Browser.NewContextOptions().setBaseURL(baseURL).setAcceptDownloads(true));
+        context = browser.newContext(
+                new Browser.NewContextOptions().setStorageStatePath(Paths.get("state.json"))
+        );
         page = context.newPage();
         page.setViewportSize(1920, 1080);
     }
 
     @AfterMethod
     public void closeContextAndAddScreenshotIfFail(ITestResult result) {
-        try {
-            if (result.getStatus() == ITestResult.FAILURE) {
-                takeScreenshotForPage(page, result.getName());
-            }
-        } finally {
-            if (page != null) page.close();
-            if (context != null) context.close();
+        if (result.getStatus() == ITestResult.FAILURE) {
+            takeScreenshotForPage(page, result.getName());
         }
+        if (page != null) page.close();
+        if (context != null) context.close();
     }
 
     private void takeScreenshotForPage(Page page, String testName) {

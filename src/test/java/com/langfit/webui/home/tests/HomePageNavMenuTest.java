@@ -1,7 +1,7 @@
 package com.langfit.webui.home.tests;
 
 import com.langfit.data.web.components.NavMenu;
-import com.langfit.data.web.hooks.SetupForLoggedUserOnLangfit;
+import com.langfit.data.web.hooks.SetupForLoggedUserOnLangfitWithPersistedState;
 import com.langfit.test.fixture.TestInitializer;
 import com.common.hooks.CustomListeners;
 import io.qameta.allure.Description;
@@ -14,7 +14,7 @@ import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
 @Listeners(CustomListeners.class)
-public class HomePageNavMenuTest extends SetupForLoggedUserOnLangfit {
+public class HomePageNavMenuTest extends SetupForLoggedUserOnLangfitWithPersistedState {
 
     public HomePageNavMenuTest(String browserType) {
         super(browserType);
@@ -30,7 +30,7 @@ public class HomePageNavMenuTest extends SetupForLoggedUserOnLangfit {
         leftnavMenu = testInitializer.getLeftnavMenu();
     }
 
-    @Test(priority = 2)
+    @Test(priority = 10, invocationCount = 3)
     @Story("Home Page Navigation menu test")
     @Description("This test case verifies if user to check left Navigation menu options")
     @Severity(SeverityLevel.NORMAL)

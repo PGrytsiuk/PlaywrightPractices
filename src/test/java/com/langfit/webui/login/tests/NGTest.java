@@ -43,7 +43,7 @@ public class NGTest extends SetupForLangFit {
         loginPage = testInitializer.getLoginPage();
     }
 
-    @Test(priority = 3, dataProvider = "Invalid users")
+    @Test(priority = 4, dataProvider = "Invalid users")
     @Story("Invalid login(Duplicate)")
     @Description("This test case verify if user is not able to login with invalid credentials with different set of data")
     @Severity(SeverityLevel.CRITICAL)

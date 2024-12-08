@@ -41,7 +41,7 @@ public class ForgotPassTest extends SetupForLangFit {
         ExecuteResetEmail = testInitializer.getEmailsHandlingResetPasswordFlow();
     }
 
-    @Test(priority = 1, dataProvider = "emailOrUsername", enabled = false)
+    @Test(priority = 8, dataProvider = "emailOrUsername", enabled = false)
     @Story("Forgot password")
     @Description("This test case verify if user is able to set up new password via reset password link")
     @Severity(SeverityLevel.CRITICAL)

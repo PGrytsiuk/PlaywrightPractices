@@ -14,11 +14,13 @@ public class HomePage extends BasePage {
     private static final Logger logger = LoggerFactory.getLogger(HomePage.class);
 
     private final Locator hostLabel;
+    private final Locator joinTheLesson;
 
 
     public HomePage(Page page) {
         super(page);
         this.hostLabel = page.locator("//*[contains (@class, 'user-name')]");
+        this.joinTheLesson = page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Join the lesson"));
 
     }
 

@@ -41,7 +41,7 @@ public class ValidLoginTest extends SetupForLangFit {
         homePage = testInitializer.getHomepage();
     }
 
-    @Test(priority = 5)
+    @Test(priority = 9)
     @Story("Valid login")
     @Description("This test case verify if user is able to login with valid credentials")
     @Severity(SeverityLevel.CRITICAL)

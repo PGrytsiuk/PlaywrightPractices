@@ -8,12 +8,46 @@
 <body>
 <table>
 <tr><th>Test</th><th># Passed</th><th># Skipped</th><th># Retried</th><th># Failed</th><th>Time (ms)</th><th>Included Groups</th><th>Excluded Groups</th></tr>
-<tr><th colspan="8">All Test Suite</th></tr>
-<tr><td><a href="#t0">Api Tests</a></td><td class="num">2</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">3,006</td><td></td><td></td></tr>
+<tr><th colspan="8">Default Suite</th></tr>
+<tr><td><a href="#t0">PlaywrightPractices</a></td><td class="num">1</td><td class="num">0</td><td class="num">0</td><td class="num attn">1</td><td class="num">21,316</td><td></td><td></td></tr>
 </table>
-<table id='summary'><thead><tr><th>Class</th><th>Method</th><th>Start</th><th>Time (ms)</th></tr></thead><tbody><tr><th colspan="4">All Test Suite</th></tr></tbody><tbody id="t0"><tr><th colspan="4">Api Tests &#8212; passed</th></tr><tr class="passedeven"><td rowspan="1">com.api.restassured.tests.usingOOPconcepts.RateLimitCoreTest</td><td><a href="#m0">resourcesCoreDefaultValuesAreCorrect</a></td><td rowspan="1">1732571530902</td><td rowspan="1">2044</td></tr><tr class="passedodd"><td rowspan="1">com.api.restassured.tests.usingOOPconcepts.RateLimitSearchTest</td><td><a href="#m1">resourcesSearchDefaultValuesAreCorrect</a></td><td rowspan="1">1732571532962</td><td rowspan="1">122</td></tr></tbody>
+<table id='summary'><thead><tr><th>Class</th><th>Method</th><th>Start</th><th>Time (ms)</th></tr></thead><tbody><tr><th colspan="4">Default Suite</th></tr></tbody><tbody id="t0"><tr><th colspan="4">PlaywrightPractices &#8212; failed</th></tr><tr class="failedeven"><td rowspan="1">com.playwright.tests2.ValidLoginTraceViewFailingDemo</td><td><a href="#m0">traceViewerFailingTestDemo</a></td><td rowspan="1">1733667815238</td><td rowspan="1">10980</td></tr><tr><th colspan="4">PlaywrightPractices &#8212; passed</th></tr><tr class="passedeven"><td rowspan="1">com.playwright.tests2.SimpleTest</td><td><a href="#m1">testLogin</a></td><td rowspan="1">1733667811878</td><td rowspan="1">2911</td></tr></tbody>
 </table>
-<h2>Api Tests</h2><h3 id="m0">com.api.restassured.tests.usingOOPconcepts.RateLimitCoreTest#resourcesCoreDefaultValuesAreCorrect</h3><table class="result"><tr><th class="invisible"/></tr></table><p class="totop"><a href="#summary">back to summary</a></p>
-<h3 id="m1">com.api.restassured.tests.usingOOPconcepts.RateLimitSearchTest#resourcesSearchDefaultValuesAreCorrect</h3><table class="result"><tr><th class="invisible"/></tr></table><p class="totop"><a href="#summary">back to summary</a></p>
+<h2>PlaywrightPractices</h2><h3 id="m0">com.playwright.tests2.ValidLoginTraceViewFailingDemo#traceViewerFailingTestDemo</h3><table class="result"><tr><th>Exception</th></tr><tr><td><div class="stacktrace">org.opentest4j.AssertionFailedError: Locator expected to have text: Pavlo Grytsiuk
+Received: 
+
+Call log:
+Locator.expect with timeout 5000ms
+waiting for locator(&quot;//*[contains (@class, &apos;user-name&apos;)]&quot;)
+  locator resolved to &lt;div class=&quot;user-name ng-binding&quot;&gt;&lt;/div&gt;
+  unexpected value &quot;&quot;
+  locator resolved to &lt;div class=&quot;user-name ng-binding&quot;&gt;&lt;/div&gt;
+  unexpected value &quot;&quot;
+  locator resolved to &lt;div class=&quot;user-name ng-binding&quot;&gt;&lt;/div&gt;
+  unexpected value &quot;&quot;
+  locator resolved to &lt;div class=&quot;user-name ng-binding&quot;&gt;&lt;/div&gt;
+  unexpected value &quot;&quot;
+  locator resolved to &lt;div class=&quot;user-name ng-binding&quot;&gt;&lt;/div&gt;
+  unexpected value &quot;&quot;
+  locator resolved to &lt;div class=&quot;user-name ng-binding&quot;&gt;&lt;/div&gt;
+  unexpected value &quot;&quot;
+  locator resolved to &lt;div class=&quot;user-name ng-binding&quot;&gt;&lt;/div&gt;
+  unexpected value &quot;&quot;
+  locator resolved to &lt;div class=&quot;user-name ng-binding&quot;&gt;&lt;/div&gt;
+  unexpected value &quot;&quot;
+  locator resolved to &lt;div class=&quot;user-name ng-binding&quot;&gt;&lt;/div&gt;
+  unexpected value &quot;&quot;
+	at com.microsoft.playwright.impl.AssertionsBase.expectImpl(AssertionsBase.java:74)
+	at com.microsoft.playwright.impl.AssertionsBase.expectImpl(AssertionsBase.java:51)
+	at com.microsoft.playwright.impl.AssertionsBase.expectImpl(AssertionsBase.java:42)
+	at com.microsoft.playwright.impl.LocatorAssertionsImpl.hasText(LocatorAssertionsImpl.java:254)
+	at com.microsoft.playwright.assertions.LocatorAssertions.hasText(LocatorAssertions.java:1727)
+	at com.langfit.data.web.pages.HomePage.verifyUserName(HomePage.java:27)
+	at com.playwright.tests2.ValidLoginTraceViewFailingDemo.traceViewerFailingTestDemo(ValidLoginTraceViewFailingDemo.java:53)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at com.intellij.rt.testng.IDEARemoteTestNG.run(IDEARemoteTestNG.java:65)
+	at com.intellij.rt.testng.RemoteTestNGStarter.main(RemoteTestNGStarter.java:105)
+... Removed 22 stack frames</div></td></tr></table><p class="totop"><a href="#summary">back to summary</a></p>
+<h3 id="m1">com.playwright.tests2.SimpleTest#testLogin</h3><table class="result"><tr><th class="invisible"/></tr></table><p class="totop"><a href="#summary">back to summary</a></p>
 </body>
 </html>

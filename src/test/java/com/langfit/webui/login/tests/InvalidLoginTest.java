@@ -33,7 +33,7 @@ public class InvalidLoginTest extends SetupForLangFit {
         loginPage = testInitializer.getLoginPage();
     }
 
-    @Test(priority = 2)
+    @Test(priority = 5)
     @Story("Invalid login")
     @Description("This test case verify if user is not able to login with invalid credentials")
     @Severity(SeverityLevel.CRITICAL)

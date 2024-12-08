@@ -33,7 +33,7 @@ public class DowloadMobileAppSecondTest extends SetupForLangFit {
         loginPage = testInitializer.getLoginPage();
     }
 
-    @Test(priority = 3, invocationCount = 2)
+    @Test(priority = 7, invocationCount = 2)
     @Story("Mobiles app pages")
     @Description("This test case verify if user is able to download the mobile app from App store and Play market")
     @Severity(SeverityLevel.MINOR)

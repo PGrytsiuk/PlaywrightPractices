@@ -34,8 +34,8 @@ public class TestInitializer {
 
     public EmailsHandlingResetPasswordFlow getEmailsHandlingResetPasswordFlow(){
         if(emailsHandlingResetPasswordFlow == null){
-                emailsHandlingResetPasswordFlow = new EmailsHandlingResetPasswordFlow(page);
-            }
+            emailsHandlingResetPasswordFlow = new EmailsHandlingResetPasswordFlow(page);
+        }
         return emailsHandlingResetPasswordFlow;
     }
 

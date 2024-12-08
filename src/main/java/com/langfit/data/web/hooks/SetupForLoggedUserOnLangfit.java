@@ -8,67 +8,76 @@ import io.qameta.allure.Attachment;
 import org.testng.ITestResult;
 import org.testng.annotations.*;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.UUID;
 
 public class SetupForLoggedUserOnLangfit {
 
-    protected static Playwright playwright;
-    protected static Browser browser;
-    protected static BrowserContext context;
-    protected static Page page;
+    protected  Playwright playwright;
+    protected  Browser browser;
+    protected  BrowserContext context;
+    protected  Page page;
 
-    protected String browserType;
+    private Path storageStatePath;
 
-    public SetupForLoggedUserOnLangfit(String browserType) {
-        this.browserType = browserType;
-    }
-
-    @BeforeSuite(alwaysRun = true)
-    @Parameters("browser")
+    @BeforeClass(alwaysRun = true)
+    @Parameters("browserType")
     public void setUp(@Optional("chrome") String browserType) {
-        this.browserType = browserType;
-        initPlaywright();
-        browser = launchBrowser();
-        // Write Allure environment information
-        AllureEnvironmentWriter.writeEnvironment(playwright, browser);
-        context = browser.newContext(new Browser.NewContextOptions().setAcceptDownloads(true));
-        page = context.newPage();
-
-        loginAndSaveState();
-    }
-
-    private void initPlaywright() {
+        // Initialize Playwright
         playwright = Playwright.create();
+        BrowserType.LaunchOptions options = new BrowserType.LaunchOptions().setHeadless(false).setSlowMo(500);
+        // Select browser type based on parameter
+        switch (browserType.toLowerCase()) {
+            case "chrome":
+                browser = playwright.chromium().launch((options).setChannel("chrome"));
+                break;
+            case "firefox":
+                browser = playwright.firefox().launch(options);
+                break;
+            case "edge":
+                browser = playwright.chromium().launch((options).setChannel("msedge"));
+                break;
+            case "safari":
+                browser = playwright.webkit().launch(options);
+                break;
+            default:
+                throw new IllegalArgumentException("Unsupported browser type: " + browserType);
+        }
     }
 
-    private Browser launchBrowser() {
-        BrowserType.LaunchOptions options = new BrowserType.LaunchOptions().setHeadless(true).setSlowMo(500);
+    @BeforeMethod
+    public void createContextAndPage() throws Exception {
+        storageStatePath = Paths.get("target", "states", UUID.randomUUID() + ".json");
+        Files.createDirectories(storageStatePath.getParent());
 
-        return switch (browserType.toLowerCase()) {
-            case "firefox" -> playwright.firefox().launch(options);
-            case "webkit" -> playwright.webkit().launch(options);
-            default -> playwright.chromium().launch(options);
-        };
+        if (Files.exists(storageStatePath)) {
+            System.out.println("Loading existing storage state: " + storageStatePath);
+            context = browser.newContext(
+                    new Browser.NewContextOptions().setStorageStatePath(storageStatePath)
+            );
+        } else {
+            System.out.println("State file not found. Logging in to generate new state.");
+            context = browser.newContext();
+            page = context.newPage();
+            loginAndSaveState();
+        }
+        page = context.newPage();
+        page.setViewportSize(1920, 1080);
     }
 
-    private void loginAndSaveState() {
-        // force reload config before each test
+    private void loginAndSaveState() throws IOException {
         TestData.reloadConfig();
         page.navigate("https://gym.langfit.net/login");
         LoginPage loginPage = new LoginPage(page);
         loginPage.login(TestData.getValidUsername(), TestData.getLastPassword());
 
-        context.storageState(new BrowserContext.StorageStateOptions().setPath(Paths.get("state.json")));
-        context.close();
-    }
-
-    @BeforeMethod
-    public void createContextAndPage() {
-        context = browser.newContext(
-                new Browser.NewContextOptions().setStorageStatePath(Paths.get("state.json"))
-        );
-        page = context.newPage();
-        page.setViewportSize(1920, 1080);
+        context.storageState(new BrowserContext.StorageStateOptions().setPath(storageStatePath));
+        if (!Files.exists(storageStatePath) || Files.size(storageStatePath) == 0) {
+            throw new RuntimeException("Failed to save valid storage state at: " + storageStatePath);
+        }
     }
 
     @AfterMethod
@@ -78,6 +87,13 @@ public class SetupForLoggedUserOnLangfit {
         }
         if (page != null) page.close();
         if (context != null) context.close();
+
+        // Retain or delete state files based on test requirements
+        try {
+            Files.deleteIfExists(storageStatePath);
+        } catch (Exception e) {
+            System.err.println("Error deleting state file: " + e.getMessage());
+        }
     }
 
     private void takeScreenshotForPage(Page page, String testName) {
@@ -105,7 +121,6 @@ public class SetupForLoggedUserOnLangfit {
             }
             browser.close();
         }
-
         if (playwright != null) {
             playwright.close();
         }

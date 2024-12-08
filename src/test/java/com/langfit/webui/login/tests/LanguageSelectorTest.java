@@ -32,7 +32,7 @@ public class LanguageSelectorTest extends SetupForLangFit {
         loginPage = testInitializer.getLoginPage();
     }
 
-    @Test(priority = 2)
+    @Test(priority = 6)
     @Story("Language selector")
     @Description("This test case verify the welcome message text when selection new language")
     @Severity(SeverityLevel.MINOR)

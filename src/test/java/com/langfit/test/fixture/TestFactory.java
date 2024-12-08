@@ -11,13 +11,14 @@ public class TestFactory {
 
     private final String browserType;
 
-    @Parameters("browser")
+
     public TestFactory(String browserType) {
         this.browserType = browserType;
     }
 
     @Factory
-    public Object[] createInstances() {
+    @Parameters("browserType")
+    public Object[] createInstances(String browserType) {
         return new Object[] {
                 new InvalidLoginTest(browserType),
                 new DowloadMobileAppSecondTest(browserType),
@@ -29,7 +30,7 @@ public class TestFactory {
                 new NGTest(browserType),
                 new ViewPortTest(browserType),
                 new HomePageNavMenuTest(browserType),
-                new LogoutTest(browserType)
+                new LogoutTest()
         };
     }
 }

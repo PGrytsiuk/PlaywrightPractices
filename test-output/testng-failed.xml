@@ -3,11 +3,12 @@
 <suite name="Failed suite [Default Suite]" guice-stage="DEVELOPMENT">
   <test thread-count="5" name="PlaywrightPractices(failed)">
     <classes>
-      <class name="com.api.restassured.tests.BadEndpointTest">
+      <class name="com.playwright.tests2.ValidLoginTraceViewFailingDemo">
         <methods>
-          <include name="testWithSpecOne"/>
+          <include name="cleanup"/>
+          <include name="traceViewerFailingTestDemo"/>
         </methods>
-      </class> <!-- com.api.restassured.tests.BadEndpointTest -->
+      </class> <!-- com.playwright.tests2.ValidLoginTraceViewFailingDemo -->
     </classes>
   </test> <!-- PlaywrightPractices(failed) -->
 </suite> <!-- Failed suite [Default Suite] -->

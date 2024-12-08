@@ -31,7 +31,7 @@ public class LogoTest extends SetupForLangFit {
         loginPage = testInitializer.getLoginPage();
     }
 
-    @Test(priority = 4)
+    @Test(priority = 3)
     @Story("Logo test")
     @Description("This test case verify that page is refreshed after tapping on Logo image")
     @Severity(SeverityLevel.MINOR)

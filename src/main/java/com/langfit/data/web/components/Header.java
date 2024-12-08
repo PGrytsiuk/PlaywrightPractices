@@ -58,7 +58,6 @@ public class Header extends BasePage {
         logger.info("Tap on the logout");
         logout.click();
         return this;
-
     }
 
     @Step("Verify if logout dialog is shown")
