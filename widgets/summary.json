@@ -1,1 +1,1 @@
-{"reportName":"Allure Report - GitHub Actions","testRuns":[],"statistic":{"failed":9,"broken":0,"skipped":0,"passed":32,"unknown":3,"total":44},"time":{"start":1733244718845,"stop":1733244922838,"duration":203993,"minDuration":0,"maxDuration":7803,"sumDuration":189545}}
+{"reportName":"Allure Report - GitHub Actions","testRuns":[],"statistic":{"failed":6,"broken":0,"skipped":0,"passed":41,"unknown":3,"total":50},"time":{"start":1734199965441,"stop":1734200151145,"duration":185704,"minDuration":1,"maxDuration":12611,"sumDuration":282204}}
