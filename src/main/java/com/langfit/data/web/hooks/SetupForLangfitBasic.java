@@ -14,22 +14,20 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.UUID;
 
-public class SetupForLoggedUserOnLangfit {
+public class SetupForLangfitBasic {
 
-    protected  Playwright playwright;
-    protected  Browser browser;
-    protected  BrowserContext context;
-    protected  Page page;
+    protected Playwright playwright;
+    protected Browser browser;
+    protected BrowserContext context;
+    protected Page page;
 
     private Path storageStatePath;
 
     @BeforeClass(alwaysRun = true)
     @Parameters("browserType")
     public void setUp(@Optional("chrome") String browserType) {
-        // Initialize Playwright
         playwright = Playwright.create();
-        BrowserType.LaunchOptions options = new BrowserType.LaunchOptions().setHeadless(false).setSlowMo(500);
-        // Select browser type based on parameter
+        BrowserType.LaunchOptions options = new BrowserType.LaunchOptions().setHeadless(true).setSlowMo(500);
         switch (browserType.toLowerCase()) {
             case "chrome":
                 browser = playwright.chromium().launch((options).setChannel("chrome"));
@@ -46,38 +44,63 @@ public class SetupForLoggedUserOnLangfit {
             default:
                 throw new IllegalArgumentException("Unsupported browser type: " + browserType);
         }
+        AllureEnvironmentWriter.writeEnvironment(playwright, browser);
+    }
+
+    @AfterClass(alwaysRun = true)
+    public void tearDown() {
+        if (browser != null) {
+            browser.close();
+        }
+        if (playwright != null) {
+            playwright.close();
+        }
     }
 
     @BeforeMethod
-    public void createContextAndPage() throws Exception {
+    @Parameters({"useCookies", "requireLogin"})
+    public void createContextAndPage(@Optional("false") boolean useCookies, @Optional("false") boolean requireLogin) throws Exception {
+        if (requireLogin) {
+            createContextAndPageWithLogin(useCookies);
+        } else {
+            createContextAndPageWithoutLogin();
+        }
+    }
+
+    private void createContextAndPageWithLogin(boolean useCookies) throws Exception {
         storageStatePath = Paths.get("target", "states", UUID.randomUUID() + ".json");
         Files.createDirectories(storageStatePath.getParent());
 
-        if (Files.exists(storageStatePath)) {
+        if (useCookies && Files.exists(storageStatePath)) {
             System.out.println("Loading existing storage state: " + storageStatePath);
             context = browser.newContext(
                     new Browser.NewContextOptions().setStorageStatePath(storageStatePath)
             );
         } else {
-            System.out.println("State file not found. Logging in to generate new state.");
+            System.out.println("State file not found or not using cookies.");
             context = browser.newContext();
             page = context.newPage();
+            System.out.println("Logging in to generate new state.");
             loginAndSaveState();
+            context.close(); // Close the context after saving the state
+
+            // Open a new context with the saved state if using cookies
+            if (useCookies) {
+                context = browser.newContext(
+                        new Browser.NewContextOptions().setStorageStatePath(storageStatePath)
+                );
+            }
         }
         page = context.newPage();
         page.setViewportSize(1920, 1080);
     }
 
-    private void loginAndSaveState() throws IOException {
+    private void createContextAndPageWithoutLogin() {
         TestData.reloadConfig();
-        page.navigate("https://gym.langfit.net/login");
-        LoginPage loginPage = new LoginPage(page);
-        loginPage.login(TestData.getValidUsername(), TestData.getLastPassword());
-
-        context.storageState(new BrowserContext.StorageStateOptions().setPath(storageStatePath));
-        if (!Files.exists(storageStatePath) || Files.size(storageStatePath) == 0) {
-            throw new RuntimeException("Failed to save valid storage state at: " + storageStatePath);
-        }
+        String baseURL = "https://gym.langfit.net/";
+        context = browser.newContext(new Browser.NewContextOptions().setBaseURL(baseURL).setAcceptDownloads(true));
+        page = context.newPage();
+        page.setViewportSize(1920, 1080);
     }
 
     @AfterMethod
@@ -88,11 +111,23 @@ public class SetupForLoggedUserOnLangfit {
         if (page != null) page.close();
         if (context != null) context.close();
 
-        // Retain or delete state files based on test requirements
-        try {
-            Files.deleteIfExists(storageStatePath);
-        } catch (Exception e) {
-            System.err.println("Error deleting state file: " + e.getMessage());
+        if (storageStatePath != null) {
+            try {
+                Files.deleteIfExists(storageStatePath);
+            } catch (Exception e) {
+                System.err.println("Error deleting state file: " + e.getMessage());
+            }
+        }
+    }
+
+    private void loginAndSaveState() throws IOException {
+        TestData.reloadConfig();
+        page.navigate("https://gym.langfit.net/login");
+        LoginPage loginPage = new LoginPage(page);
+        loginPage.login(TestData.getValidUsername(), TestData.getLastPassword());
+        context.storageState(new BrowserContext.StorageStateOptions().setPath(storageStatePath));
+        if (!Files.exists(storageStatePath) || Files.size(storageStatePath) == 0) {
+            throw new RuntimeException("Failed to save valid storage state at: " + storageStatePath);
         }
     }
 
@@ -108,21 +143,5 @@ public class SetupForLoggedUserOnLangfit {
     @Attachment(value = "Screenshot of {testName}", type = "image/png")
     public byte[] saveScreenshot(byte[] screenshot, String testName) {
         return screenshot;
-    }
-
-    @AfterSuite(alwaysRun = true)
-    public void tearDown() {
-        if (browser != null) {
-            for (BrowserContext ctx : browser.contexts()) {
-                for (Page p : ctx.pages()) {
-                    if (p != null) p.close();
-                }
-                ctx.close();
-            }
-            browser.close();
-        }
-        if (playwright != null) {
-            playwright.close();
-        }
     }
 }

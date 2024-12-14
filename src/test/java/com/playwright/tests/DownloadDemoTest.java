@@ -7,10 +7,6 @@ import java.nio.file.Path;
 
 public class DownloadDemoTest extends BasicSetup {
 
-    public DownloadDemoTest(String browserType) {
-        super(browserType); // Pass the browser type to the Setup constructor
-    }
-
     @Test
     public void downloadTestWithHandler(){
             page.navigate("https://notepad-plus-plus.org/downloads/v8.7/");

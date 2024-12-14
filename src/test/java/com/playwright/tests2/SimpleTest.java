@@ -1,6 +1,6 @@
 package com.playwright.tests2;
 
-import com.langfit.data.web.hooks.TestHookSetup;
+import com.common.hooks.TestHookSetup;
 import org.testng.annotations.Test;
 
 public class SimpleTest extends TestHookSetup {

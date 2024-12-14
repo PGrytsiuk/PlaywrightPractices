@@ -1,7 +1,7 @@
 package com.langfit.webui.home.tests;
 
 import com.langfit.data.web.components.NavMenu;
-import com.langfit.data.web.hooks.SetupForLoggedUserOnLangfitWithPersistedState;
+import com.langfit.data.web.hooks.SetupForLangfitBasic;
 import com.langfit.test.fixture.TestInitializer;
 import com.common.hooks.CustomListeners;
 import io.qameta.allure.Description;
@@ -9,21 +9,18 @@ import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import io.qameta.allure.Story;
 import org.testng.Assert;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.Listeners;
-import org.testng.annotations.Test;
+import org.testng.annotations.*;
 
 @Listeners(CustomListeners.class)
-public class HomePageNavMenuTest extends SetupForLoggedUserOnLangfitWithPersistedState {
-
-    public HomePageNavMenuTest(String browserType) {
-        super(browserType);
-    }
+public class HomePageNavMenuTest extends SetupForLangfitBasic {
 
     private NavMenu leftnavMenu;
 
     @BeforeMethod
-    public void setUpTest() {
+    @Parameters({"useCookies", "requireLogin"})
+    public void setUpTest(@Optional("true") boolean useCookies, @Optional("true") boolean requireLogin) throws Exception {
+        // Initialize context and page with the parameters
+        createContextAndPage(useCookies, requireLogin);
         // Initialize TestInitializer
         TestInitializer testInitializer = new TestInitializer(page);
         // Initialize the left navigation menu object

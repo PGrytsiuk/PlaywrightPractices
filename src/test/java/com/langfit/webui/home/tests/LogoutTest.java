@@ -2,7 +2,7 @@ package com.langfit.webui.home.tests;
 
 import com.common.hooks.CustomListeners;
 import com.langfit.data.web.components.Header;
-import com.langfit.data.web.hooks.SetupForLoggedUserOnLangfit;
+import com.langfit.data.web.hooks.SetupForLangfitBasic;
 import com.langfit.test.fixture.TestInitializer;
 import io.qameta.allure.Description;
 import io.qameta.allure.Severity;
@@ -12,22 +12,15 @@ import org.testng.Assert;
 import org.testng.annotations.*;
 
 @Listeners(CustomListeners.class)
-public class LogoutTest extends SetupForLoggedUserOnLangfit {
-
-
-   /* public LogoutTest() {
-        super();
-    }
-
-    @Parameters("browserType")
-    public void setBrowserType(String browserType) {
-        this.browserType = browserType; // Set the browserType for the superclass
-    }*/
+public class LogoutTest extends SetupForLangfitBasic {
 
     private Header header;
 
     @BeforeMethod
-    public void setUpTest() {
+    @Parameters({"useCookies", "requireLogin"})
+    public void setUpTest(@Optional("true") boolean useCookies, @Optional("true") boolean requireLogin) throws Exception {
+        // Initialize context and page with the parameters
+        createContextAndPage(useCookies, requireLogin);
         // Initialize TestInitializer
         TestInitializer testInitializer = new TestInitializer(page);
         // Initialize the left navigation menu object

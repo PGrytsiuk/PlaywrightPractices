@@ -1,6 +1,6 @@
 package com.langfit.webui.login.tests;
 
-import com.langfit.data.web.hooks.SetupForLangFit;
+import com.langfit.data.web.hooks.SetupForLangfitBasic;
 import com.langfit.data.web.pages.LoginPage;
 import com.utils.ScreenshotsAndRecordings;
 import com.langfit.test.fixture.TestInitializer;
@@ -18,11 +18,7 @@ import org.testng.annotations.Test;
 import java.nio.file.Paths;
 
 @Listeners(CustomListeners.class)
-public class ViewPortTest extends SetupForLangFit {
-
-    public ViewPortTest(String browserType) {
-        super(browserType); // Pass the browser type to the Setup constructor
-    }
+public class ViewPortTest extends SetupForLangfitBasic {
 
     private LoginPage loginPage;
 

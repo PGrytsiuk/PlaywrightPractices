@@ -1,4 +1,4 @@
-package com.langfit.data.web.hooks;
+package com.common.hooks;
 
 import com.microsoft.playwright.*;
 import org.testng.annotations.*;

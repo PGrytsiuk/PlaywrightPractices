@@ -1,7 +1,7 @@
 package com.langfit.webui.login.tests;
 
 import com.langfit.data.TestData;
-import com.langfit.data.web.hooks.SetupForLangFit;
+import com.langfit.data.web.hooks.SetupForLangfitBasic;
 import com.langfit.data.web.pages.LoginPage;
 import com.utils.ScreenshotsAndRecordings;
 import com.langfit.test.fixture.TestInitializer;
@@ -17,11 +17,7 @@ import org.testng.annotations.Test;
 import static com.utils.ScreenshotsAndRecordings.setupContextWithVideo;
 
 @Listeners(CustomListeners.class)
-public class InvalidLoginTest extends SetupForLangFit {
-
-    public InvalidLoginTest(String browserType) {
-        super(browserType); // Pass the browser type to the Setup constructor
-    }
+public class InvalidLoginTest extends SetupForLangfitBasic {
 
     private LoginPage loginPage;
 

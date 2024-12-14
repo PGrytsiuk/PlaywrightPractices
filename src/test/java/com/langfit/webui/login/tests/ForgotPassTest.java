@@ -1,6 +1,6 @@
 package com.langfit.webui.login.tests;
 
-import com.langfit.data.web.hooks.SetupForLangFit;
+import com.langfit.data.web.hooks.SetupForLangfitBasic;
 import com.langfit.data.web.pages.LoginPage;
 import com.langfit.tests.specific.hooks.EmailsHandlingResetPasswordFlow;
 import com.langfit.test.fixture.TestInitializer;
@@ -15,11 +15,7 @@ import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
 @Listeners(CustomListeners.class)
-public class ForgotPassTest extends SetupForLangFit {
-
-    public ForgotPassTest(String browserType) {
-        super(browserType); // Pass the browser type to the Setup constructor
-    }
+public class ForgotPassTest extends SetupForLangfitBasic {
 
     @DataProvider(name="EmailOrusername")
     public Object[][] emailOrUsername() {
