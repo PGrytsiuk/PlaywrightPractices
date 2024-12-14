@@ -15,37 +15,38 @@ public class BasicSetup {
     protected static BrowserContext context;
     protected static Page page;
 
-    protected String browserType;
-
-    public BasicSetup() {}
-
-    public BasicSetup(String browserType) {
-        this.browserType = browserType;
-    }
-
-    @BeforeSuite(alwaysRun = true)
-    @Parameters("browser")
-    public void basicSetUp(@Optional("chromium") String browserType) {
-        this.browserType = browserType;
-
-        // Check for Playwright initialization
+    @BeforeClass(alwaysRun = true)
+    @Parameters("browserType")
+    public void setUp(@Optional("chrome") String browserType) {
         playwright = Playwright.create();
-        BrowserType.LaunchOptions options = new BrowserType.LaunchOptions().setHeadless(true);
-
+        BrowserType.LaunchOptions options = new BrowserType.LaunchOptions().setHeadless(false).setSlowMo(500);
         switch (browserType.toLowerCase()) {
+            case "chrome":
+                browser = playwright.chromium().launch((options).setChannel("chrome"));
+                break;
             case "firefox":
                 browser = playwright.firefox().launch(options);
                 break;
-            case "webkit":
+            case "edge":
+                browser = playwright.chromium().launch((options).setChannel("msedge"));
+                break;
+            case "safari":
                 browser = playwright.webkit().launch(options);
                 break;
-            case "chromium":
             default:
-                browser = playwright.chromium().launch(options);
+                throw new IllegalArgumentException("Unsupported browser type: " + browserType);
         }
-
-        // Write Allure environment information
         AllureEnvironmentWriter.writeEnvironment(playwright, browser);
+    }
+
+    @AfterClass(alwaysRun = true)
+    public void tearDown() {
+        if (browser != null) {
+            browser.close();
+        }
+        if (playwright != null) {
+            playwright.close();
+        }
     }
 
     @BeforeMethod
@@ -79,22 +80,5 @@ public class BasicSetup {
     @Attachment(value = "Screenshot of {testName}", type = "image/png")
     public byte[] saveScreenshot(byte[] screenshot, String testName) {
         return screenshot;
-    }
-
-    @AfterSuite(alwaysRun = true)
-    public void tearDown() {
-        if (browser != null) {
-            for (BrowserContext ctx : browser.contexts()) {
-                for (Page p : ctx.pages()) {
-                    if (p != null) p.close();
-                }
-                ctx.close();
-            }
-            browser.close();
-        }
-
-        if (playwright != null) {
-            playwright.close();
-        }
     }
 }

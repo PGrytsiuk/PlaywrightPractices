@@ -1,7 +1,6 @@
 package com.langfit.webui.login.tests;
 
-
-import com.langfit.data.web.hooks.SetupForLangFit;
+import com.langfit.data.web.hooks.SetupForLangfitBasic;
 import com.langfit.data.web.pages.LoginPage;
 import com.langfit.test.fixture.TestInitializer;
 import com.common.hooks.CustomListeners;
@@ -16,11 +15,7 @@ import org.testng.annotations.Test;
 import static com.utils.ScreenshotsAndRecordings.setupContextWithVideo;
 
 @Listeners(CustomListeners.class)
-public class LanguageSelectorTest extends SetupForLangFit {
-
-    public LanguageSelectorTest(String browserType) {
-        super(browserType); // Pass the browser type to the Setup constructor
-    }
+public class LanguageSelectorTest extends SetupForLangfitBasic {
 
     private LoginPage loginPage;
 
@@ -32,7 +27,7 @@ public class LanguageSelectorTest extends SetupForLangFit {
         loginPage = testInitializer.getLoginPage();
     }
 
-    @Test(priority = 2)
+    @Test(priority = 6)
     @Story("Language selector")
     @Description("This test case verify the welcome message text when selection new language")
     @Severity(SeverityLevel.MINOR)

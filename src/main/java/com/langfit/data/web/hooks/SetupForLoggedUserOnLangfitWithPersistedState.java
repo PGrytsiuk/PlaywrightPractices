@@ -10,7 +10,7 @@ import org.testng.annotations.*;
 
 import java.nio.file.Paths;
 
-public class SetupForLoggedUserOnLangfit {
+public class SetupForLoggedUserOnLangfitWithPersistedState {
 
     protected static Playwright playwright;
     protected static Browser browser;
@@ -19,7 +19,7 @@ public class SetupForLoggedUserOnLangfit {
 
     protected String browserType;
 
-    public SetupForLoggedUserOnLangfit(String browserType) {
+    public SetupForLoggedUserOnLangfitWithPersistedState(String browserType) {
         this.browserType = browserType;
     }
 

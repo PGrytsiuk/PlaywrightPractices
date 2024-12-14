@@ -1,5 +1,6 @@
 package com.langfit.test.fixture;
 
+import com.langfit.data.web.components.Header;
 import com.langfit.data.web.components.NavMenu;
 import com.langfit.tests.specific.hooks.EmailsHandlingResetPasswordFlow;
 import com.langfit.data.web.pages.HomePage;
@@ -17,6 +18,7 @@ public class TestInitializer {
     private ResetPassword resetPassword;
     private PasswordGenerator passwordGenerator;
     private NavMenu leftnavMenu;
+    private Header header;
 
 
     public TestInitializer(Page page) {
@@ -32,8 +34,8 @@ public class TestInitializer {
 
     public EmailsHandlingResetPasswordFlow getEmailsHandlingResetPasswordFlow(){
         if(emailsHandlingResetPasswordFlow == null){
-                emailsHandlingResetPasswordFlow = new EmailsHandlingResetPasswordFlow(page);
-            }
+            emailsHandlingResetPasswordFlow = new EmailsHandlingResetPasswordFlow(page);
+        }
         return emailsHandlingResetPasswordFlow;
     }
 
@@ -63,6 +65,13 @@ public class TestInitializer {
             leftnavMenu = new NavMenu(page);
         }
         return leftnavMenu;
+    }
+
+    public Header getHeader() {
+        if(header== null) {
+            header = new Header(page);
+        }
+        return header;
     }
 
     // Add more page initializations as needed

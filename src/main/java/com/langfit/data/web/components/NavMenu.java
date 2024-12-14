@@ -1,5 +1,6 @@
 package com.langfit.data.web.components;
 
+import com.langfit.data.web.pages.BasePage;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.AriaRole;
@@ -9,9 +10,10 @@ import org.slf4j.LoggerFactory;
 
 import static org.testng.Assert.assertEquals;
 
-public class NavMenu {
+public class NavMenu extends BasePage {
 
     private static final Logger logger = LoggerFactory.getLogger(NavMenu.class);
+
     private final Locator leftnavmenu;
     private final Locator hamburger;
     private final Locator homePage;
@@ -23,11 +25,8 @@ public class NavMenu {
     //private final Locator clickLeftNavigationMenuOption;
     private final Locator expandedLeftNavMenu;
 
-
-    protected Page page;
-
     public NavMenu(Page page) {
-        this.page = page;
+        super(page);
         this.leftnavmenu = page.locator(".lt-left-menu-box");
         this.hamburger = page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("open menu"));
         this.homePage = page.getByLabel("Home Page");
