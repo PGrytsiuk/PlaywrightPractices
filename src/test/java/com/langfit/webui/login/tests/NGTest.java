@@ -1,6 +1,6 @@
 package com.langfit.webui.login.tests;
 
-import com.langfit.data.web.hooks.SetupForLangFit;
+import com.langfit.data.web.hooks.SetupForLangfitBasic;
 import com.langfit.data.web.pages.LoginPage;
 import com.utils.ScreenshotsAndRecordings;
 import com.langfit.test.fixture.TestInitializer;
@@ -19,11 +19,7 @@ import org.testng.annotations.Test;
 import java.nio.file.Paths;
 
 @Listeners(CustomListeners.class)
-public class NGTest extends SetupForLangFit {
-
-    public NGTest(String browserType) {
-        super(browserType); // Pass the browser type to the Setup constructor
-    }
+public class NGTest extends SetupForLangfitBasic {
 
     @DataProvider(name = "Invalid users")
     public Object[][] InvalidUsers() {
@@ -43,7 +39,7 @@ public class NGTest extends SetupForLangFit {
         loginPage = testInitializer.getLoginPage();
     }
 
-    @Test(priority = 3, dataProvider = "Invalid users")
+    @Test(priority = 4, dataProvider = "Invalid users")
     @Story("Invalid login(Duplicate)")
     @Description("This test case verify if user is not able to login with invalid credentials with different set of data")
     @Severity(SeverityLevel.CRITICAL)

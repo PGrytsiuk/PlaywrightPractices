@@ -22,9 +22,10 @@ public class SetupForLangFit {
     }
 
     @BeforeSuite(alwaysRun = true)
-    @Parameters("browser")
+    @Parameters("browserType")
     public void setUp(@Optional("chromium") String browserType) {
         this.browserType = browserType;
+        System.out.println("Initializing tests on browser: " + browserType);
 
         // Check for Playwright initialization
         playwright = Playwright.create();

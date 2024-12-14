@@ -1,7 +1,7 @@
 package com.langfit.webui.home.tests;
 
 import com.langfit.data.TestData;
-import com.langfit.data.web.hooks.SetupForLangFit;
+import com.langfit.data.web.hooks.SetupForLangfitBasic;
 import com.langfit.data.web.pages.HomePage;
 import com.langfit.data.web.pages.LoginPage;
 import com.langfit.test.fixture.TestInitializer;
@@ -11,9 +11,7 @@ import io.qameta.allure.Description;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import io.qameta.allure.Story;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.Listeners;
-import org.testng.annotations.Test;
+import org.testng.annotations.*;
 
 import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
@@ -23,11 +21,7 @@ import java.util.UUID;
 import static com.utils.ScreenshotsAndRecordings.setupContextWithVideo;
 
 @Listeners(CustomListeners.class)
-public class ValidLoginTest extends SetupForLangFit {
-
-    public ValidLoginTest(String browserType) {
-        super(browserType); // Pass the browser type to the Setup constructor
-    }
+public class ValidLoginTest extends SetupForLangfitBasic {
 
     private LoginPage loginPage;
     private HomePage homePage;
@@ -41,7 +35,7 @@ public class ValidLoginTest extends SetupForLangFit {
         homePage = testInitializer.getHomepage();
     }
 
-    @Test(priority = 5)
+    @Test(priority = 9)
     @Story("Valid login")
     @Description("This test case verify if user is able to login with valid credentials")
     @Severity(SeverityLevel.CRITICAL)

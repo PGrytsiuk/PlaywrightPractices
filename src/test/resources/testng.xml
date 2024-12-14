@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="Langfit Test Suite" parallel="tests" thread-count="1" verbose="2">
+<suite name="Langfit Test Suite" parallel="tests" thread-count="3" verbose="2">
     <listeners>
         <listener class-name="com.common.hooks.CustomListeners"/>
     </listeners>
 
     <!-- Test for Chrome -->
     <test name="Chrome Tests">
-        <parameter name="browser" value="chromium"/>
+        <parameter name="browserType" value="chrome"/>
         <classes>
             <class name="com.langfit.test.fixture.TestFactory"/>
         </classes>
@@ -15,7 +15,7 @@
 
     <!-- Test for Firefox -->
     <test name="Firefox Tests">
-        <parameter name="browser" value="firefox"/>
+        <parameter name="browserType" value="firefox"/>
         <classes>
             <class name="com.langfit.test.fixture.TestFactory"/>
         </classes>
@@ -23,7 +23,7 @@
 
     <!-- Test for WebKit -->
     <test name="WebKit Tests">
-        <parameter name="browser" value="webkit"/>
+        <parameter name="browserType" value="safari"/>
         <classes>
             <class name="com.langfit.test.fixture.TestFactory"/>
         </classes>

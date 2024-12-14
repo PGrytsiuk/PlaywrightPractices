@@ -1,7 +1,7 @@
 package com.langfit.webui.login.tests;
 
 import com.langfit.data.TestData;
-import com.langfit.data.web.hooks.SetupForLangFit;
+import com.langfit.data.web.hooks.SetupForLangfitBasic;
 import com.langfit.data.web.pages.LoginPage;
 import com.utils.ScreenshotsAndRecordings;
 import com.langfit.test.fixture.TestInitializer;
@@ -17,11 +17,7 @@ import org.testng.annotations.Test;
 import static com.utils.ScreenshotsAndRecordings.setupContextWithVideo;
 
 @Listeners(CustomListeners.class)
-public class InvalidLoginTest extends SetupForLangFit {
-
-    public InvalidLoginTest(String browserType) {
-        super(browserType); // Pass the browser type to the Setup constructor
-    }
+public class InvalidLoginTest extends SetupForLangfitBasic {
 
     private LoginPage loginPage;
 
@@ -33,7 +29,7 @@ public class InvalidLoginTest extends SetupForLangFit {
         loginPage = testInitializer.getLoginPage();
     }
 
-    @Test(priority = 2)
+    @Test(priority = 5)
     @Story("Invalid login")
     @Description("This test case verify if user is not able to login with invalid credentials")
     @Severity(SeverityLevel.CRITICAL)

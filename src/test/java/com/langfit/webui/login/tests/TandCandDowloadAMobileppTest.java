@@ -1,6 +1,6 @@
 package com.langfit.webui.login.tests;
 
-import com.langfit.data.web.hooks.SetupForLangFit;
+import com.langfit.data.web.hooks.SetupForLangfitBasic;
 import com.langfit.data.web.pages.LoginPage;
 import com.langfit.test.fixture.TestInitializer;
 import com.microsoft.playwright.Download;
@@ -19,11 +19,7 @@ import org.testng.annotations.Test;
 import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
 
 @Listeners(CustomListeners.class)
-public class TandCandDowloadAMobileppTest extends SetupForLangFit {
-
-    public TandCandDowloadAMobileppTest(String browserType) {
-        super(browserType); // Pass the browser type to the Setup constructor
-    }
+public class TandCandDowloadAMobileppTest extends SetupForLangfitBasic {
 
     private LoginPage loginPage;
 
@@ -72,8 +68,8 @@ public class TandCandDowloadAMobileppTest extends SetupForLangFit {
         playMarketPage.waitForLoadState();
         System.out.println("Play Market Page Title: " + playMarketPage.title());
 
-        Assert.assertEquals(playMarketPage.title(), "LangFit on the Play Market");
-        Locator langFitAndroid = playMarketPage.locator("//span[text()='LangFit']");
+        Assert.assertEquals(playMarketPage.title(), "LangFit - Apps on Google Play");
+        Locator langFitAndroid = playMarketPage.locator("//span[text()='LangFit']").first();
         assertThat(langFitAndroid).hasText("LangFit");
     }
 }

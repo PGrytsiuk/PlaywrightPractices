@@ -1,6 +1,6 @@
 package com.langfit.webui.login.tests;
 
-import com.langfit.data.web.hooks.SetupForLangFit;
+import com.langfit.data.web.hooks.SetupForLangfitBasic;
 import com.langfit.data.web.pages.LoginPage;
 import com.langfit.test.fixture.TestInitializer;
 import com.microsoft.playwright.Page;
@@ -17,11 +17,7 @@ import org.testng.annotations.Test;
 import java.util.List;
 
 @Listeners(CustomListeners.class)
-public class DowloadMobileAppSecondTest extends SetupForLangFit {
-
-    public DowloadMobileAppSecondTest(String browserType) {
-        super(browserType); // Pass the browser type to the Setup constructor
-    }
+public class DowloadMobileAppSecondTest extends SetupForLangfitBasic {
 
     private LoginPage loginPage;
 
@@ -33,7 +29,7 @@ public class DowloadMobileAppSecondTest extends SetupForLangFit {
         loginPage = testInitializer.getLoginPage();
     }
 
-    @Test(priority = 3, invocationCount = 2)
+    @Test(priority = 7, invocationCount = 2)
     @Story("Mobiles app pages")
     @Description("This test case verify if user is able to download the mobile app from App store and Play market")
     @Severity(SeverityLevel.MINOR)
@@ -66,7 +62,7 @@ public class DowloadMobileAppSecondTest extends SetupForLangFit {
             Page playMarketPage = pages.get(2);
             page = playMarketPage; // Set the current page to this tab for proper screenshot in case of failure
             System.out.println(playMarketPage.title());
-            Assert.assertEquals(playMarketPage.title(), "LangFit on the Play market", "Play Market title mismatch");
+            Assert.assertEquals(playMarketPage.title(), "LangFit - Apps on Google Play", "Play Market title mismatch");
             System.out.println(playMarketPage.textContent("h1"));
     }
 }

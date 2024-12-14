@@ -1,7 +1,7 @@
 package com.langfit.webui.login.tests;
 
 import com.langfit.data.TestData;
-import com.langfit.data.web.hooks.SetupForLangFit;
+import com.langfit.data.web.hooks.SetupForLangfitBasic;
 import com.langfit.data.web.pages.LoginPage;
 import com.langfit.test.fixture.TestInitializer;
 import com.common.hooks.CustomListeners;
@@ -15,11 +15,7 @@ import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
 @Listeners(CustomListeners.class)
-public class LogoTest extends SetupForLangFit {
-
-    public LogoTest(String browserType) {
-        super(browserType); // Pass the browser type to the Setup constructor
-    }
+public class LogoTest extends SetupForLangfitBasic {
 
     private LoginPage loginPage;
 
@@ -31,7 +27,7 @@ public class LogoTest extends SetupForLangFit {
         loginPage = testInitializer.getLoginPage();
     }
 
-    @Test(priority = 4)
+    @Test(priority = 3)
     @Story("Logo test")
     @Description("This test case verify that page is refreshed after tapping on Logo image")
     @Severity(SeverityLevel.MINOR)
