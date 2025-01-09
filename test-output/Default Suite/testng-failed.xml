@@ -3,13 +3,15 @@
 <suite name="Failed suite [Default Suite]" guice-stage="DEVELOPMENT">
   <test thread-count="5" name="PlaywrightPractices(failed)">
     <classes>
-      <class name="com.api.restassured.tests.OtherMethodsPostPatchDeleteDemo">
+      <class name="com.api.playwright.tests.SetHttpAuthentication">
         <methods>
-          <include name="waitForTheNextTEST"/>
-          <include name="patchTest"/>
-          <include name="deleteTest"/>
+          <include name="setHttpAuthentication"/>
+          <include name="setUp"/>
+          <include name="closeContextAndAddScreenshotIfFail"/>
+          <include name="tearDown"/>
+          <include name="createContextAndPage"/>
         </methods>
-      </class> <!-- com.api.restassured.tests.OtherMethodsPostPatchDeleteDemo -->
+      </class> <!-- com.api.playwright.tests.SetHttpAuthentication -->
     </classes>
   </test> <!-- PlaywrightPractices(failed) -->
 </suite> <!-- Failed suite [Default Suite] -->

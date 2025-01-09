@@ -11,7 +11,7 @@ public class RequestChangeContentDemo {
 
     Playwright pw;
     Browser browser;
-    String token ="test";
+    String token = System.getenv("GITHUB_TOKEN");
 
     @Test(enabled = false)
     public void requestChangeContentDemo() {
