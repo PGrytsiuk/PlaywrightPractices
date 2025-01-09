@@ -16,7 +16,7 @@ public class ParametrizedTestDemo {
         return new Object[][]{
                 {Map.of("q", "java", "per_page", "1"), 1},
                 {Map.of("q", "python", "per_page", "2"), 2},
-                {Map.of("q", "C#", "per_page", "2"), 2},
+                {Map.of("q", "C#", "per_page", "5"), 5},
         };
     }
 
