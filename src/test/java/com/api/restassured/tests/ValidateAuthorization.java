@@ -5,8 +5,8 @@ import org.testng.annotations.Test;
 
 public class ValidateAuthorization {
 
-    private static String BASE_URL = "https://api.github.com/user";
-    private static String TOKEN = "invalid token";
+    private static final String BASE_URL = "https://api.github.com/user";
+    private static final String TOKEN = "invalid token";
 
     @Test
     public void validateAuthorization() {
