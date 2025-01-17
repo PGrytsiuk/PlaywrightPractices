@@ -10,7 +10,7 @@ on:
 jobs:
   test:
     timeout-minutes: 60
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04 # Use Ubuntu 20.04 for better compatibility
 
     permissions:
       contents: write # Grant write permissions to the GITHUB_TOKEN
@@ -36,13 +36,14 @@ jobs:
           ls -l src/test/resources/testng.xml
           ls -l src/test/resources/apiTesting.xml
 
-      - name: Install dependencies
+      - name: Add PPAs and Install Dependencies
         run: |
+          sudo add-apt-repository -y ppa:oibaf/graphics-drivers
           sudo apt-get update
           sudo apt-get install -y \
             libwoff1 \
             libopus0 \
-            libvpx7 \
+            libvpx6 \
             libevent-2.1-7 \
             libgstreamer-plugins-base1.0-0 \
             libgstreamer1.0-0 \
@@ -60,7 +61,6 @@ jobs:
             libgles2-mesa \
             libx264-dev \
             flite1-dev \
-            libgstreamer-plugins-bad1.0-0 \
             libmanette-0.2-0 \
             libsndio-dev
 
@@ -86,6 +86,9 @@ jobs:
           distribution: 'temurin'
           java-version: '22'
 
+      - name: Set up environment variables
+        run: echo "GITHUB_TOKEN=${{ secrets.GH_TOKEN }}" >> $GITHUB_ENV
+
       - name: Set up Node.js (for Allure CLI and other dependencies)
         uses: actions/setup-node@v3
         with:
@@ -93,18 +96,6 @@ jobs:
 
       - name: Install Allure CLI
         run: npm install -g allure-commandline --save-dev
-
-      - name: Download Allure History
-        run: |
-          if ! gh api -H "Accept: application/vnd.github+json" \
-            /repos/${{ github.repository }}/actions/artifacts \
-            | grep -q allure-history; then
-            echo "No allure-history found. Creating directory."
-            mkdir -p target/allure-results/history
-          else
-            echo "Downloading allure-history artifact."
-            gh run download -n allure-history --dir target/allure-results/history || exit 1
-          fi
 
       - name: Build & Install
         run: mvn -B install -DskipTests --no-transfer-progress
@@ -117,17 +108,13 @@ jobs:
           mkdir -p target/allure-results
           if [ -f "src/test/resources/default_environment.properties" ]; then
             cp src/test/resources/default_environment.properties target/allure-results/environment.properties
-          fi 
+          fi
 
       - name: Create Allure Environment and Executor Files
         run: |
-          
-          # Create environment.properties file dynamically
           echo "OS=$(uname -s)" >> target/allure-results/environment.properties
           echo "Java Version=$(java -version 2>&1 | awk -F '\"' '/version/ {print $2}')" >> target/allure-results/environment.properties
           echo "Browser Version=$(mvn exec:java -Dexec.mainClass='Utils.AllureEnvironmentWriter' -q -Dexec.args='version')" >> target/allure-results/environment.properties
-
-          # Create executor.json file dynamically
           cat <<EOF > target/allure-results/executor.json
           {
             "name": "GitHub Actions",
@@ -152,46 +139,11 @@ jobs:
           name: allure-results
           path: target/allure-results
 
-      - name: Verify Allure Results Directory
-        run: |
-          if [ -d "target/allure-results" ]; then
-            echo "Allure results directory exists"
-            ls -R target/allure-results
-          else
-            echo "Allure results directory does not exist"
-            exit 1
-          fi
-
-      - name: Verify Allure Environment and Executor Files
-        run: |
-          if [ -f "target/allure-results/environment.properties" ]; then
-            echo "environment.properties file exists"
-          else
-            echo "environment.properties file does not exist"
-            exit 1
-          fi
-          if [ -f "target/allure-results/executor.json" ]; then
-            echo "executor.json file exists"
-          else
-            echo "executor.json file does not exist"
-            exit 1
-          fi
-
       - name: Generate Allure Report
         run: allure generate target/allure-results --clean -o allure-report
 
-      - name: Verify Allure Report Directory
-        run: |
-          if [ -d "allure-report" ]; then
-            echo "Allure report directory exists"
-            ls -R allure-report
-          else
-            echo "Allure report directory does not exist"
-            exit 1
-          fi
-
       - name: Deploy Allure Report to GitHub Pages
-        if: ${{ github.event_name == 'push' }} # Only deploy on push events
+        if: ${{ github.event_name == 'push' }}
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GH_PAT }}

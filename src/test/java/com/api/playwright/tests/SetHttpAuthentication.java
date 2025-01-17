@@ -11,9 +11,9 @@ public class SetHttpAuthentication extends BasicSetup {
 
     Playwright pw;
     Browser browser;
-    String token ="test";
+    String token = System.getenv("GITHUB_TOKEN");
 
-    @Test(enabled = false)
+    @Test(description = "Set Http Authentication")
     public void setHttpAuthentication(){
 
         pw = Playwright.create();
@@ -24,7 +24,7 @@ public class SetHttpAuthentication extends BasicSetup {
 
         Page uiPage = uiContext.newPage();
         uiPage.navigate("https://github.com/PGrytsiuk");
-        Assert.assertTrue(uiPage.isVisible("text=Repositories 3"));
+        Assert.assertTrue(uiPage.isVisible("text=Repositories 4"));
 
 
         //----------- Web Api part - cross-check ------------
@@ -38,7 +38,7 @@ public class SetHttpAuthentication extends BasicSetup {
         Response response = webApiPAge.navigate("https://api.github.com/user");
         System.out.println(response.text());
         Assert.assertEquals(200, response.status());
-        Assert.assertTrue(response.text().contains("\"public_repos\": 3"));
+        Assert.assertTrue(response.text().contains("\"public_repos\": 4"));
     }
 
 }

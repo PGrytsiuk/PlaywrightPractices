@@ -1,6 +1,8 @@
 package com.playwright.tests2;
 
 import com.common.hooks.TestHookSetup;
+import com.microsoft.playwright.Page;
+import com.microsoft.playwright.options.AriaRole;
 import org.testng.annotations.Test;
 
 public class SimpleTest extends TestHookSetup {
@@ -9,7 +11,7 @@ public class SimpleTest extends TestHookSetup {
     public void testLogin() {
         // Use the initialized page object for automation
         page.navigate("https://www.google.com/");
-        page.fill("//textarea[@aria-controls='Alh6id']", "testuser");
-        page.click("(//input[@class='gNO89b'])[1]");
+        page.getByRole(AriaRole.COMBOBOX, new Page.GetByRoleOptions().setName("Пошук")).fill("testuser");
+        page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Пошук Google")).nth(0).click();
     }
 }

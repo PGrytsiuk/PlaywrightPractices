@@ -11,9 +11,9 @@ public class RouteFulFillDemo {
 
     Playwright pw;
     Browser browser;
-    String token ="test";
+    String token = System.getenv("GITHUB_TOKEN");
 
-    @Test(enabled = false)
+    @Test(description = "This test demonstrates how to intercept and modify the request headers")
     public void requestChangeDemo() {
 
         pw = Playwright.create();
@@ -37,5 +37,4 @@ public class RouteFulFillDemo {
         Assert.assertEquals(401, response.status());
        /* Assert.assertEquals(200, response.status());*/
     }
-
 }
